@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F7668233-6CE7-400E-A4D2-FABAC3BEFD6F}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>VR_GeoGraphic</RootNamespace>
+    <ProjectName>VR_GeoGraphic</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;VR_GEOGRAPHIC_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VR_GEOGRAPHIC_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\kernelLib\include;$(SolutionDir)\Osg340\include;$(SolutionDir)\Osgearth280</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Osgearth280\lib;$(SolutionDir)\Osg340\lib;$(OutDir)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OpenThreads.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgWidget.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgEarth.lib;osgEarthUtil.lib;osgEarthSymbology.lib;osgEarthAnnotation.lib;osgEarthFeatures.lib;VR_Framework.lib;VR_GlobeWidget.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\geographic\bezierarithmetric.h" />
+    <ClInclude Include="..\..\include\geographic\geoarc.h" />
+    <ClInclude Include="..\..\include\geographic\geobezierarrow.h" />
+    <ClInclude Include="..\..\include\geographic\geobezierline.h" />
+    <ClInclude Include="..\..\include\geographic\geocirlce.h" />
+    <ClInclude Include="..\..\include\geographic\geocoattaildirectarrow.h" />
+    <ClInclude Include="..\..\include\geographic\geocoattailleanarrow.h" />
+    <ClInclude Include="..\..\include\geographic\geodirectarrow.h" />
+    <ClInclude Include="..\..\include\geographic\geodoublearrow.h" />
+    <ClInclude Include="..\..\include\geographic\geoellipse.h" />
+    <ClInclude Include="..\..\include\geographic\geofreeline.h" />
+    <ClInclude Include="..\..\include\geographic\geographicconfig.h" />
+    <ClInclude Include="..\..\include\geographic\geographiccreator.h" />
+    <ClInclude Include="..\..\include\geographic\geographictype.h" />
+    <ClInclude Include="..\..\include\geographic\geoleanarrow.h" />
+    <ClInclude Include="..\..\include\geographic\geoline.h" />
+    <ClInclude Include="..\..\include\geographic\geolinearrow.h" />
+    <ClInclude Include="..\..\include\geographic\geomultipoint.h" />
+    <ClInclude Include="..\..\include\geographic\geoparallelsearcharea.h" />
+    <ClInclude Include="..\..\include\geographic\geopoint.h" />
+    <ClInclude Include="..\..\include\geographic\geopolygon.h" />
+    <ClInclude Include="..\..\include\geographic\georoundedrectangle.h" />
+    <ClInclude Include="..\..\include\geographic\geosector.h" />
+    <ClInclude Include="..\..\include\geographic\geosectorsearcharea.h" />
+    <ClInclude Include="..\..\include\geographic\rectangle.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="bezierarithmetric.cpp" />
+    <ClCompile Include="geoarc.cpp" />
+    <ClCompile Include="geobezierarrow.cpp" />
+    <ClCompile Include="geobezierline.cpp" />
+    <ClCompile Include="geocirlce.cpp" />
+    <ClCompile Include="geocoattaildirectarrow.cpp" />
+    <ClCompile Include="geocoattailleanarrow.cpp" />
+    <ClCompile Include="geodirectarrow.cpp" />
+    <ClCompile Include="geodoublearrow.cpp" />
+    <ClCompile Include="geoellipse.cpp" />
+    <ClCompile Include="geofreeline.cpp" />
+    <ClCompile Include="geographiccreator.cpp" />
+    <ClCompile Include="geoleanarrow.cpp" />
+    <ClCompile Include="geoline.cpp" />
+    <ClCompile Include="geolinearrow.cpp" />
+    <ClCompile Include="geomultipoint.cpp" />
+    <ClCompile Include="geoparallelsearcharea.cpp" />
+    <ClCompile Include="geopoint.cpp" />
+    <ClCompile Include="geopolygon.cpp" />
+    <ClCompile Include="georoundedrectangle.cpp" />
+    <ClCompile Include="geosector.cpp" />
+    <ClCompile Include="geosectorsearcharea.cpp" />
+    <ClCompile Include="rectangle.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

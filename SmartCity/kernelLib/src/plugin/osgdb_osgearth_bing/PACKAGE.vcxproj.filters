@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="E:\os\osgearth\osgearth-2.8\CMakeFiles\5a3a1f70d8c9ce92995b9981443bef39\PACKAGE_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{2781E3A0-C168-4BB9-B4B3-8C0D1599CB1D}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

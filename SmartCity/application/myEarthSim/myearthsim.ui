@@ -1,0 +1,3018 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>myEarthSimClass</class>
+ <widget class="QMainWindow" name="myEarthSimClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>669</width>
+    <height>492</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>myEarthSim</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="margin">
+     <number>0</number>
+    </property>
+    <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout_4"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>669</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>场景控件</string>
+    </property>
+    <widget class="QMenu" name="menu_25">
+     <property name="title">
+      <string>鼠标地理位置</string>
+     </property>
+     <addaction name="actionStartGetMourseGeoPosition"/>
+     <addaction name="actionEndGetMourseGeoPosition"/>
+    </widget>
+    <addaction name="actionShowEarthControl"/>
+    <addaction name="actionSetNavigationPosition"/>
+    <addaction name="actionSetGlobeScalePosition"/>
+    <addaction name="actionFlyToTarget"/>
+    <addaction name="menu_25"/>
+    <addaction name="actionGUIEventHandler"/>
+    <addaction name="actionStateTextSize"/>
+    <addaction name="actionGetCameraPosition"/>
+    <addaction name="actionSetCameraHeight"/>
+    <addaction name="actionComputeAzimuth"/>
+    <addaction name="actionSetCameraMode"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>图层管理</string>
+    </property>
+    <widget class="QMenu" name="menu_6">
+     <property name="title">
+      <string>影像图层</string>
+     </property>
+     <addaction name="action_TMSImage"/>
+     <addaction name="action_UnVisibleTMSImage"/>
+     <addaction name="action_VisibleTMSImage"/>
+     <addaction name="action_gooleImage"/>
+     <addaction name="action_unVidibleGoogleImage"/>
+     <addaction name="action_VisiblegoogleImage"/>
+     <addaction name="separator"/>
+     <addaction name="actionAddTDTImage"/>
+    </widget>
+    <widget class="QMenu" name="menu_8">
+     <property name="title">
+      <string>高程图层</string>
+     </property>
+     <addaction name="action_TMSEle"/>
+     <addaction name="action_unVisibleTMSEle"/>
+     <addaction name="action_VisibleTMSEle"/>
+     <addaction name="separator"/>
+     <addaction name="actionAddTifDem"/>
+    </widget>
+    <widget class="QMenu" name="menu_9">
+     <property name="title">
+      <string>矢量图层</string>
+     </property>
+     <addaction name="action_addCountryLineShp"/>
+     <addaction name="action_UnVisiblelineShp"/>
+     <addaction name="action_VisiblelineShp"/>
+     <addaction name="separator"/>
+     <addaction name="action_AddPolygonShp"/>
+     <addaction name="action_UnVisiblePolygonShp"/>
+     <addaction name="action_VisiblePolygonShp"/>
+     <addaction name="separator"/>
+     <addaction name="action_AddPointShp"/>
+     <addaction name="action_UnVisiblePointShp"/>
+     <addaction name="action_VisiblePointShp"/>
+    </widget>
+    <widget class="QMenu" name="menu_18">
+     <property name="title">
+      <string>太乐瓦片</string>
+     </property>
+     <addaction name="actionLoadCustomTile"/>
+     <addaction name="actionShowCustomTile"/>
+     <addaction name="actionHideCustomTile"/>
+    </widget>
+    <widget class="QMenu" name="menu_28">
+     <property name="title">
+      <string>对象图层</string>
+     </property>
+     <addaction name="actionCreateJFQLayer"/>
+     <addaction name="actionVisibleJFQLayer"/>
+     <addaction name="actionDeleteJFQLayer"/>
+    </widget>
+    <addaction name="menu_6"/>
+    <addaction name="menu_8"/>
+    <addaction name="menu_9"/>
+    <addaction name="menu_18"/>
+    <addaction name="menu_28"/>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>地理标绘</string>
+    </property>
+    <widget class="QMenu" name="menu_12">
+     <property name="title">
+      <string>地理方格</string>
+     </property>
+     <addaction name="actionCreateRectGrid"/>
+     <addaction name="actionDeleteRectGrid"/>
+    </widget>
+    <widget class="QMenu" name="menu_11">
+     <property name="title">
+      <string>地理圆格</string>
+     </property>
+     <addaction name="actionCreateRingGrid"/>
+     <addaction name="actionDeleteRingGrid"/>
+    </widget>
+    <widget class="QMenu" name="menu_13">
+     <property name="title">
+      <string>地理圆（扇形）</string>
+     </property>
+     <addaction name="actionCreateCircle"/>
+     <addaction name="actionDeleteCircle"/>
+    </widget>
+    <widget class="QMenu" name="menu_7">
+     <property name="title">
+      <string>地标点</string>
+     </property>
+     <addaction name="action_CreatPoint"/>
+     <addaction name="action_DeletePoint"/>
+    </widget>
+    <widget class="QMenu" name="menu_16">
+     <property name="title">
+      <string>地理折线</string>
+     </property>
+     <addaction name="action_CreateLine"/>
+     <addaction name="action_DeleteLine"/>
+    </widget>
+    <widget class="QMenu" name="menu_17">
+     <property name="title">
+      <string>地理面</string>
+     </property>
+     <addaction name="action_CreatePolygon"/>
+     <addaction name="action_DeletePolygon"/>
+    </widget>
+    <widget class="QMenu" name="menu_24">
+     <property name="title">
+      <string>地理标牌</string>
+     </property>
+     <addaction name="actionCreateScutcheon"/>
+     <addaction name="actionDeleteScutcheon"/>
+    </widget>
+    <widget class="QMenu" name="menu_29">
+     <property name="title">
+      <string>地理线段</string>
+     </property>
+     <addaction name="actionCreateSegment"/>
+     <addaction name="actionDeleteSegment"/>
+    </widget>
+    <widget class="QMenu" name="menu_31">
+     <property name="title">
+      <string>雷达扫描线</string>
+     </property>
+     <addaction name="actionCreateRadarLine"/>
+     <addaction name="actionModifyRadarColor"/>
+     <addaction name="actionDeleteRadarLine"/>
+    </widget>
+    <addaction name="menu_7"/>
+    <addaction name="menu_29"/>
+    <addaction name="menu_16"/>
+    <addaction name="menu_17"/>
+    <addaction name="menu_13"/>
+    <addaction name="menu_12"/>
+    <addaction name="menu_11"/>
+    <addaction name="menu_24"/>
+    <addaction name="menu_31"/>
+   </widget>
+   <widget class="QMenu" name="menu_4">
+    <property name="title">
+     <string>空间测量</string>
+    </property>
+    <widget class="QMenu" name="menu_10">
+     <property name="title">
+      <string>距离量算</string>
+     </property>
+     <addaction name="action_BeginMeasureDistance"/>
+     <addaction name="action_EndMeasureDistance"/>
+     <addaction name="action_BeginSphereDistance"/>
+     <addaction name="action_EndSphereDistance"/>
+    </widget>
+    <widget class="QMenu" name="menu_14">
+     <property name="title">
+      <string>面积量算</string>
+     </property>
+     <addaction name="action_BeginFlatArea"/>
+     <addaction name="action_EndFlatArea"/>
+     <addaction name="action_BeginSphereArea"/>
+     <addaction name="action_EndSphereArea"/>
+    </widget>
+    <widget class="QMenu" name="menu_15">
+     <property name="title">
+      <string>方位量算</string>
+     </property>
+     <addaction name="action_BeginAzimuth"/>
+     <addaction name="action_EndAzimuth"/>
+    </widget>
+    <addaction name="menu_10"/>
+    <addaction name="menu_14"/>
+    <addaction name="menu_15"/>
+   </widget>
+   <widget class="QMenu" name="menu_5">
+    <property name="title">
+     <string>态势显示</string>
+    </property>
+    <widget class="QMenu" name="menu_26">
+     <property name="title">
+      <string>添加态势显示</string>
+     </property>
+     <addaction name="action_AddDynamicObjects"/>
+     <addaction name="actionControlIconVisible"/>
+     <addaction name="actionSetScutcheonFields"/>
+     <addaction name="actionControlScutVisible"/>
+     <addaction name="actionControlTrackLineVisible"/>
+     <addaction name="actionChangeTrackPoins"/>
+     <addaction name="actionChangeTrackLineColor"/>
+     <addaction name="actionChangeTrackLineType"/>
+     <addaction name="actionChangeTrackLineWidth"/>
+     <addaction name="actionChangeTrackLineLength"/>
+     <addaction name="actionDirLineVisible"/>
+     <addaction name="actionChangeDirLineColor"/>
+     <addaction name="actionChangeDirLineType"/>
+     <addaction name="actionChangeDirLineWidth"/>
+     <addaction name="actionChangeIconStyle"/>
+     <addaction name="actionChangeScuStyle"/>
+     <addaction name="actionChangeObjectIconStyle"/>
+     <addaction name="actionChangeObjectScuStyle"/>
+     <addaction name="actionChangeObjectTrackPoint"/>
+     <addaction name="actionChangeScuOffset"/>
+     <addaction name="actionChangeScuShadow"/>
+     <addaction name="actionChangeObjectScuShadow"/>
+     <addaction name="actionVisibleIconText"/>
+     <addaction name="actionVisibleObjectIconText"/>
+     <addaction name="actionEnableDragScu"/>
+     <addaction name="actionScuLineVisible"/>
+     <addaction name="actionChangeScuLineType"/>
+     <addaction name="actionChangeScuLineColor"/>
+     <addaction name="actionChangeScuLineWidth"/>
+    </widget>
+    <widget class="QMenu" name="menu_27">
+     <property name="title">
+      <string>添加警告区域</string>
+     </property>
+     <addaction name="action_AddWarnningRegion"/>
+     <addaction name="actionAddObjectListener"/>
+     <addaction name="actionAddScanningRegion"/>
+     <addaction name="actionDynamicObjectBlink"/>
+    </widget>
+    <addaction name="separator"/>
+    <addaction name="menu_27"/>
+    <addaction name="menu_26"/>
+    <addaction name="actionDynamicObjectVisible"/>
+    <addaction name="actionObjectVisibleByFacility"/>
+    <addaction name="separator"/>
+    <addaction name="actionCircleTangentAngle"/>
+    <addaction name="actionPolygonTangentAngle"/>
+    <addaction name="actionComputeAngle"/>
+    <addaction name="actionComputeBanyCenter"/>
+    <addaction name="actionJudgePointInCircle"/>
+    <addaction name="actionJudgePointInGeometry"/>
+   </widget>
+   <widget class="QMenu" name="menu_19">
+    <property name="title">
+     <string>编辑标绘</string>
+    </property>
+    <widget class="QMenu" name="menu_20">
+     <property name="title">
+      <string>点标绘</string>
+     </property>
+     <addaction name="action_BeginEditorPoint"/>
+     <addaction name="action_EndEditorPoint"/>
+    </widget>
+    <widget class="QMenu" name="menu_21">
+     <property name="title">
+      <string>线标绘</string>
+     </property>
+     <addaction name="action_BeginEditorLine"/>
+     <addaction name="action_EndEditorLine"/>
+    </widget>
+    <widget class="QMenu" name="menu_22">
+     <property name="title">
+      <string>面标绘</string>
+     </property>
+     <addaction name="action_BeginEditorPolygon"/>
+     <addaction name="action_EndEditorPolygon"/>
+    </widget>
+    <widget class="QMenu" name="menu_30">
+     <property name="title">
+      <string>图形编辑</string>
+     </property>
+     <addaction name="actionBeginGraphicEdit"/>
+     <addaction name="actionBeginSelectedGraphicEdit"/>
+     <addaction name="actionEndGraphicEdit"/>
+    </widget>
+    <addaction name="menu_20"/>
+    <addaction name="menu_21"/>
+    <addaction name="menu_22"/>
+    <addaction name="separator"/>
+    <addaction name="menu_30"/>
+   </widget>
+   <widget class="QMenu" name="menu_23">
+    <property name="title">
+     <string>信息查询</string>
+    </property>
+    <addaction name="actionStartPointQuery"/>
+    <addaction name="actionEndPointQuery"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_23"/>
+   <addaction name="menu_2"/>
+   <addaction name="menu_3"/>
+   <addaction name="menu_19"/>
+   <addaction name="menu_4"/>
+   <addaction name="menu_5"/>
+  </widget>
+  <action name="actionShowEarthControl">
+   <property name="text">
+    <string>创建显示控件</string>
+   </property>
+  </action>
+  <action name="actionFlyToTarget">
+   <property name="text">
+    <string>定位南京</string>
+   </property>
+  </action>
+  <action name="action_TMSImage">
+   <property name="text">
+    <string>添加TMS影像</string>
+   </property>
+  </action>
+  <action name="action_TMSEle">
+   <property name="text">
+    <string>添加TMS高程</string>
+   </property>
+  </action>
+  <action name="action_gooleImage">
+   <property name="text">
+    <string>添加goole影像</string>
+   </property>
+  </action>
+  <action name="action_UnVisibleTMSImage">
+   <property name="text">
+    <string>隐藏TMS影像</string>
+   </property>
+  </action>
+  <action name="action_unVidibleGoogleImage">
+   <property name="text">
+    <string>隐藏google影像</string>
+   </property>
+  </action>
+  <action name="action_unVisibleTMSEle">
+   <property name="text">
+    <string>隐藏TMS高程</string>
+   </property>
+  </action>
+  <action name="action_VisibleTMSImage">
+   <property name="text">
+    <string>显示TMS影像</string>
+   </property>
+  </action>
+  <action name="action_VisiblegoogleImage">
+   <property name="text">
+    <string>显示google影像</string>
+   </property>
+  </action>
+  <action name="action_VisibleTMSEle">
+   <property name="text">
+    <string>显示TMS高程</string>
+   </property>
+  </action>
+  <action name="action_addCountryLineShp">
+   <property name="text">
+    <string>添加国界线</string>
+   </property>
+  </action>
+  <action name="action_UnVisiblelineShp">
+   <property name="text">
+    <string>隐藏国界线</string>
+   </property>
+  </action>
+  <action name="action_VisiblelineShp">
+   <property name="text">
+    <string>显示国界线</string>
+   </property>
+  </action>
+  <action name="action_AddPolygonShp">
+   <property name="text">
+    <string>添加国界面</string>
+   </property>
+  </action>
+  <action name="action_UnVisiblePolygonShp">
+   <property name="text">
+    <string>隐藏国界面</string>
+   </property>
+  </action>
+  <action name="action_VisiblePolygonShp">
+   <property name="text">
+    <string>显示国界面</string>
+   </property>
+  </action>
+  <action name="action_AddPointShp">
+   <property name="text">
+    <string>添加省点数据</string>
+   </property>
+  </action>
+  <action name="action_UnVisiblePointShp">
+   <property name="text">
+    <string>隐藏省点数据</string>
+   </property>
+  </action>
+  <action name="action_VisiblePointShp">
+   <property name="text">
+    <string>显示省点数据</string>
+   </property>
+  </action>
+  <action name="action_BeginMeasureDistance">
+   <property name="text">
+    <string>开始平面距离量算</string>
+   </property>
+  </action>
+  <action name="action_EndMeasureDistance">
+   <property name="text">
+    <string>结束平面距离量算</string>
+   </property>
+  </action>
+  <action name="actionCreateRingGrid">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="actionDeleteRingGrid">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="actionDeleteRectGrid">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="actionCreateRectGrid">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="actionCreateCircle">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="actionDeleteCircle">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="action_BeginSphereDistance">
+   <property name="text">
+    <string>开始球面距离量算</string>
+   </property>
+  </action>
+  <action name="action_EndSphereDistance">
+   <property name="text">
+    <string>结束球面距离量算</string>
+   </property>
+  </action>
+  <action name="action_BeginFlatArea">
+   <property name="text">
+    <string>开始平面面积量算</string>
+   </property>
+  </action>
+  <action name="action_EndFlatArea">
+   <property name="text">
+    <string>结束平面面积量算</string>
+   </property>
+  </action>
+  <action name="action_BeginSphereArea">
+   <property name="text">
+    <string>开始球面面积量算</string>
+   </property>
+  </action>
+  <action name="action_EndSphereArea">
+   <property name="text">
+    <string>结束球面面积量算</string>
+   </property>
+  </action>
+  <action name="action_BeginAzimuth">
+   <property name="text">
+    <string>开始方位量算</string>
+   </property>
+  </action>
+  <action name="action_EndAzimuth">
+   <property name="text">
+    <string>结束方位量算</string>
+   </property>
+  </action>
+  <action name="actionSetNavigationPosition">
+   <property name="text">
+    <string>设置导航键位置</string>
+   </property>
+  </action>
+  <action name="action_CreatPoint">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="action_DeletePoint">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="action_CreateLine">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="action_DeleteLine">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="action_CreatePolygon">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="action_DeletePolygon">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="actionLoadCustomTile">
+   <property name="text">
+    <string>加载custom瓦片</string>
+   </property>
+  </action>
+  <action name="actionShowCustomTile">
+   <property name="text">
+    <string>显示custom瓦片</string>
+   </property>
+  </action>
+  <action name="actionHideCustomTile">
+   <property name="text">
+    <string>隐藏custom瓦片</string>
+   </property>
+  </action>
+  <action name="action_BeginEditorPoint">
+   <property name="text">
+    <string>开始编辑</string>
+   </property>
+  </action>
+  <action name="action_EndEditorPoint">
+   <property name="text">
+    <string>结束编辑</string>
+   </property>
+  </action>
+  <action name="action_BeginEditorLine">
+   <property name="text">
+    <string>开始编辑</string>
+   </property>
+  </action>
+  <action name="action_EndEditorLine">
+   <property name="text">
+    <string>结束编辑</string>
+   </property>
+  </action>
+  <action name="action_BeginEditorPolygon">
+   <property name="text">
+    <string>开始编辑</string>
+   </property>
+  </action>
+  <action name="action_EndEditorPolygon">
+   <property name="text">
+    <string>结束编辑</string>
+   </property>
+  </action>
+  <action name="actionStartPointQuery">
+   <property name="text">
+    <string>开始查询</string>
+   </property>
+  </action>
+  <action name="actionEndPointQuery">
+   <property name="text">
+    <string>结束查询</string>
+   </property>
+  </action>
+  <action name="actionCreateScutcheon">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="actionDeleteScutcheon">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="actionStartGetMourseGeoPosition">
+   <property name="text">
+    <string>开启</string>
+   </property>
+  </action>
+  <action name="actionEndGetMourseGeoPosition">
+   <property name="text">
+    <string>关闭</string>
+   </property>
+  </action>
+  <action name="actionGUIEventHandler">
+   <property name="text">
+    <string>鼠标键盘事件</string>
+   </property>
+  </action>
+  <action name="action_AddDynamicObjects">
+   <property name="text">
+    <string>接态势目标数据(模拟)</string>
+   </property>
+  </action>
+  <action name="action_AddDynamicPoints">
+   <property name="text">
+    <string>添加态势轨迹</string>
+   </property>
+  </action>
+  <action name="action_AddWarnningRegion">
+   <property name="text">
+    <string>添加告警区域</string>
+   </property>
+  </action>
+  <action name="actionStateTextSize">
+   <property name="text">
+    <string>状态栏字体大小与风格</string>
+   </property>
+  </action>
+  <action name="actionCreateJFQLayer">
+   <property name="text">
+    <string>创建禁飞区图层</string>
+   </property>
+  </action>
+  <action name="actionDeleteJFQLayer">
+   <property name="text">
+    <string>销毁禁飞区图层</string>
+   </property>
+  </action>
+  <action name="actionVisibleJFQLayer">
+   <property name="text">
+    <string>设置禁飞区显隐</string>
+   </property>
+  </action>
+  <action name="actionCreateSegment">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="actionDeleteSegment">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="actionControlTrackLineVisible">
+   <property name="text">
+    <string>显隐轨迹线</string>
+   </property>
+  </action>
+  <action name="actionControlIconVisible">
+   <property name="text">
+    <string>显隐目标注记</string>
+   </property>
+  </action>
+  <action name="actionChangeTrackLineColor">
+   <property name="text">
+    <string>修改轨迹线颜色</string>
+   </property>
+  </action>
+  <action name="actionChangeTrackLineType">
+   <property name="text">
+    <string>修改轨迹线样式</string>
+   </property>
+  </action>
+  <action name="actionControlScutVisible">
+   <property name="text">
+    <string>显隐目标标牌</string>
+   </property>
+  </action>
+  <action name="actionDirLineVisible">
+   <property name="text">
+    <string>显隐方向线</string>
+   </property>
+  </action>
+  <action name="actionChangeDirLineColor">
+   <property name="text">
+    <string>修改方向线颜色</string>
+   </property>
+  </action>
+  <action name="actionChangeDirLineType">
+   <property name="text">
+    <string>修改方向线样式</string>
+   </property>
+  </action>
+  <action name="actionChangeTrackLineLength">
+   <property name="text">
+    <string>修改轨迹线长度</string>
+   </property>
+  </action>
+  <action name="actionChangeTrackLineWidth">
+   <property name="text">
+    <string>修改轨迹线宽度</string>
+   </property>
+  </action>
+  <action name="actionChangeDirLineWidth">
+   <property name="text">
+    <string>修改方向线宽度</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>-</string>
+   </property>
+  </action>
+  <action name="actionBeginGraphicEdit">
+   <property name="text">
+    <string>开启编辑</string>
+   </property>
+  </action>
+  <action name="actionEndGraphicEdit">
+   <property name="text">
+    <string>结束编辑</string>
+   </property>
+  </action>
+  <action name="actionAddObjectListener">
+   <property name="text">
+    <string>添加态势监听</string>
+   </property>
+  </action>
+  <action name="actionCreateRadarLine">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="actionDeleteRadarLine">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="actionDynamicObjectBlink">
+   <property name="text">
+    <string>态势对象闪烁</string>
+   </property>
+  </action>
+  <action name="actionGetCameraPosition">
+   <property name="text">
+    <string>获取相机当前位置</string>
+   </property>
+  </action>
+  <action name="actionComputeAzimuth">
+   <property name="text">
+    <string>计算两点的方位角</string>
+   </property>
+  </action>
+  <action name="actionSetScutcheonFields">
+   <property name="text">
+    <string>设置标牌显示字段</string>
+   </property>
+  </action>
+  <action name="actionCircleTangentAngle">
+   <property name="text">
+    <string>计算目标与圆区域切线夹角</string>
+   </property>
+  </action>
+  <action name="actionPolygonTangentAngle">
+   <property name="text">
+    <string>计算目标与多边形切线夹角</string>
+   </property>
+  </action>
+  <action name="actionComputeBanyCenter">
+   <property name="text">
+    <string>计算多边形的质心</string>
+   </property>
+  </action>
+  <action name="actionComputeAngle">
+   <property name="text">
+    <string>计算目标到中心点连线与方位角方向的夹角</string>
+   </property>
+  </action>
+  <action name="actionDynamicObjectVisible">
+   <property name="text">
+    <string>显隐单个态势对象</string>
+   </property>
+  </action>
+  <action name="actionAddScanningRegion">
+   <property name="text">
+    <string>添加雷达扫描区 </string>
+   </property>
+  </action>
+  <action name="actionObjectVisibleByFacility">
+   <property name="text">
+    <string>通过设备控制显示</string>
+   </property>
+  </action>
+  <action name="actionSetCameraHeight">
+   <property name="text">
+    <string>设置相机高度</string>
+   </property>
+  </action>
+  <action name="actionModifyRadarColor">
+   <property name="text">
+    <string>改颜色</string>
+   </property>
+  </action>
+  <action name="actionChangeIconStyle">
+   <property name="text">
+    <string>修改注记风格</string>
+   </property>
+  </action>
+  <action name="actionChangeScuStyle">
+   <property name="text">
+    <string>修改标牌风格</string>
+   </property>
+  </action>
+  <action name="actionChangeObjectIconStyle">
+   <property name="text">
+    <string>单个修改注记风格</string>
+   </property>
+  </action>
+  <action name="actionChangeObjectScuStyle">
+   <property name="text">
+    <string>单个修改标牌风格</string>
+   </property>
+  </action>
+  <action name="actionChangeTrackPoins">
+   <property name="text">
+    <string>修改轨迹线点渲染模式</string>
+   </property>
+  </action>
+  <action name="actionChangeObjectTrackPoint">
+   <property name="text">
+    <string>单个修改轨迹线点样式</string>
+   </property>
+  </action>
+  <action name="actionChangeScuOffset">
+   <property name="text">
+    <string>修改标牌的偏移</string>
+   </property>
+  </action>
+  <action name="actionSetCameraMode">
+   <property name="text">
+    <string>设置相机的操作模式</string>
+   </property>
+  </action>
+  <action name="actionBeginSelectedGraphicEdit">
+   <property name="text">
+    <string>开启编辑(当前选中图形)</string>
+   </property>
+  </action>
+  <action name="actionChangeScuShadow">
+   <property name="text">
+    <string>修改标牌文字阴影</string>
+   </property>
+  </action>
+  <action name="actionChangeObjectScuShadow">
+   <property name="text">
+    <string>单个修改标牌文字阴影</string>
+   </property>
+  </action>
+  <action name="actionJudgePointInCircle">
+   <property name="text">
+    <string>判断点在圆心内</string>
+   </property>
+  </action>
+  <action name="actionJudgePointInGeometry">
+   <property name="text">
+    <string>判断点在多边形内</string>
+   </property>
+  </action>
+  <action name="actionEnableDragScu">
+   <property name="text">
+    <string>标牌拖拽</string>
+   </property>
+  </action>
+  <action name="actionSetGlobeScalePosition">
+   <property name="text">
+    <string>设置比例尺位置与风格</string>
+   </property>
+  </action>
+  <action name="actionVisibleIconText">
+   <property name="text">
+    <string>显隐注记文字</string>
+   </property>
+  </action>
+  <action name="actionVisibleObjectIconText">
+   <property name="text">
+    <string>单个显隐注记文字</string>
+   </property>
+  </action>
+  <action name="actionScuLineVisible">
+   <property name="text">
+    <string>标牌线显隐</string>
+   </property>
+  </action>
+  <action name="actionChangeScuLineType">
+   <property name="text">
+    <string>标牌线样式修改</string>
+   </property>
+  </action>
+  <action name="actionChangeScuLineColor">
+   <property name="text">
+    <string>标牌线颜色修改</string>
+   </property>
+  </action>
+  <action name="actionChangeScuLineWidth">
+   <property name="text">
+    <string>标牌线线宽修改</string>
+   </property>
+  </action>
+  <action name="actionAddTDTImage">
+   <property name="text">
+    <string>添加天地图影像</string>
+   </property>
+  </action>
+  <action name="actionAddTifDem">
+   <property name="text">
+    <string>添加本地tif高程</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="myearthsim.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>actionShowEarthControl</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotShowEarthControl()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFlyToTarget</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotFlyToTarget()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_TMSImage</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotAddTMSImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_TMSEle</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotAddTMSElevation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_gooleImage</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotAddGoogleImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_UnVisibleTMSImage</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotUnVisibleTMSImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_unVidibleGoogleImage</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotUnVisibleGoogleImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_unVisibleTMSEle</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotUnVisibleTMSElevation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_VisibleTMSImage</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotVisibleTMSImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_VisiblegoogleImage</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotVisibleGoogleImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_VisibleTMSEle</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotVisibleTMSElevation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_addCountryLineShp</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotAddCountryLineShp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_UnVisiblelineShp</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotUnVisibleLineShp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_VisiblelineShp</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotVisibleLineShp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_AddPolygonShp</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotAddPolygonShp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_UnVisiblePolygonShp</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotUnVisiblePolygonShp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_VisiblePolygonShp</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotVisiblePolygonShp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_AddPointShp</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotAddPointShp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_UnVisiblePointShp</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotUnVisiblePointShp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_VisiblePointShp</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotVisiblePointShp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_BeginMeasureDistance</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotBeginFlatDistance()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_EndMeasureDistance</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotEndFlatDistance()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCreateCircle</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionCreateCircle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDeleteCircle</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionDeleteCircle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCreateRectGrid</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionCreateRectGrid()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDeleteRectGrid</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionDeleteRectGrid()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDeleteRingGrid</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionDeleteRingGrid()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCreateRingGrid</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionCreateRingGrid()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_BeginSphereDistance</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotBeginSphereDistance()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_EndSphereDistance</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotEndSphereDistance()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_BeginFlatArea</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotBeginFlatArea()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_EndFlatArea</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotEndFlatArea()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_BeginSphereArea</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotBeginSphereArea()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_EndSphereArea</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotEndSphereArea()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_BeginAzimuth</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotBeginAzimuth()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_EndAzimuth</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotEndAzimuth()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSetNavigationPosition</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotSetNavigationPosition()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_CreatPoint</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionCreatePoint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_CreateLine</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionCreateLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_CreatePolygon</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionCreatePolygon()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_DeletePoint</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionDeletePoint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_DeleteLine</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionDeleteLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_DeletePolygon</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionDeletePolygon()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLoadCustomTile</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotLoadCustomTile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionShowCustomTile</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotShowCustomTile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionHideCustomTile</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotHideCustomTile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_BeginEditorPoint</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotBeginEditorPoint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_BeginEditorLine</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotBeginEditorLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_BeginEditorPolygon</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotBeginEditorPolygon()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_EndEditorPoint</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotEndEditorPoint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_EndEditorLine</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotEndEditorLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_EndEditorPolygon</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotEndEditorPolygon()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionStartPointQuery</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotStartPointQuery()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionEndPointQuery</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotEndPointQuery()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCreateScutcheon</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionCreateScutcheon()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDeleteScutcheon</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionDeleteScutcheon()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionStartGetMourseGeoPosition</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionStartGetMourseGeoPosition()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>189</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionEndGetMourseGeoPosition</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionEndGetMourseGeoPosition()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>189</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionGUIEventHandler</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionGUIEventHandler()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>189</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_AddDynamicObjects</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotAddDynamicObjects()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_AddDynamicPoints</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotAddDynamicPoints()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_AddWarnningRegion</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotAddWarnningRegion()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionStateTextSize</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionStateTextSize()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCreateJFQLayer</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionCreateJFQLayer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionVisibleJFQLayer</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionVisibleJFQLayer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDeleteJFQLayer</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionDeleteJFQLayer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCreateSegment</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionCreateSegment()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDeleteSegment</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionDeleteSegment()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeDirLineColor</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeDirLineColor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeDirLineType</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeDirLineType()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeTrackLineColor</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeTrackLineColor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeTrackLineLength</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeTrackLineLength()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeTrackLineType</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeTrackLineType()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionControlIconVisible</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionControlIconVisible()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionControlScutVisible</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionControlScutVisible()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDirLineVisible</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionDirLineVisible()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionControlTrackLineVisible</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionControlTrackLineVisible()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeTrackLineWidth</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeTrackLineWidth()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeDirLineWidth</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeDirLineWidth()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionBeginGraphicEdit</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionBeginGraphicEdit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionEndGraphicEdit</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionEndGraphicEdit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAddObjectListener</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionAddObjectListener()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCreateRadarLine</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionCreateRadarLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDeleteRadarLine</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionDeleteRadarLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDynamicObjectBlink</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionDynamicObjectBlink()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionGetCameraPosition</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionGetCameraPosition()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionComputeAzimuth</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionComputeAzimuth()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSetScutcheonFields</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionSetScutcheonFields()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCircleTangentAngle</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionCircleTangentAngle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionPolygonTangentAngle</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionPolygonTangentAngle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionComputeAngle</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionComputeAngle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionComputeBanyCenter</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionComputeBanyCenter()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDynamicObjectVisible</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionDynamicObjectVisible()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAddScanningRegion</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotAddScanningRegion()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionObjectVisibleByFacility</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionObjectVisibleByFacility()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSetCameraHeight</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionSetCameraHeight()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionModifyRadarColor</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionModifyRadarColor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeIconStyle</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeIconStyle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeObjectIconStyle</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeObjectIconStyle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeScuStyle</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeScuStyle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeObjectScuStyle</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeObjecctScuStyle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeTrackPoins</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeTrackPoints()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeObjectTrackPoint</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeObjectTrackPoint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeScuOffset</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeScuOffset()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSetCameraMode</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionSetCameraMode()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionBeginSelectedGraphicEdit</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionBeginSelectedGraphicEdit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeObjectScuShadow</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeObjectScuShadow()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeScuShadow</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeScuShadow()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionJudgePointInCircle</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionJudgePointInCircle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionJudgePointInGeometry</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionJudgePointInGeometry()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionEnableDragScu</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionEnableDragScu()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSetGlobeScalePosition</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionSetGlobeScalePosition()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionVisibleIconText</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionVisibleIconText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionVisibleObjectIconText</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionVisibleObjectIconText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionScuLineVisible</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionVisibleScuLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeScuLineColor</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeScuLineColor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeScuLineType</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeScuLineType()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeScuLineWidth</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionChangeScuLineWidth()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAddTDTImage</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionAddTDTImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAddTifDem</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionAddTifDem()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>slotShowEarthControl()</slot>
+  <slot>slotFlyToTarget()</slot>
+  <slot>slotDrawCircle()</slot>
+  <slot>slotAddTMSImage()</slot>
+  <slot>slotAddTMSElevation()</slot>
+  <slot>slotAddGoogleImage()</slot>
+  <slot>slotUnVisibleTMSImage()</slot>
+  <slot>slotUnVisibleGoogleImage()</slot>
+  <slot>slotUnVisibleTMSElevation()</slot>
+  <slot>slotVisibleTMSImage()</slot>
+  <slot>slotVisibleGoogleImage()</slot>
+  <slot>slotVisibleTMSElevation()</slot>
+  <slot>slotAddCountryLineShp()</slot>
+  <slot>slotUnVisibleLineShp()</slot>
+  <slot>slotVisibleLineShp()</slot>
+  <slot>slotAddPolygonShp()</slot>
+  <slot>slotUnVisiblePolygonShp()</slot>
+  <slot>slotVisiblePolygonShp()</slot>
+  <slot>slotAddPointShp()</slot>
+  <slot>slotUnVisiblePointShp()</slot>
+  <slot>slotVisiblePointShp()</slot>
+  <slot>slotBeginFlatDistance()</slot>
+  <slot>slotEndFlatDistance()</slot>
+  <slot>slotActionCreateCircle()</slot>
+  <slot>slotActionDeleteCircle()</slot>
+  <slot>slotActionCreateRectGrid()</slot>
+  <slot>slotActionDeleteRectGrid()</slot>
+  <slot>slotActionCreateRingGrid()</slot>
+  <slot>slotActionDeleteRingGrid()</slot>
+  <slot>slotBeginSphereDistance()</slot>
+  <slot>slotEndSphereDistance()</slot>
+  <slot>slotBeginSphereArea()</slot>
+  <slot>slotEndSphereArea()</slot>
+  <slot>slotBeginFlatArea()</slot>
+  <slot>slotEndFlatArea()</slot>
+  <slot>slotBeginAzimuth()</slot>
+  <slot>slotEndAzimuth()</slot>
+  <slot>slotSetNavigationPosition()</slot>
+  <slot>slotActionCreatePoint()</slot>
+  <slot>slotActionDeletePoint()</slot>
+  <slot>slotActionCreateLine()</slot>
+  <slot>slotActionDeleteLine()</slot>
+  <slot>slotActionCreatePolygon()</slot>
+  <slot>slotActionDeletePolygon()</slot>
+  <slot>slotLoadCustomTile()</slot>
+  <slot>slotShowCustomTile()</slot>
+  <slot>slotHideCustomTile()</slot>
+  <slot>slotBeginEditorPoint()</slot>
+  <slot>slotEndEditorPoint()</slot>
+  <slot>slotBeginEditorLine()</slot>
+  <slot>slotEndEditorLine()</slot>
+  <slot>slotBeginEditorPolygon()</slot>
+  <slot>slotEndEditorPolygon()</slot>
+  <slot>slotStartPointQuery()</slot>
+  <slot>slotEndPointQuery()</slot>
+  <slot>slotActionCreateScutcheon()</slot>
+  <slot>slotActionDeleteScutcheon()</slot>
+  <slot>slotActionStartGetMourseGeoPosition()</slot>
+  <slot>slotActionEndGetMourseGeoPosition()</slot>
+  <slot>slotActionGUIEventHandler()</slot>
+  <slot>slotAddDynamicObjects()</slot>
+  <slot>slotAddDynamicPoints()</slot>
+  <slot>slotAddWarnningRegion()</slot>
+  <slot>slotActionStateTextSize()</slot>
+  <slot>slotActionCreateJFQLayer()</slot>
+  <slot>slotActionVisibleJFQLayer()</slot>
+  <slot>slotActionDeleteJFQLayer()</slot>
+  <slot>slotActionCreateSegment()</slot>
+  <slot>slotActionDeleteSegment()</slot>
+  <slot>slotActionControlIconVisible()</slot>
+  <slot>slotActionChangeTrackLineColor()</slot>
+  <slot>slotActionChangeTrackLineType()</slot>
+  <slot>slotActionControlScutVisible()</slot>
+  <slot>slotActionDirLineVisible()</slot>
+  <slot>slotActionChangeDirLineColor()</slot>
+  <slot>slotActionChangeDirLineType()</slot>
+  <slot>slotActionChangeTrackLineLength()</slot>
+  <slot>slotActionControlTrackLineVisible()</slot>
+  <slot>slotActionChangeTrackLineWidth()</slot>
+  <slot>slotActionChangeDirLineWidth()</slot>
+  <slot>slotActionBeginGraphicEdit()</slot>
+  <slot>slotActionEndGraphicEdit()</slot>
+  <slot>slotActionAddObjectListener()</slot>
+  <slot>slotActionCreateRadarLine()</slot>
+  <slot>slotActionDeleteRadarLine()</slot>
+  <slot>slotActionDynamicObjectBlink()</slot>
+  <slot>slotActionGetCameraPosition()</slot>
+  <slot>slotActionComputeAzimuth()</slot>
+  <slot>slotActionSetScutcheonFields()</slot>
+  <slot>slotActionCircleTangentAngle()</slot>
+  <slot>slotActionPolygonTangentAngle()</slot>
+  <slot>slotActionComputeAngle()</slot>
+  <slot>slotActionComputeBanyCenter()</slot>
+  <slot>slotActionDynamicObjectVisible()</slot>
+  <slot>slotAddScanningRegion()</slot>
+  <slot>slotActionObjectVisibleByFacility()</slot>
+  <slot>slotActionSetCameraHeight()</slot>
+  <slot>slotActionModifyRadarColor()</slot>
+  <slot>slotActionChangeIconStyle()</slot>
+  <slot>slotActionChangeObjectIconStyle()</slot>
+  <slot>slotActionChangeScuStyle()</slot>
+  <slot>slotActionChangeObjecctScuStyle()</slot>
+  <slot>slotActionChangeTrackPoints()</slot>
+  <slot>slotActionChangeObjectTrackPoint()</slot>
+  <slot>slotActionChangeScuOffset()</slot>
+  <slot>slotActionSetCameraMode()</slot>
+  <slot>slotActionBeginSelectedGraphicEdit()</slot>
+  <slot>slotActionChangeScuShadow()</slot>
+  <slot>slotActionChangeObjectScuShadow()</slot>
+  <slot>slotActionJudgePointInCircle()</slot>
+  <slot>slotActionJudgePointInGeometry()</slot>
+  <slot>slotActionEnableDragScu()</slot>
+  <slot>slotActionSetGlobeScalePosition()</slot>
+  <slot>slotActionVisibleIconText()</slot>
+  <slot>slotActionVisibleObjectIconText()</slot>
+  <slot>slotActionVisibleScuLine()</slot>
+  <slot>slotActionChangeScuLineType()</slot>
+  <slot>slotActionChangeScuLineColor()</slot>
+  <slot>slotActionChangeScuLineWidth()</slot>
+  <slot>slotActionAddTDTImage()</slot>
+  <slot>slotActionAddTifDem()</slot>
+ </slots>
+</ui>

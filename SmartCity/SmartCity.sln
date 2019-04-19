@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "myEarthSim", "application\myEarthSim\myEarthSim.vcxproj", "{0BE7E850-26EF-498D-8F69-12B1B867022C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VR_DataGenerater", "kernelLib\src\VR_DataGenerater\VR_DataGenerater.vcxproj", "{29F825DC-AF26-4C4C-91B8-4F6005EAE1D9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0BE7E850-26EF-498D-8F69-12B1B867022C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0BE7E850-26EF-498D-8F69-12B1B867022C}.Debug|Win32.Build.0 = Debug|Win32
+		{0BE7E850-26EF-498D-8F69-12B1B867022C}.Release|Win32.ActiveCfg = Release|Win32
+		{0BE7E850-26EF-498D-8F69-12B1B867022C}.Release|Win32.Build.0 = Release|Win32
+		{29F825DC-AF26-4C4C-91B8-4F6005EAE1D9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{29F825DC-AF26-4C4C-91B8-4F6005EAE1D9}.Debug|Win32.Build.0 = Debug|Win32
+		{29F825DC-AF26-4C4C-91B8-4F6005EAE1D9}.Release|Win32.ActiveCfg = Release|Win32
+		{29F825DC-AF26-4C4C-91B8-4F6005EAE1D9}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		QtVersion = 4.8.6
+	EndGlobalSection
+EndGlobal

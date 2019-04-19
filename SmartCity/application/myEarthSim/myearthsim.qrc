@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="myEarthSim">
+    <file>Resources/icon.png</file>
+    <file>Resources/backImage1.png</file>
+    <file>Resources/button.png</file>
+    <file>Resources/backImage.png</file>
+  </qresource>
+</RCC>

@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>myEarthSimClass</class>
+ <widget class="QMainWindow" name="myEarthSimClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>669</width>
+    <height>492</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>myEarthSim</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="margin">
+     <number>0</number>
+    </property>
+    <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout_4"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>669</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>海图</string>
+    </property>
+    <addaction name="actionShowEarthControl"/>
+    <addaction name="separator"/>
+   </widget>
+   <addaction name="menu"/>
+  </widget>
+  <action name="actionShowEarthControl">
+   <property name="text">
+    <string>加载</string>
+   </property>
+  </action>
+  <action name="actionFlyToTarget">
+   <property name="text">
+    <string>定位南京</string>
+   </property>
+  </action>
+  <action name="action_TMSImage">
+   <property name="text">
+    <string>添加TMS影像</string>
+   </property>
+  </action>
+  <action name="action_TMSEle">
+   <property name="text">
+    <string>添加TMS高程</string>
+   </property>
+  </action>
+  <action name="action_gooleImage">
+   <property name="text">
+    <string>添加goole影像</string>
+   </property>
+  </action>
+  <action name="action_UnVisibleTMSImage">
+   <property name="text">
+    <string>隐藏TMS影像</string>
+   </property>
+  </action>
+  <action name="action_unVidibleGoogleImage">
+   <property name="text">
+    <string>隐藏google影像</string>
+   </property>
+  </action>
+  <action name="action_unVisibleTMSEle">
+   <property name="text">
+    <string>隐藏TMS高程</string>
+   </property>
+  </action>
+  <action name="action_VisibleTMSImage">
+   <property name="text">
+    <string>显示TMS影像</string>
+   </property>
+  </action>
+  <action name="action_VisiblegoogleImage">
+   <property name="text">
+    <string>显示google影像</string>
+   </property>
+  </action>
+  <action name="action_VisibleTMSEle">
+   <property name="text">
+    <string>显示TMS高程</string>
+   </property>
+  </action>
+  <action name="action_addCountryLineShp">
+   <property name="text">
+    <string>添加国界线</string>
+   </property>
+  </action>
+  <action name="action_UnVisiblelineShp">
+   <property name="text">
+    <string>隐藏国界线</string>
+   </property>
+  </action>
+  <action name="action_VisiblelineShp">
+   <property name="text">
+    <string>显示国界线</string>
+   </property>
+  </action>
+  <action name="action_AddPolygonShp">
+   <property name="text">
+    <string>添加国界面</string>
+   </property>
+  </action>
+  <action name="action_UnVisiblePolygonShp">
+   <property name="text">
+    <string>隐藏国界面</string>
+   </property>
+  </action>
+  <action name="action_VisiblePolygonShp">
+   <property name="text">
+    <string>显示国界面</string>
+   </property>
+  </action>
+  <action name="action_AddPointShp">
+   <property name="text">
+    <string>添加省点数据</string>
+   </property>
+  </action>
+  <action name="action_UnVisiblePointShp">
+   <property name="text">
+    <string>隐藏省点数据</string>
+   </property>
+  </action>
+  <action name="action_VisiblePointShp">
+   <property name="text">
+    <string>显示省点数据</string>
+   </property>
+  </action>
+  <action name="action_BeginMeasureDistance">
+   <property name="text">
+    <string>开始平面距离量算</string>
+   </property>
+  </action>
+  <action name="action_EndMeasureDistance">
+   <property name="text">
+    <string>结束平面距离量算</string>
+   </property>
+  </action>
+  <action name="actionCreateRingGrid">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="actionDeleteRingGrid">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="actionDeleteRectGrid">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="actionCreateRectGrid">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="actionCreateCircle">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="actionDeleteCircle">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="action_BeginSphereDistance">
+   <property name="text">
+    <string>开始球面距离量算</string>
+   </property>
+  </action>
+  <action name="action_EndSphereDistance">
+   <property name="text">
+    <string>结束球面距离量算</string>
+   </property>
+  </action>
+  <action name="action_BeginFlatArea">
+   <property name="text">
+    <string>开始平面面积量算</string>
+   </property>
+  </action>
+  <action name="action_EndFlatArea">
+   <property name="text">
+    <string>结束平面面积量算</string>
+   </property>
+  </action>
+  <action name="action_BeginSphereArea">
+   <property name="text">
+    <string>开始球面面积量算</string>
+   </property>
+  </action>
+  <action name="action_EndSphereArea">
+   <property name="text">
+    <string>结束球面面积量算</string>
+   </property>
+  </action>
+  <action name="action_BeginAzimuth">
+   <property name="text">
+    <string>开始方位量算</string>
+   </property>
+  </action>
+  <action name="action_EndAzimuth">
+   <property name="text">
+    <string>结束方位量算</string>
+   </property>
+  </action>
+  <action name="actionSetNavigationPosition">
+   <property name="text">
+    <string>设置导航键位置</string>
+   </property>
+  </action>
+  <action name="action_CreatPoint">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="action_DeletePoint">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="action_CreateLine">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="action_DeleteLine">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="action_CreatePolygon">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="action_DeletePolygon">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="actionLoadCustomTile">
+   <property name="text">
+    <string>加载custom瓦片</string>
+   </property>
+  </action>
+  <action name="actionShowCustomTile">
+   <property name="text">
+    <string>显示custom瓦片</string>
+   </property>
+  </action>
+  <action name="actionHideCustomTile">
+   <property name="text">
+    <string>隐藏custom瓦片</string>
+   </property>
+  </action>
+  <action name="action_BeginEditorPoint">
+   <property name="text">
+    <string>开始编辑</string>
+   </property>
+  </action>
+  <action name="action_EndEditorPoint">
+   <property name="text">
+    <string>结束编辑</string>
+   </property>
+  </action>
+  <action name="action_BeginEditorLine">
+   <property name="text">
+    <string>开始编辑</string>
+   </property>
+  </action>
+  <action name="action_EndEditorLine">
+   <property name="text">
+    <string>结束编辑</string>
+   </property>
+  </action>
+  <action name="action_BeginEditorPolygon">
+   <property name="text">
+    <string>开始编辑</string>
+   </property>
+  </action>
+  <action name="action_EndEditorPolygon">
+   <property name="text">
+    <string>结束编辑</string>
+   </property>
+  </action>
+  <action name="actionStartPointQuery">
+   <property name="text">
+    <string>开始查询</string>
+   </property>
+  </action>
+  <action name="actionEndPointQuery">
+   <property name="text">
+    <string>结束查询</string>
+   </property>
+  </action>
+  <action name="actionCreateScutcheon">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="actionDeleteScutcheon">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="actionStartGetMourseGeoPosition">
+   <property name="text">
+    <string>开启</string>
+   </property>
+  </action>
+  <action name="actionEndGetMourseGeoPosition">
+   <property name="text">
+    <string>关闭</string>
+   </property>
+  </action>
+  <action name="actionGUIEventHandler">
+   <property name="text">
+    <string>鼠标键盘事件</string>
+   </property>
+  </action>
+  <action name="action_AddDynamicObjects">
+   <property name="text">
+    <string>接态势目标数据(模拟)</string>
+   </property>
+  </action>
+  <action name="action_AddDynamicPoints">
+   <property name="text">
+    <string>添加态势轨迹</string>
+   </property>
+  </action>
+  <action name="action_AddWarnningRegion">
+   <property name="text">
+    <string>添加告警区域</string>
+   </property>
+  </action>
+  <action name="actionStateTextSize">
+   <property name="text">
+    <string>状态栏字体大小与风格</string>
+   </property>
+  </action>
+  <action name="actionCreateJFQLayer">
+   <property name="text">
+    <string>创建禁飞区图层</string>
+   </property>
+  </action>
+  <action name="actionDeleteJFQLayer">
+   <property name="text">
+    <string>销毁禁飞区图层</string>
+   </property>
+  </action>
+  <action name="actionVisibleJFQLayer">
+   <property name="text">
+    <string>设置禁飞区显隐</string>
+   </property>
+  </action>
+  <action name="actionCreateSegment">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="actionDeleteSegment">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="actionControlTrackLineVisible">
+   <property name="text">
+    <string>显隐轨迹线</string>
+   </property>
+  </action>
+  <action name="actionControlIconVisible">
+   <property name="text">
+    <string>显隐目标注记</string>
+   </property>
+  </action>
+  <action name="actionChangeTrackLineColor">
+   <property name="text">
+    <string>修改轨迹线颜色</string>
+   </property>
+  </action>
+  <action name="actionChangeTrackLineType">
+   <property name="text">
+    <string>修改轨迹线样式</string>
+   </property>
+  </action>
+  <action name="actionControlScutVisible">
+   <property name="text">
+    <string>显隐目标标牌</string>
+   </property>
+  </action>
+  <action name="actionDirLineVisible">
+   <property name="text">
+    <string>显隐方向线</string>
+   </property>
+  </action>
+  <action name="actionChangeDirLineColor">
+   <property name="text">
+    <string>修改方向线颜色</string>
+   </property>
+  </action>
+  <action name="actionChangeDirLineType">
+   <property name="text">
+    <string>修改方向线样式</string>
+   </property>
+  </action>
+  <action name="actionChangeTrackLineLength">
+   <property name="text">
+    <string>修改轨迹线长度</string>
+   </property>
+  </action>
+  <action name="actionChangeTrackLineWidth">
+   <property name="text">
+    <string>修改轨迹线宽度</string>
+   </property>
+  </action>
+  <action name="actionChangeDirLineWidth">
+   <property name="text">
+    <string>修改方向线宽度</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>-</string>
+   </property>
+  </action>
+  <action name="actionBeginGraphicEdit">
+   <property name="text">
+    <string>开启编辑</string>
+   </property>
+  </action>
+  <action name="actionEndGraphicEdit">
+   <property name="text">
+    <string>结束编辑</string>
+   </property>
+  </action>
+  <action name="actionAddObjectListener">
+   <property name="text">
+    <string>添加态势监听</string>
+   </property>
+  </action>
+  <action name="actionCreateRadarLine">
+   <property name="text">
+    <string>创建</string>
+   </property>
+  </action>
+  <action name="actionDeleteRadarLine">
+   <property name="text">
+    <string>销毁</string>
+   </property>
+  </action>
+  <action name="actionDynamicObjectBlink">
+   <property name="text">
+    <string>态势对象闪烁</string>
+   </property>
+  </action>
+  <action name="actionGetCameraPosition">
+   <property name="text">
+    <string>获取相机当前位置</string>
+   </property>
+  </action>
+  <action name="actionComputeAzimuth">
+   <property name="text">
+    <string>计算两点的方位角</string>
+   </property>
+  </action>
+  <action name="actionSetScutcheonFields">
+   <property name="text">
+    <string>设置标牌显示字段</string>
+   </property>
+  </action>
+  <action name="actionCircleTangentAngle">
+   <property name="text">
+    <string>计算目标与圆区域切线夹角</string>
+   </property>
+  </action>
+  <action name="actionPolygonTangentAngle">
+   <property name="text">
+    <string>计算目标与多边形切线夹角</string>
+   </property>
+  </action>
+  <action name="actionComputeBanyCenter">
+   <property name="text">
+    <string>计算多边形的质心</string>
+   </property>
+  </action>
+  <action name="actionComputeAngle">
+   <property name="text">
+    <string>计算目标到中心点连线与方位角方向的夹角</string>
+   </property>
+  </action>
+  <action name="actionDynamicObjectVisible">
+   <property name="text">
+    <string>显隐单个态势对象</string>
+   </property>
+  </action>
+  <action name="actionAddScanningRegion">
+   <property name="text">
+    <string>添加雷达扫描区 </string>
+   </property>
+  </action>
+  <action name="actionObjectVisibleByFacility">
+   <property name="text">
+    <string>通过设备控制显示</string>
+   </property>
+  </action>
+  <action name="actionSetCameraHeight">
+   <property name="text">
+    <string>设置相机高度</string>
+   </property>
+  </action>
+  <action name="actionModifyRadarColor">
+   <property name="text">
+    <string>改颜色</string>
+   </property>
+  </action>
+  <action name="actionChangeIconStyle">
+   <property name="text">
+    <string>修改注记风格</string>
+   </property>
+  </action>
+  <action name="actionChangeScuStyle">
+   <property name="text">
+    <string>修改标牌风格</string>
+   </property>
+  </action>
+  <action name="actionChangeObjectIconStyle">
+   <property name="text">
+    <string>单个修改注记风格</string>
+   </property>
+  </action>
+  <action name="actionChangeObjectScuStyle">
+   <property name="text">
+    <string>单个修改标牌风格</string>
+   </property>
+  </action>
+  <action name="actionChangeTrackPoins">
+   <property name="text">
+    <string>修改轨迹线点渲染模式</string>
+   </property>
+  </action>
+  <action name="actionChangeObjectTrackPoint">
+   <property name="text">
+    <string>单个修改轨迹线点样式</string>
+   </property>
+  </action>
+  <action name="actionChangeScuOffset">
+   <property name="text">
+    <string>修改标牌的偏移</string>
+   </property>
+  </action>
+  <action name="actionSetCameraMode">
+   <property name="text">
+    <string>设置相机的操作模式</string>
+   </property>
+  </action>
+  <action name="actionBeginSelectedGraphicEdit">
+   <property name="text">
+    <string>开启编辑(当前选中图形)</string>
+   </property>
+  </action>
+  <action name="actionChangeScuShadow">
+   <property name="text">
+    <string>修改标牌文字阴影</string>
+   </property>
+  </action>
+  <action name="actionChangeObjectScuShadow">
+   <property name="text">
+    <string>单个修改标牌文字阴影</string>
+   </property>
+  </action>
+  <action name="actionJudgePointInCircle">
+   <property name="text">
+    <string>判断点在圆心内</string>
+   </property>
+  </action>
+  <action name="actionJudgePointInGeometry">
+   <property name="text">
+    <string>判断点在多边形内</string>
+   </property>
+  </action>
+  <action name="actionEnableDragScu">
+   <property name="text">
+    <string>标牌拖拽</string>
+   </property>
+  </action>
+  <action name="actionSetGlobeScalePosition">
+   <property name="text">
+    <string>设置比例尺位置与风格</string>
+   </property>
+  </action>
+  <action name="actionVisibleIconText">
+   <property name="text">
+    <string>显隐注记文字</string>
+   </property>
+  </action>
+  <action name="actionVisibleObjectIconText">
+   <property name="text">
+    <string>单个显隐注记文字</string>
+   </property>
+  </action>
+  <action name="actionScuLineVisible">
+   <property name="text">
+    <string>标牌线显隐</string>
+   </property>
+  </action>
+  <action name="actionChangeScuLineType">
+   <property name="text">
+    <string>标牌线样式修改</string>
+   </property>
+  </action>
+  <action name="actionChangeScuLineColor">
+   <property name="text">
+    <string>标牌线颜色修改</string>
+   </property>
+  </action>
+  <action name="actionChangeScuLineWidth">
+   <property name="text">
+    <string>标牌线线宽修改</string>
+   </property>
+  </action>
+  <action name="actionAddTDTImage">
+   <property name="text">
+    <string>添加天地图影像</string>
+   </property>
+  </action>
+  <action name="actionAddTifDem">
+   <property name="text">
+    <string>添加本地tif高程</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="myearthsim.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>actionShowEarthControl</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotLoadS57()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAddTDTImage</sender>
+   <signal>triggered()</signal>
+   <receiver>myEarthSimClass</receiver>
+   <slot>slotActionAddTDTImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>slotShowEarthControl()</slot>
+  <slot>slotActionAddTDTImage()</slot>
+  <slot>slotLoadS57()</slot>
+ </slots>
+</ui>

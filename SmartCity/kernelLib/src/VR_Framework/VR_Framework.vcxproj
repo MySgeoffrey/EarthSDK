@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A39FD1E8-0B8D-449F-B4A6-1CC26F5F930F}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>VR_PipeFramework</RootNamespace>
+    <ProjectName>VR_Framework</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v100</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <TargetName>$(ProjectName)d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;VR_PIPEFRAMEWORK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)\kernelLib\include;$(SolutionDir)\Osg340\include;$(SolutionDir)\Osgearth280\include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4251;4584;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgWidgetd.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgEarthd.lib;osgEarthUtild.lib;osgEarthSymbologyd.lib;osgEarthAnnotationd.lib;OpenThreadsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Osgearth280\lib;$(SolutionDir)\Osg340\lib</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VR_PIPEFRAMEWORK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)\kernelLib\include;$(SolutionDir)\Osg340\include;$(SolutionDir)\Osgearth280</AdditionalIncludeDirectories>
+      <MinimalRebuild>true</MinimalRebuild>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Osgearth280\lib;$(SolutionDir)\Osg340\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgWidget.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgEarth.lib;osgEarthUtil.lib;osgEarthSymbology.lib;osgEarthAnnotation.lib;OpenThreads.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="common\globesetting.cpp" />
+    <ClCompile Include="common\iobject.cpp" />
+    <ClCompile Include="common\isceneobject.cpp" />
+    <ClCompile Include="common\iserialisable.cpp" />
+    <ClCompile Include="common\languageconfig.cpp" />
+    <ClCompile Include="core\igeoline.cpp" />
+    <ClCompile Include="core\igeomodel.cpp" />
+    <ClCompile Include="core\igeopoint.cpp" />
+    <ClCompile Include="core\igeopolygon.cpp" />
+    <ClCompile Include="core\igeorect.cpp" />
+    <ClCompile Include="core\igeosegment.cpp" />
+    <ClCompile Include="core\igrouplayer.cpp" />
+    <ClCompile Include="core\ilayer.cpp" />
+    <ClCompile Include="core\ilayermanager.cpp" />
+    <ClCompile Include="core\iobjectcontainer.cpp" />
+    <ClCompile Include="core\irasterlayer.cpp" />
+    <ClCompile Include="core\ispatialparameter.cpp" />
+    <ClCompile Include="core\itopologyarc.cpp" />
+    <ClCompile Include="core\itopologygraphy.cpp" />
+    <ClCompile Include="core\itopologypoint.cpp" />
+    <ClCompile Include="core\ivectorlayer.cpp" />
+    <ClCompile Include="igenguid.cpp" />
+    <ClCompile Include="tool\ibufferquery.cpp" />
+    <ClCompile Include="tool\iobjectquery.cpp" />
+    <ClCompile Include="tool\itool.cpp" />
+    <ClCompile Include="tool\itoollistener.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\framework\common\globesetting.h" />
+    <ClInclude Include="..\..\include\framework\common\iobject.h" />
+    <ClInclude Include="..\..\include\framework\common\iobjectcontainer.h" />
+    <ClInclude Include="..\..\include\framework\common\isceneobject.h" />
+    <ClInclude Include="..\..\include\framework\common\iserialisable.h" />
+    <ClInclude Include="..\..\include\framework\common\languageconfig.h" />
+    <ClInclude Include="..\..\include\framework\core\igeoline.h" />
+    <ClInclude Include="..\..\include\framework\core\igeomodel.h" />
+    <ClInclude Include="..\..\include\framework\core\igeopoint.h" />
+    <ClInclude Include="..\..\include\framework\core\igeopolygon.h" />
+    <ClInclude Include="..\..\include\framework\core\igeorect.h" />
+    <ClInclude Include="..\..\include\framework\core\igeosegment.h" />
+    <ClInclude Include="..\..\include\framework\core\igrouplayer.h" />
+    <ClInclude Include="..\..\include\framework\core\ilayer.h" />
+    <ClInclude Include="..\..\include\framework\core\ilayermanager.h" />
+    <ClInclude Include="..\..\include\framework\core\iobjectcontainer.h" />
+    <ClInclude Include="..\..\include\framework\core\irasterlayer.h" />
+    <ClInclude Include="..\..\include\framework\core\ispatialparameter.h" />
+    <ClInclude Include="..\..\include\framework\core\itopologyarc.h" />
+    <ClInclude Include="..\..\include\framework\core\itopologygraphy.h" />
+    <ClInclude Include="..\..\include\framework\core\itopologypoint.h" />
+    <ClInclude Include="..\..\include\framework\core\ivectorlayer.h" />
+    <ClInclude Include="..\..\include\framework\tool\ibufferquery.h" />
+    <ClInclude Include="..\..\include\framework\tool\iobjectquery.h" />
+    <ClInclude Include="..\..\include\framework\tool\itool.h" />
+    <ClInclude Include="..\..\include\framework\tool\itoollistener.h" />
+    <ClInclude Include="..\..\include\framework\vr_globeframework_global.h" />
+    <ClInclude Include="igenguid.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

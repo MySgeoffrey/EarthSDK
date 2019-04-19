@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TitleForm</class>
+ <widget class="QWidget" name="TitleForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1612</width>
+    <height>103</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>-10</x>
+     <y>0</y>
+     <width>1861</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/myEarthSim/Resources/backImage.png);</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="xq">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>50</y>
+     <width>81</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 15pt &quot;微软雅黑&quot;;
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>周四</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="ny">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>20</y>
+     <width>271</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 17pt &quot;微软雅黑&quot;;
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>2018年9月5日</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="time">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>60</y>
+     <width>151</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 15pt &quot;微软雅黑&quot;;
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>21:23:04</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="analyse">
+   <property name="geometry">
+    <rect>
+     <x>1060</x>
+     <y>70</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;微软雅黑&quot;;
+border-image: url(:/myEarthSim/Resources/button.png);
+</string>
+   </property>
+   <property name="text">
+    <string>分析工具</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="fireSim">
+   <property name="geometry">
+    <rect>
+     <x>820</x>
+     <y>70</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);
+border-image: url(:/myEarthSim/Resources/button.png);
+font: 12pt &quot;微软雅黑&quot;;
+border-image: url(:/myEarthSim/Resources/button.png);
+</string>
+   </property>
+   <property name="text">
+    <string>火灾模拟</string>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="systemSetting">
+   <property name="geometry">
+    <rect>
+     <x>1180</x>
+     <y>70</y>
+     <width>111</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;微软雅黑&quot;;
+border-image: url(:/myEarthSim/Resources/button.png);
+</string>
+   </property>
+   <property name="text">
+    <string>系统设置</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="dataSim">
+   <property name="geometry">
+    <rect>
+     <x>940</x>
+     <y>70</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;微软雅黑&quot;;
+border-image: url(:/myEarthSim/Resources/button.png);
+</string>
+   </property>
+   <property name="text">
+    <string>消防演练</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="exitSystem">
+   <property name="geometry">
+    <rect>
+     <x>1300</x>
+     <y>10</y>
+     <width>31</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;微软雅黑&quot;;
+border-image: url(:/myEarthSim/Resources/icon.png);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="ny333">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>10</y>
+     <width>391</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 18pt &quot;微软雅黑&quot;;
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>火灾监测与消防应急救援系统</string>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="myearthsim.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>exitSystem</sender>
+   <signal>clicked()</signal>
+   <receiver>TitleForm</receiver>
+   <slot>slotExit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1290</x>
+     <y>40</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>805</x>
+     <y>49</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fireSim</sender>
+   <signal>clicked()</signal>
+   <receiver>TitleForm</receiver>
+   <slot>slotFireSim()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>660</x>
+     <y>75</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>805</x>
+     <y>49</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataSim</sender>
+   <signal>clicked()</signal>
+   <receiver>TitleForm</receiver>
+   <slot>slotDataSim()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>780</x>
+     <y>75</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>805</x>
+     <y>49</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>analyse</sender>
+   <signal>clicked()</signal>
+   <receiver>TitleForm</receiver>
+   <slot>slotAnalyse()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>900</x>
+     <y>75</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>805</x>
+     <y>49</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>systemSetting</sender>
+   <signal>clicked()</signal>
+   <receiver>TitleForm</receiver>
+   <slot>slotSetting()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1145</x>
+     <y>95</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>805</x>
+     <y>58</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>slotExit()</slot>
+  <slot>slotFireSim()</slot>
+  <slot>slotDataSim()</slot>
+  <slot>slotAnalyse()</slot>
+  <slot>slotSetting()</slot>
+ </slots>
+</ui>
