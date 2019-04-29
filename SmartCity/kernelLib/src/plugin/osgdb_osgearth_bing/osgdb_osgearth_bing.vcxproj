@@ -130,7 +130,8 @@
       <AdditionalLibraryDirectories>$(SolutionDir)\Osg340\lib;$(SolutionDir)\Osgearth280\lib;$(OutDir);$(SolutionDir)\3rdParty\x86\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>E:/os/osgearth/osgearth-2.8/bin/Release/osgdb_osgearth_bing.lib</ImportLibrary>
+      <ImportLibrary>
+      </ImportLibrary>
       <ProgramDataBaseFile>$(OutDir)$(TargetName).pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
       <Version>

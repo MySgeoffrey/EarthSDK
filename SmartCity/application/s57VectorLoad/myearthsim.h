@@ -7,7 +7,7 @@
 #include "GeneratedFiles/ui_myearthsim.h"
 #include "vr_globewidget.h"
 
-
+class MyChartMapControl;
 class myEarthSim : public QMainWindow
 {
 	Q_OBJECT
@@ -24,6 +24,8 @@ public:
 
 		//创建并显示地球控件
 		void slotShowEarthControl();
+
+		void slotShowMapControl();
 	
 		//添加天地图影像
 		void slotActionAddTDTImage();
@@ -32,7 +34,7 @@ public:
 private:
 	Ui::myEarthSimClass ui;
 	VRGlobeWidget* mpGlobeWidget;
-
+	MyChartMapControl* mpMapWidget;
 };
 
 
