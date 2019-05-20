@@ -817,7 +817,7 @@ void VRGlobeWidget::runEarth()
 		//this->mpViewer->getDatabasePager()->setUpThreads(10, 8);
 		//////////////////////////////////////////////////////////////////////////
 		//¹Ø±Õ¹âÕÕ
-		//this->mpMapNode->getOrCreateStateSet()->setMode(GL_LIGHTING, osg::StateAttribute::OFF);
+		this->mpMapNode->getOrCreateStateSet()->setMode(GL_LIGHTING, osg::StateAttribute::ON);
 		
 		//osg::DisplaySettings::instance()->setNumMultiSamples(4);
 		/*osg::ref_ptr< osg::DisplaySettings > displaySettings = new osg::DisplaySettings;
@@ -843,8 +843,7 @@ void VRGlobeWidget::runEarth()
 		/*pSkyNode->setMinimumAmbient(osg::Vec4f(0.3, 0.3, 0.3, 1.0));*/
 		pSkyNode->setMinimumAmbient(osg::Vec4f(0.9, 0.9, 0.9, 1.0));
 		osgEarth::insertGroup(pSkyNode.get(),this->mpMapNode);
-		//pSkyNode->getOrCreateStateSet()->setMode(GL_LIGHTING, osg::StateAttribute::OFF);
-		//pSkyNode->s
+		//pSkyNode->getOrCreateStateSet()->setMode(GL_LIGHTING, osg::StateAttribute::ON);
 
 		//QString editTimeStr = "2017-08-15 12:36:04";
 		//QString tempHour = editTimeStr.mid(11, 2);

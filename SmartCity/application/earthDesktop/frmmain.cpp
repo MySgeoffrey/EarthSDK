@@ -17,6 +17,7 @@
 #include "GeneratedFiles/ui_splashScreen.h"
 #include "pipenet/pipeline.h"
 #include "pipenet/pipepoint.h"
+#include "pipenet/pipearithmetic.h"
 
 #define _use_amap_api_ 1
 
@@ -130,52 +131,7 @@ QDialog(parent),
 	osgEarth::ImageLayer* pBackImageLayer = Globe::CGlobeMap::getInstance()->addCFGShpModelLayer(cfgPath,"backImage");
 	pBackImageLayer->setOpacity(1);*/
 #endif
-	PipeNet::CPipeLineDataSet* pPipeLineLayer = NULL;
-	PipeNet::CPipePointDataSet* pPipePointLayer = NULL;
-	QString dirPath = "E:/dataService/testPipeData";
-	QDir dir(dirPath);
-	if (dir.exists())
-	{
-		QStringList namefilters;
-		namefilters << "*.shp";
-		QStringList files = dir.entryList(namefilters,QDir::Files | QDir::Readable,QDir::Name);
-		if (!files.empty())
-		{
-			for (int i = 0 ; i < files.size(); ++i)
-			{
-				QString lPath = files.at(i);
-				QString pipePath = dirPath + "/" + files.at(i);
-				if (lPath.contains("YSLine"))
-				{
-					CityBuilder::CPipeLayerDriver::load(pipePath.toLocal8Bit().constData(),pPipeLineLayer);
-					/*CityBuilder::CInstanceModelLayer* pPipeLayer_GDLine = new CityBuilder::CInstanceModelLayer(this->mpGlobeWidget->getMapNodeRef());
-					pPipeLayer_GDLine->loadDataFromFile(pipePath.toLocal8Bit().constData());
-					pPipeLayer_GDLine->loadToScene();
-					pPipeLayer_GDLine->renderToScene();*/
-				}
-				else if (lPath.contains("YSPoint"))
-				{
-					CityBuilder::CPipeLayerDriver::load(pipePath.toLocal8Bit().constData(),pPipePointLayer);
-				}
-			}			
-		}
-	}
-	if (pPipeLineLayer && pPipePointLayer)
-	{
-		for (int i = 0; i < pPipePointLayer->getPipePoints().size(); ++i)
-		{
-			PipeNet::CPipePoint* pPipePoint = pPipePointLayer->getPipePoints().at(i);
-			std::vector<PipeNet::CPipeLine*> inout_pipeLines;
-			if (pPipeLineLayer->getPipeLines(pPipePoint->getID(),inout_pipeLines))
-			{
-				pPipePoint->setAdjcentLines(inout_pipeLines);
-			}
-		}
-	}
-
-	this->mpGlobeWidget->flyTo(118.3717, 35.1306,3000,0);//
-	osgEarth::Viewpoint vp("", 118.3717, 35.1306, 3000, 0, -90, 0.0);
-	this->mpGlobeWidget->getEarthManipulator()->setHomeViewpoint(vp);
+	this->processPipe();
 
 	QStandardItemModel * pModel = new QStandardItemModel(); 
 	pModel->setColumnCount(4); 
@@ -204,6 +160,115 @@ QDialog(parent),
 frmMain::~frmMain()
 {
 	delete ui;
+}
+
+void frmMain::processPipe()
+{
+	PipeNet::CPipeLineDataSet* pPipeLineDataSet = NULL;
+	PipeNet::CPipePointDataSet* pPipePointDataSet = NULL;
+	QString dirPath = "D:/dataService/testPipeData";
+	QDir dir(dirPath);
+	if (dir.exists())
+	{
+		QStringList namefilters;
+		namefilters << "*.shp";
+		QStringList files = dir.entryList(namefilters,QDir::Files | QDir::Readable,QDir::Name);
+		if (!files.empty())
+		{
+			for (int i = 0 ; i < files.size(); ++i)
+			{
+				QString lPath = files.at(i);
+				QString pipePath = dirPath + "/" + files.at(i);
+				if (lPath.contains("YSLine"))
+				{
+					CityBuilder::CPipeLayerDriver::load(pipePath.toLocal8Bit().constData(),pPipeLineDataSet);
+					CityBuilder::CInstanceModelLayer* pPipeLayer_GDLine = new CityBuilder::CInstanceModelLayer(this->mpGlobeWidget->getMapNodeRef());
+					//pPipeLayer_GDLine->loadDataFromFile(pipePath.toLocal8Bit().constData());
+					pPipeLayer_GDLine->loadToScene(pPipeLineDataSet);
+					pPipeLayer_GDLine->renderToScene();
+				}
+				else if (lPath.contains("YSPoint"))
+				{
+					CityBuilder::CPipeLayerDriver::load(pipePath.toLocal8Bit().constData(),pPipePointDataSet);
+				}
+			}			
+		}
+	}
+	if (pPipeLineDataSet && pPipePointDataSet)
+	{
+		for (int i = 0; i < pPipePointDataSet->getPipePoints().size(); ++i)
+		{
+			PipeNet::CPipePoint* pPipePoint = pPipePointDataSet->getPipePoints().at(i);
+			std::vector<PipeNet::CPipeLine*> inout_pipeLines;
+			if (pPipeLineDataSet->getPipeLines(pPipePoint->getID(),inout_pipeLines))
+			{
+				pPipePoint->setAdjcentLines(inout_pipeLines);
+			}
+		}
+	}
+
+	for (int i = 0; i < pPipePointDataSet->getPipePoints().size(); ++i)
+	{
+		PipeNet::CPipePoint* pPipePoint = pPipePointDataSet->getPipePoints().at(i);
+		if (pPipePoint->getAdjcentLines().size() >= 2)
+		{
+			double radius = -0.5;
+			//弯头建模参数
+			CPipeLinkerParameter pParameter;
+			pParameter.LinkerBackDistance = radius * 4;
+			//处理中心点坐标
+			osgEarth::GeoPoint centerGeoPos = osgEarth::GeoPoint(
+				this->mpGlobeWidget->getMapNodeRef()->getMapSRS(),
+				pPipePoint->getGeoPosition(),
+				osgEarth::AltitudeMode::ALTMODE_ABSOLUTE);
+			centerGeoPos.toWorld(pParameter.LinkerWorldPos);
+			std::vector<PipeNet::CPipeLine*>& adjcentPipeLines = pPipePoint->getAdjcentLines();
+			for (int j = 0; j < adjcentPipeLines.size(); ++j)
+			{
+				PipeNet::CPipeLine* pPipeLine = adjcentPipeLines.at(j);
+				PipeNet::CPipePoint* pAdjencentPoint = NULL;
+				if (pPipeLine->getStartPointID() == pPipePoint->getID())
+				{
+					std::string adjencentID = pPipeLine->getEndPointID();
+					pAdjencentPoint = dynamic_cast<PipeNet::CPipePoint*>(pPipePointDataSet->getPipePoint(adjencentID));
+				}
+				else
+				{
+					std::string adjencentID = pPipeLine->getStartPointID();
+					pAdjencentPoint = dynamic_cast<PipeNet::CPipePoint*>(pPipePointDataSet->getPipePoint(adjencentID));
+				}
+				if (pAdjencentPoint != NULL)
+				{
+					SubLinkerParameter* pSublinker = new SubLinkerParameter();
+					pSublinker->Radius = pPipeLine->getRadius();
+					pSublinker->NeedRingflange = true;
+					pSublinker->RingflangeThick = pSublinker->Radius / 2;
+					pSublinker->RingflangeRadius = pSublinker->Radius * 1.5;
+					osgEarth::GeoPoint otherGeoPos = osgEarth::GeoPoint(
+						this->mpGlobeWidget->getMapNodeRef()->getMapSRS(),
+						pAdjencentPoint->getGeoPosition(),
+						osgEarth::AltitudeMode::ALTMODE_ABSOLUTE);
+					otherGeoPos.toWorld(pSublinker->WorldPos);
+
+					pParameter.SubLinkerParameters.push_back(pSublinker);
+
+					pParameter.LinkerBackDistance = pPipeLine->getRadius() * 1.8;
+				}
+			}
+			//建模，且生成场景节点
+			CPipeRenderData* pData = CPipeModelArithmetic::createModel(&pParameter);
+			if (pData)
+			{
+				osg::Node* pNode = CPipeModelArithmetic::createNodeByData(pData);
+				osg::LOD* pLod = new osg::LOD();
+				pLod->addChild(pNode,0,1000);
+				this->mpGlobeWidget->getRootRef()->addChild(pLod);
+			}
+		}
+	}
+	this->mpGlobeWidget->flyTo(118.3717, 35.1306,3000,0);//
+	osgEarth::Viewpoint vp("", 118.3717, 35.1306, 3000, 0, -90, 0.0);
+	this->mpGlobeWidget->getEarthManipulator()->setHomeViewpoint(vp);
 }
 
 void frmMain::InitStyle()

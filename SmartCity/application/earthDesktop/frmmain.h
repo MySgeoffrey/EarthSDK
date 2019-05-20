@@ -77,7 +77,7 @@ private slots:
 	void slotAzimuthMeature();
 	void slotClearMeatureResult();
 
-
+	void processPipe();
 
 private:
     Ui::frmMain *ui;

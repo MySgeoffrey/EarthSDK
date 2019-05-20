@@ -15,6 +15,8 @@ namespace PipeNet
 
 		std::vector<CPipePoint*>& getPipePoints();
 
+		CPipePoint* getPipePoint(const std::string& in_pipePointId);
+
 	protected:
 		std::vector<CPipePoint*> mPipePoints;
 	};

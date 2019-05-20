@@ -7,6 +7,7 @@
 #include <osgEarth/DrawInstanced>
 #include "pipenet/pipeline.h"
 #include "pipenet/pipepoint.h"
+#include "pipenet/pipelinedataset.h"
 
 #pragma execution_character_set("utf-8")
 
@@ -283,6 +284,99 @@ bool CInstanceModelLayer::loadDataFromFile(const std::string& filePath)
 	MyChart::IMyLayer* pDataSet = MyChart::CMyShpDataDriver::readShpLayer(layerDataPath);
 	this->mpDataSet = pDataSet;
 	return this->mpDataSet != NULL;
+}
+
+bool CInstanceModelLayer::loadToScene(PipeNet::CPipeLineDataSet* pPipeLineDataSet)
+{
+#if 1
+	osg::Vec4d layerColor(
+		rand() % 255 / 255.0,
+		rand() % 255 / 255.0,
+		rand() % 255 / 255.0,
+		1
+		);
+
+#else
+	osg::Vec4d layerColor(
+		1,0,0,1
+		);
+#endif
+	osg::Node* pGraphicUnit = createGraphicUnit(0.5,pPipeLineDataSet->getPipeLines().size());
+	osg::BoundingBox layerBox;
+	// calculate the overall bounding box for the model:
+	osg::ComputeBoundsVisitor cbv;
+	pGraphicUnit->accept( cbv );
+	const osg::BoundingBox& nodeBox = cbv.getBoundingBox();
+	double altOffset = 1;
+	osg::Vec3d referenceCenter(0,0,0);
+	for (int i = 0; i < pPipeLineDataSet->getPipeLines().size(); ++i)
+	{
+		PipeNet::CPipeLine* pPipeLine = pPipeLineDataSet->getPipeLines().at(i);
+		if (pPipeLine)
+		{
+			int startDeepthIndex = 3;//this->mpDataSet->getProperty()->getFieldIndex(QString("起点埋深"));
+			//double startDeep = this->mpDataSet->getProperty()->RecordDBFValues[i]->at(startDeepthIndex).toDouble();
+			int endtDeepthIndex = 4;//this->mpDataSet->getProperty()->getFieldIndex(QString("终点埋深"));
+			//double endDeep = this->mpDataSet->getProperty()->RecordDBFValues[i]->at(endtDeepthIndex).toDouble();
+
+			osg::Vec3d worldStartPoint,worldEndPoint;
+			osgEarth::GeoPoint geoStartPoint(this->getMapNode()->getMapSRS(),
+				pPipeLine->getStartGeoPosition());
+			geoStartPoint.toWorld(worldStartPoint);
+			osgEarth::GeoPoint geoEndPoint(this->getMapNode()->getMapSRS(),
+				pPipeLine->getEndGeoPosition());
+			geoEndPoint.toWorld(worldEndPoint);
+
+			if (referenceCenter == osg::Vec3d(0,0,0))
+			{
+				referenceCenter = worldStartPoint;
+			}
+
+			osg::Vec3d worldPosition = worldStartPoint - referenceCenter;
+			osg::Vec3d worldDir = worldEndPoint - worldStartPoint;
+			double length = worldDir.normalize();
+			osg::Quat q;
+			q.makeRotate(osg::Vec3d(0,0,1),worldDir);
+			osg::Matrix matrix;
+			matrix.makeRotate(q);
+			double radius = pPipeLine->getRadius();
+			matrix = osg::Matrix::scale(osg::Vec3d(radius,radius,length)) * matrix * osg::Matrix::translate(worldPosition);
+
+			if (NULL == mpRenderObject)
+			{
+				mpRenderObject = new Render::CInstanceObject(this->getMapNode());
+			}
+
+			Render::InstanceMatrix instanceMatrix;
+			instanceMatrix.Matrix = matrix;
+			instanceMatrix.Color = layerColor;
+
+			if (!layerBox.valid())
+			{
+				layerBox.set(nodeBox.corner(0) * matrix,nodeBox.corner(0) * matrix);
+			}
+			layerBox.expandBy(nodeBox.corner(0) * matrix);
+			layerBox.expandBy(nodeBox.corner(1) * matrix);
+			layerBox.expandBy(nodeBox.corner(2) * matrix);
+			layerBox.expandBy(nodeBox.corner(3) * matrix);
+			layerBox.expandBy(nodeBox.corner(4) * matrix);
+			layerBox.expandBy(nodeBox.corner(5) * matrix);
+			layerBox.expandBy(nodeBox.corner(6) * matrix);
+			layerBox.expandBy(nodeBox.corner(7) * matrix);
+
+			mpRenderObject->getMatrixes().push_back(instanceMatrix);
+		}
+	}
+
+	osg::MatrixTransform* pMatrixNode = new osg::MatrixTransform();
+	pMatrixNode->addChild(pGraphicUnit);
+	pGraphicUnit->asGeode()->getDrawable(0)->asGeometry()->setInitialBound(layerBox);
+	pGraphicUnit->setInitialBound(layerBox);
+	pMatrixNode->setMatrix(osg::Matrix::translate(referenceCenter));
+	mpRenderObject->setNode(pMatrixNode);
+	mpRenderObject->initial();
+
+	return false;
 }
 
 bool CInstanceModelLayer::loadToScene()

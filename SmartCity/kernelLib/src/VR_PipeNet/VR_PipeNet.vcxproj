@@ -78,12 +78,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="pipearithmetic.cpp" />
     <ClCompile Include="pipeline.cpp" />
     <ClCompile Include="pipelinelayer.cpp" />
     <ClCompile Include="pipepoint.cpp" />
     <ClCompile Include="pipepointdataset.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\pipenet\pipearithmetic.h" />
     <ClInclude Include="..\..\include\pipenet\pipeline.h" />
     <ClInclude Include="..\..\include\pipenet\pipelinedataset.h" />
     <ClInclude Include="..\..\include\pipenet\pipenetconfig.h" />

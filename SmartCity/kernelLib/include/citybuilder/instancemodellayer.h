@@ -38,6 +38,8 @@ namespace CityBuilder
 
 		virtual bool loadToScene();
 
+		virtual bool loadToScene(PipeNet::CPipeLineDataSet* pPipeLineDataSet);
+
 		virtual bool renderToScene();
 
 		virtual bool deRenderFromScene();

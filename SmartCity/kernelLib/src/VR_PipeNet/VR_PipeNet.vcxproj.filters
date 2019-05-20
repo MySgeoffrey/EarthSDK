@@ -30,6 +30,9 @@
     <ClInclude Include="..\..\include\pipenet\pipepoint.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\pipenet\pipearithmetic.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pipelinelayer.cpp">
@@ -42,6 +45,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="pipepoint.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="pipearithmetic.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
