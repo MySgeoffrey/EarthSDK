@@ -17,6 +17,7 @@
 #include <osgEarthFeatures/Feature>
 #include <osgEarthAnnotation/FeatureNode>
 #include "globemap/globemap.h"
+#include "framework/common/globesetting.h"
 //#include <..\\osgdb_osgearth_s57map\\osgdb_osgearth_s57map.h>
 
 using namespace  std;
@@ -29,6 +30,13 @@ using osgEarth::Drivers::FeatureGeomModelOptions;
 using osgEarth::Symbology::StyleSheet;
 using osgEarth::ModelLayerOptions;
 using osgEarth::ModelLayer;
+
+std::string getUtf8StringEx(std::string str)
+{
+	std::string utf8String;
+	CGlobeSetting::instance()->gb2312ToUtf8(str, utf8String);
+	return utf8String;
+}
 
 CAddShp::CAddShp(QWidget *parent, Qt::WindowFlags f)
 	: QDialog(parent, f)
@@ -60,7 +68,7 @@ CAddShp::~CAddShp()
 
 void Globe::CAddShp::slotOpenFileDlg()
 {
-	mFilepath = QFileDialog::getOpenFileName(this, QString::fromLocal8Bit("打开矢量文件"), " ",  QString::fromLocal8Bit("文件格式(*.shp *.000 *.my)")); 
+	mFilepath = QFileDialog::getOpenFileName(this, QString::fromLocal8Bit(getUtf8StringEx("打开矢量文件").c_str()), " ",  QString::fromLocal8Bit(getUtf8StringEx("文件格式(*.shp *.000 *.my)").c_str())); 
 	QFileInfo fi;
 	fi = QFileInfo(mFilepath);
 	mFilepath = mFilepath;

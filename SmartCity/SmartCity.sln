@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "myEarthSim", "application\m
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VR_DataGenerater", "kernelLib\src\VR_DataGenerater\VR_DataGenerater.vcxproj", "{29F825DC-AF26-4C4C-91B8-4F6005EAE1D9}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VR_LocalEngine", "kernelLib\src\VR_LocalEngine\VR_LocalEngine.vcxproj", "{6DB0567F-29EA-46D2-AFBB-525E185B1F85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{29F825DC-AF26-4C4C-91B8-4F6005EAE1D9}.Debug|Win32.Build.0 = Debug|Win32
 		{29F825DC-AF26-4C4C-91B8-4F6005EAE1D9}.Release|Win32.ActiveCfg = Release|Win32
 		{29F825DC-AF26-4C4C-91B8-4F6005EAE1D9}.Release|Win32.Build.0 = Release|Win32
+		{6DB0567F-29EA-46D2-AFBB-525E185B1F85}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6DB0567F-29EA-46D2-AFBB-525E185B1F85}.Debug|Win32.Build.0 = Debug|Win32
+		{6DB0567F-29EA-46D2-AFBB-525E185B1F85}.Release|Win32.ActiveCfg = Release|Win32
+		{6DB0567F-29EA-46D2-AFBB-525E185B1F85}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

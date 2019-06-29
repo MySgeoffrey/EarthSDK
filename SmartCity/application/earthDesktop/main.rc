@@ -15,13 +15,13 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "CompanyName", "MyEarth"
-            VALUE "FileDescription", "MyEarth"
+            VALUE "CompanyName", "iXServiceProvider"
+            VALUE "FileDescription", "iXServiceProvider"
             VALUE "FileVersion", "1.0.0.0"
-            VALUE "LegalCopyright", "MyEarth"
-            VALUE "InternalName", "MyEarth"
-            VALUE "OriginalFilename", "MyEarth"
-            VALUE "ProductName", "MyEarth"
+            VALUE "LegalCopyright", "iXServiceProvider"
+            VALUE "InternalName", "iXServiceProvider"
+            VALUE "OriginalFilename", "iXServiceProvider"
+            VALUE "ProductName", "iXServiceProvider"
             VALUE "ProductVersion", "1.0.0.0"
         END
     END

@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 
+#include "osgdb_osgearth_shp.h"
 #include <osgEarth/TileSource>
 #include <osgEarth/Registry>
 #include <osgEarth/URI>
@@ -26,7 +27,10 @@
 #include "osgDB/FileUtils"
 #include <Wininet.h>
 #include <QtOpenGL/qgl.h>
-#include "osgdb_osgearth_shp.h"
+#include <QFileInfo>
+#include <QUuid>
+#include <QFile>
+
 #include "mychartmaplib/imymap.h"
 #include "mychartdatadriverlib/mychartsdatalib.h"
 #include "mychartmaplib/imymapmanager.h"
@@ -34,9 +38,6 @@
 #include "mychartmaplib/imysymbol.h"
 #include "mychartdrawlib/imys57map.h"
 #include "mychartsymbollib/mychartsymbollib.h"
-#include <QFileInfo>
-#include <QUuid>
-#include <QFile>
 
 #pragma comment(lib,"Wininet.lib")
 
@@ -96,8 +97,8 @@ public:
 		TileSource(options),
 		_options(options),
 		_debugDirect(true),
-		_tileURICache(true, 1024u),
-		mpShpData(NULL)
+		_tileURICache(true, 1024u)/*,
+		mpShpData(NULL)*/
 	{
 		if (::getenv("OSGEARTH_BING_DIRECT"))
 			_debugDirect = true;
@@ -111,7 +112,7 @@ public:
 			_geom->push_back(osg::Vec3(10, 245, 0));
 			_font = Registry::instance()->getDefaultFont();
 		}
-		MyChart::CMyChartCommonlib::S57DrawParameter.IsShowMapFrame = false;
+		MyChart::CMyChartCommonlib::S57DrawParameter.IsShowMapFrame = true;
 	}
 
 	/**
@@ -242,7 +243,7 @@ public:
 		double x, y;
 		const osgEarth::GeoExtent& extend = key.getExtent();
         key.getExtent().getCentroid(x, y);
-		OGREnvelope curBox;
+		MyChart::IMyEnvelope curBox;
 		GeoPoint geo;
 
         GeoPoint( getProfile()->getSRS(), x, y ).transform(
@@ -284,7 +285,7 @@ public:
 		drawArgs.geoLeftUpY = geoLeftUp.y();
 		drawArgs.geoRightDownX = geoRightDown.x();
 		drawArgs.geoRightDownY = geoRightDown.y();
-		drawArgs.CoorsystemType = MyChart::EMyCoorsystemType::MCT_Prj_MECATOR;
+		drawArgs.CoorsystemType = MyChart::MCT_Prj_MECATOR;
 
 		MyChart::IMyCoorTransformer::geoCoor2PrjCoor(
 			drawArgs.geoLeftUpX,

@@ -164,6 +164,7 @@
     <None Include="image\sub-line_vertical.png">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="main.ico" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="main.rc" />
@@ -176,6 +177,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_splashScreen.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,7 @@
 // osgdb_osgearth_bingd.cpp : 定义 DLL 应用程序的导出函数。
 //
 
+
 #include <osgEarthDrivers/bing/BingOptions>
 
 #include <osgEarth/TileSource>
