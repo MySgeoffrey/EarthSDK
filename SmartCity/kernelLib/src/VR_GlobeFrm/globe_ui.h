@@ -3,7 +3,7 @@
 
 #include "globe_ui_config.h"
 
-#include <QtGui/QDialog>
+#include <QtWidgets/QDialog>
 #include "osgEarth/ImageLayer"
 
 namespace Ui {

@@ -20,7 +20,7 @@ class CSplashScreenDlg
 {
 	Q_OBJECT
 public:	
-	CSplashScreenDlg(QWidget *parent = 0, Qt::WFlags flags = 0);
+	CSplashScreenDlg(QWidget *parent = 0, Qt::WindowFlags f = Qt::WindowFlags());
 
 	~CSplashScreenDlg();
 

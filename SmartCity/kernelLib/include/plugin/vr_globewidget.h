@@ -2,7 +2,7 @@
 #define VR_GLOBEWIDGET_H
 
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 #include <QtOpenGL/QGLWidget>
 #include "vr_globewidgetconfig.h"
 #include <osgViewer/CompositeViewer>

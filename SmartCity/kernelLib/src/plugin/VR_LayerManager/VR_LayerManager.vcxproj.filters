@@ -45,10 +45,8 @@
     <CustomBuild Include="..\..\..\include\plugin\vr_layermanager.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\include\plugin\vr_layermanagerconfig.h">
+    <CustomBuild Include="..\..\..\include\plugin\vr_layermanagerconfig.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
+    </CustomBuild>
   </ItemGroup>
 </Project>

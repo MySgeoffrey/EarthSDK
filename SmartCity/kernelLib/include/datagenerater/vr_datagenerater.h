@@ -1,7 +1,7 @@
 #ifndef VR_DATAGENERATER_H
 #define VR_DATAGENERATER_H
 
-#include <QThread>
+#include <QtCore/QThread>
 #include "datagenerater/vr_datagenerater_global.h"
 #include <string>
 #include <map>

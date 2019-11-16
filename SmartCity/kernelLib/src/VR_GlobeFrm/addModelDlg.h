@@ -2,7 +2,7 @@
 #define ADDMODELDLG_H
 
 
-#include <QtGui/QDialog>
+#include <QtWidgets/QDialog>
 #include "globe_ui_config.h"
 #include "vr_globewidget.h"
 #include <osgEarthUtil/ObjectLocator>

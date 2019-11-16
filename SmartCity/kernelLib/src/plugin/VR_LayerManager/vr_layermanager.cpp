@@ -959,13 +959,13 @@ void VRServiceManager::createDefaultItems()
 		this->mpRootItem->addChild(pPipeModelerItem);
 	}
 	//矢量海图切片服务
-	{
+	/*{
 		VRServiceItem* pTileCreateorItem = new VRServiceItem();
 		pTileCreateorItem->ServiceType = 4;
 		pTileCreateorItem->setText(0, QString(getUtf8String("矢量海图切片服务").c_str()).arg(1));
 		pTileCreateorItem->setIcon(0, QIcon("systemImages/layermangericon/webData.png"));
 		this->mpRootItem->addChild(pTileCreateorItem);
-	}
+	}*/
 	this->expandToDepth(0);
 }
 

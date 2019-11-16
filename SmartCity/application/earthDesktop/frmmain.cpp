@@ -2,6 +2,7 @@
 #include "ui_frmmain.h"
 #include "iconhelper.h"
 #include "myhelper.h"
+#include <QtWidgets/QMessageBox>
 #include <osgDB/FileUtils>
 #include "globemap/globemap.h"
 #include <osgEarth/HTTPClient>
@@ -23,8 +24,8 @@
 
 QStandardItemModel * DataModel = NULL;
 
-CSplashScreenDlg::CSplashScreenDlg(QWidget *parent, Qt::WFlags flags)
-	:QDialog(parent,flags)
+CSplashScreenDlg::CSplashScreenDlg(QWidget *parent, Qt::WindowFlags f)
+:QDialog(parent, f)
 {
 	this->ui = new Ui::splashScreen();
 	this->ui->setupUi(this);
@@ -139,9 +140,9 @@ QDialog(parent),
 	pModel->setHeaderData(1,Qt::Horizontal,"名称"); 
 	pModel->setHeaderData(2,Qt::Horizontal,"地址"); 
 	pModel->setHeaderData(3,Qt::Horizontal,"位置"); 
-	this->ui->placeSearchWidget->horizontalHeader()->setResizeMode(0,QHeaderView::Fixed); //ResizeToContents
-	this->ui->placeSearchWidget->horizontalHeader()->setResizeMode(1,QHeaderView::Fixed); 
-	this->ui->placeSearchWidget->horizontalHeader()->setResizeMode(2,QHeaderView::Fixed); 
+	//this->ui->placeSearchWidget->horizontalHeader()->setResizeMode(0,QHeaderView::Fixed); //ResizeToContents
+	//this->ui->placeSearchWidget->horizontalHeader()->setResizeMode(1,QHeaderView::Fixed); 
+	//this->ui->placeSearchWidget->horizontalHeader()->setResizeMode(2,QHeaderView::Fixed); 
 	this->ui->placeSearchWidget->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft); 
 	this->ui->placeSearchWidget->setModel(pModel);
 	this->ui->placeSearchWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);

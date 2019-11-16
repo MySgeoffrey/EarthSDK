@@ -1,7 +1,7 @@
 #include "citybuilder/instancemodellayer.h"
-#include "mychartdatadriverlib/mychartsdatalib.h"
-#include "mychartmaplib/imyshaperecord.h"
-#include "mychartmaplib/imyproperty.h"
+//#include "mychartdatadriverlib/mychartsdatalib.h"
+//#include "mychartmaplib/imyshaperecord.h"
+//#include "mychartmaplib/imyproperty.h"
 #include "citybuilder/modelcreator.h"
 #include <osg/ComputeBoundsVisitor>
 #include <osgEarth/DrawInstanced>
@@ -154,70 +154,70 @@ CPipeLayerDriver::~CPipeLayerDriver()
 
 bool CPipeLayerDriver::load(const std::string& filePath,PipeNet::CPipeLineDataSet*& inout_pDataSet)
 {
-	MyChart::CMyShpDataDriver::initial();
+	//MyChart::CMyShpDataDriver::initial();
 
-	QString layerDataPath = QString::fromStdString(filePath);
-	MyChart::IMyLayer* pDataSet = MyChart::CMyShpDataDriver::readShpLayer(layerDataPath);
-	for (int i = 0; i < pDataSet->getRecords().size(); ++i)
-	{
-		MyChart::IMyShapeRecord* pRecord = pDataSet->getRecords().at(i);
-		if (pRecord && pRecord->Geometry)
-		{
-			MyChart::IMyPolyline* pLine = 
-				dynamic_cast<MyChart::IMyPolyline*>(pRecord->Geometry);
-			if (pLine->Points.size() >= 2)
-			{
-				//获取管线ID
-				int objectIdIndex = pDataSet->getProperty()->getFieldIndex("OBJECTID");
-				int startPointIndex = pDataSet->getProperty()->getFieldIndex("起点点号");
-				int endPointIndex = pDataSet->getProperty()->getFieldIndex("终点点号");
-				int materialIndex = pDataSet->getProperty()->getFieldIndex("材质");
-				int typeIndex = pDataSet->getProperty()->getFieldIndex("线型");
-				int radiusIndex = pDataSet->getProperty()->getFieldIndex("管径");
+	//QString layerDataPath = QString::fromStdString(filePath);
+	//MyChart::IMyLayer* pDataSet = MyChart::CMyShpDataDriver::readShpLayer(layerDataPath);
+	//for (int i = 0; i < pDataSet->getRecords().size(); ++i)
+	//{
+	//	MyChart::IMyShapeRecord* pRecord = pDataSet->getRecords().at(i);
+	//	if (pRecord && pRecord->Geometry)
+	//	{
+	//		MyChart::IMyPolyline* pLine = 
+	//			dynamic_cast<MyChart::IMyPolyline*>(pRecord->Geometry);
+	//		if (pLine->Points.size() >= 2)
+	//		{
+	//			//获取管线ID
+	//			int objectIdIndex = pDataSet->getProperty()->getFieldIndex("OBJECTID");
+	//			int startPointIndex = pDataSet->getProperty()->getFieldIndex("起点点号");
+	//			int endPointIndex = pDataSet->getProperty()->getFieldIndex("终点点号");
+	//			int materialIndex = pDataSet->getProperty()->getFieldIndex("材质");
+	//			int typeIndex = pDataSet->getProperty()->getFieldIndex("线型");
+	//			int radiusIndex = pDataSet->getProperty()->getFieldIndex("管径");
 
-				int start84XIndex = pDataSet->getProperty()->getFieldIndex("START84X");
-				int start84YIndex = pDataSet->getProperty()->getFieldIndex("START84Y");
-				int start84ZIndex = pDataSet->getProperty()->getFieldIndex("START84Z");
-				int end84XIndex = pDataSet->getProperty()->getFieldIndex("END84X");
-				int end84YIndex = pDataSet->getProperty()->getFieldIndex("END84Y");
-				int end84ZIndex = pDataSet->getProperty()->getFieldIndex("END84Z");
-				QString objectID = pDataSet->getProperty()->RecordDBFValues[i]->at(objectIdIndex);
-				QString startPointID = pDataSet->getProperty()->RecordDBFValues[i]->at(startPointIndex);
-				QString endPointID = pDataSet->getProperty()->RecordDBFValues[i]->at(endPointIndex);
+	//			int start84XIndex = pDataSet->getProperty()->getFieldIndex("START84X");
+	//			int start84YIndex = pDataSet->getProperty()->getFieldIndex("START84Y");
+	//			int start84ZIndex = pDataSet->getProperty()->getFieldIndex("START84Z");
+	//			int end84XIndex = pDataSet->getProperty()->getFieldIndex("END84X");
+	//			int end84YIndex = pDataSet->getProperty()->getFieldIndex("END84Y");
+	//			int end84ZIndex = pDataSet->getProperty()->getFieldIndex("END84Z");
+	//			QString objectID = pDataSet->getProperty()->RecordDBFValues[i]->at(objectIdIndex);
+	//			QString startPointID = pDataSet->getProperty()->RecordDBFValues[i]->at(startPointIndex);
+	//			QString endPointID = pDataSet->getProperty()->RecordDBFValues[i]->at(endPointIndex);
 
-				QString material = pDataSet->getProperty()->RecordDBFValues[i]->at(materialIndex);
-				QString type = pDataSet->getProperty()->RecordDBFValues[i]->at(typeIndex);
-				QString radius = pDataSet->getProperty()->RecordDBFValues[i]->at(radiusIndex);
-				double startZ = pDataSet->getProperty()->RecordDBFValues[i]->at(start84ZIndex).toDouble();
-				double endZ = pDataSet->getProperty()->RecordDBFValues[i]->at(end84ZIndex).toDouble();
+	//			QString material = pDataSet->getProperty()->RecordDBFValues[i]->at(materialIndex);
+	//			QString type = pDataSet->getProperty()->RecordDBFValues[i]->at(typeIndex);
+	//			QString radius = pDataSet->getProperty()->RecordDBFValues[i]->at(radiusIndex);
+	//			double startZ = pDataSet->getProperty()->RecordDBFValues[i]->at(start84ZIndex).toDouble();
+	//			double endZ = pDataSet->getProperty()->RecordDBFValues[i]->at(end84ZIndex).toDouble();
 
-				PipeNet::CPipeLine* pPipeLine = new PipeNet::CPipeLine();
-				pPipeLine->setID(objectID.toStdString());
-				pPipeLine->getStartGeoPosition() = 
-					osg::Vec3d(pLine->Points.at(0).X,pLine->Points.at(0).Y,startZ);
-				pPipeLine->getEndGeoPosition() = 
-					osg::Vec3d(pLine->Points.at(1).X,pLine->Points.at(1).Y,endZ);
-				
-				std::string startID = startPointID.toStdString();
-				std::string endID = endPointID.toStdString();
-				pPipeLine->getStartPointID() = startID;
-				pPipeLine->getEndPointID() = endID;
-				pPipeLine->getRadius() = 2.0;
+	//			PipeNet::CPipeLine* pPipeLine = new PipeNet::CPipeLine();
+	//			pPipeLine->setID(objectID.toStdString());
+	//			pPipeLine->getStartGeoPosition() = 
+	//				osg::Vec3d(pLine->Points.at(0).X,pLine->Points.at(0).Y,startZ);
+	//			pPipeLine->getEndGeoPosition() = 
+	//				osg::Vec3d(pLine->Points.at(1).X,pLine->Points.at(1).Y,endZ);
+	//			
+	//			std::string startID = startPointID.toStdString();
+	//			std::string endID = endPointID.toStdString();
+	//			pPipeLine->getStartPointID() = startID;
+	//			pPipeLine->getEndPointID() = endID;
+	//			pPipeLine->getRadius() = 2.0;
 
-				if (NULL == inout_pDataSet)
-				{
-					inout_pDataSet = new PipeNet::CPipeLineDataSet();
-				}
-				inout_pDataSet->getPipeLines().push_back(pPipeLine);
-			}
-		}
-	}
+	//			if (NULL == inout_pDataSet)
+	//			{
+	//				inout_pDataSet = new PipeNet::CPipeLineDataSet();
+	//			}
+	//			inout_pDataSet->getPipeLines().push_back(pPipeLine);
+	//		}
+	//	}
+	//}
 	return false;
 }
 
 bool CPipeLayerDriver::load(const std::string& filePath,PipeNet::CPipePointDataSet*& inout_pDataSet)
 {
-	MyChart::CMyShpDataDriver::initial();
+	/*MyChart::CMyShpDataDriver::initial();
 
 	QString layerDataPath = QString::fromStdString(filePath);
 	MyChart::IMyLayer* pDataSet = MyChart::CMyShpDataDriver::readShpLayer(layerDataPath);
@@ -260,7 +260,7 @@ bool CPipeLayerDriver::load(const std::string& filePath,PipeNet::CPipePointDataS
 				inout_pDataSet->getPipePoints().push_back(pPipePoint);
 			}
 		}
-	}
+	}*/
 	return false;
 }
 
@@ -268,21 +268,21 @@ CInstanceModelLayer::CInstanceModelLayer()
 	: Core::ILayer()
 {
 	this->mpRenderObject = NULL;
-	MyChart::CMyShpDataDriver::initial();
+	//MyChart::CMyShpDataDriver::initial();
 }
 
 CInstanceModelLayer::CInstanceModelLayer(osgEarth::MapNode* pRefMapNode)
 	: Core::ILayer(pRefMapNode)
 {
 	this->mpRenderObject = NULL;
-	MyChart::CMyShpDataDriver::initial();
+	//MyChart::CMyShpDataDriver::initial();
 }
 
 bool CInstanceModelLayer::loadDataFromFile(const std::string& filePath)
 {
-	QString layerDataPath = QString::fromStdString(filePath);
+	/*QString layerDataPath = QString::fromStdString(filePath);
 	MyChart::IMyLayer* pDataSet = MyChart::CMyShpDataDriver::readShpLayer(layerDataPath);
-	this->mpDataSet = pDataSet;
+	this->mpDataSet = pDataSet;*/
 	return this->mpDataSet != NULL;
 }
 
@@ -396,87 +396,87 @@ bool CInstanceModelLayer::loadToScene()
 		1,0,0,1
 		);
 #endif
-	osg::Node* pGraphicUnit = createGraphicUnit(0.5,this->mpDataSet->getRecords().size());
-	osg::BoundingBox layerBox;
-	// calculate the overall bounding box for the model:
-	osg::ComputeBoundsVisitor cbv;
-	pGraphicUnit->accept( cbv );
-	const osg::BoundingBox& nodeBox = cbv.getBoundingBox();
-	double altOffset = 1;
-	osg::Vec3d referenceCenter(0,0,0);
-	for (int i = 0; i < this->mpDataSet->getRecords().size(); ++i)
-	{
-		MyChart::IMyShapeRecord* pShapeRecord = this->mpDataSet->getRecords().at(i);
-		if (pShapeRecord->getGeometryType() == MyChart::GeometryType::GT_POLYLINE)
-		{
-			MyChart::IMyPolyline* pGeometry = 
-				dynamic_cast<MyChart::IMyPolyline*>(pShapeRecord->Geometry);
-			if (pGeometry && pGeometry->Points.size() >= 2)
-			{
-				MyChart::IVector3& startPoint = pGeometry->Points.at(0);
-				MyChart::IVector3& endPoint = pGeometry->Points.at(1);
+	//osg::Node* pGraphicUnit = createGraphicUnit(0.5,this->mpDataSet->getRecords().size());
+	//osg::BoundingBox layerBox;
+	//// calculate the overall bounding box for the model:
+	//osg::ComputeBoundsVisitor cbv;
+	//pGraphicUnit->accept( cbv );
+	//const osg::BoundingBox& nodeBox = cbv.getBoundingBox();
+	//double altOffset = 1;
+	//osg::Vec3d referenceCenter(0,0,0);
+	//for (int i = 0; i < this->mpDataSet->getRecords().size(); ++i)
+	//{
+	//	MyChart::IMyShapeRecord* pShapeRecord = this->mpDataSet->getRecords().at(i);
+	//	if (pShapeRecord->getGeometryType() == MyChart::GeometryType::GT_POLYLINE)
+	//	{
+	//		MyChart::IMyPolyline* pGeometry = 
+	//			dynamic_cast<MyChart::IMyPolyline*>(pShapeRecord->Geometry);
+	//		if (pGeometry && pGeometry->Points.size() >= 2)
+	//		{
+	//			MyChart::IVector3& startPoint = pGeometry->Points.at(0);
+	//			MyChart::IVector3& endPoint = pGeometry->Points.at(1);
 
-				int startDeepthIndex = 3;//this->mpDataSet->getProperty()->getFieldIndex(QString("起点埋深"));
-				double startDeep = this->mpDataSet->getProperty()->RecordDBFValues[i]->at(startDeepthIndex).toDouble();
-				int endtDeepthIndex = 4;//this->mpDataSet->getProperty()->getFieldIndex(QString("终点埋深"));
-				double endDeep = this->mpDataSet->getProperty()->RecordDBFValues[i]->at(endtDeepthIndex).toDouble();
+	//			int startDeepthIndex = 3;//this->mpDataSet->getProperty()->getFieldIndex(QString("起点埋深"));
+	//			double startDeep = this->mpDataSet->getProperty()->RecordDBFValues[i]->at(startDeepthIndex).toDouble();
+	//			int endtDeepthIndex = 4;//this->mpDataSet->getProperty()->getFieldIndex(QString("终点埋深"));
+	//			double endDeep = this->mpDataSet->getProperty()->RecordDBFValues[i]->at(endtDeepthIndex).toDouble();
 
-				osg::Vec3d worldStartPoint,worldEndPoint;
-				osgEarth::GeoPoint geoStartPoint(this->getMapNode()->getMapSRS(),
-					osg::Vec3d(startPoint.X,startPoint.Y,startPoint.Z + startDeep + altOffset));
-				geoStartPoint.toWorld(worldStartPoint);
-				osgEarth::GeoPoint geoEndPoint(this->getMapNode()->getMapSRS(),
-					osg::Vec3d(endPoint.X,endPoint.Y,endPoint.Z + endDeep + altOffset));
-				geoEndPoint.toWorld(worldEndPoint);
+	//			osg::Vec3d worldStartPoint,worldEndPoint;
+	//			osgEarth::GeoPoint geoStartPoint(this->getMapNode()->getMapSRS(),
+	//				osg::Vec3d(startPoint.X,startPoint.Y,startPoint.Z + startDeep + altOffset));
+	//			geoStartPoint.toWorld(worldStartPoint);
+	//			osgEarth::GeoPoint geoEndPoint(this->getMapNode()->getMapSRS(),
+	//				osg::Vec3d(endPoint.X,endPoint.Y,endPoint.Z + endDeep + altOffset));
+	//			geoEndPoint.toWorld(worldEndPoint);
 
-				if (referenceCenter == osg::Vec3d(0,0,0))
-				{
-					referenceCenter = worldStartPoint;
-				}
+	//			if (referenceCenter == osg::Vec3d(0,0,0))
+	//			{
+	//				referenceCenter = worldStartPoint;
+	//			}
 
-				osg::Vec3d worldPosition = worldStartPoint - referenceCenter;
-				osg::Vec3d worldDir = worldEndPoint - worldStartPoint;
-				double length = worldDir.normalize();
-				osg::Quat q;
-				q.makeRotate(osg::Vec3d(0,0,1),worldDir);
-				osg::Matrix matrix;
-				matrix.makeRotate(q);
-				matrix = osg::Matrix::scale(osg::Vec3d(1,1,length)) * matrix * osg::Matrix::translate(worldPosition);
-				
-				if (NULL == mpRenderObject)
-				{
-					mpRenderObject = new Render::CInstanceObject(this->getMapNode());
-				}
+	//			osg::Vec3d worldPosition = worldStartPoint - referenceCenter;
+	//			osg::Vec3d worldDir = worldEndPoint - worldStartPoint;
+	//			double length = worldDir.normalize();
+	//			osg::Quat q;
+	//			q.makeRotate(osg::Vec3d(0,0,1),worldDir);
+	//			osg::Matrix matrix;
+	//			matrix.makeRotate(q);
+	//			matrix = osg::Matrix::scale(osg::Vec3d(1,1,length)) * matrix * osg::Matrix::translate(worldPosition);
+	//			
+	//			if (NULL == mpRenderObject)
+	//			{
+	//				mpRenderObject = new Render::CInstanceObject(this->getMapNode());
+	//			}
 
-				Render::InstanceMatrix instanceMatrix;
-				instanceMatrix.Matrix = matrix;
-				instanceMatrix.Color = layerColor;
-				
-				if (!layerBox.valid())
-				{
-					layerBox.set(nodeBox.corner(0) * matrix,nodeBox.corner(0) * matrix);
-				}
-				layerBox.expandBy(nodeBox.corner(0) * matrix);
-				layerBox.expandBy(nodeBox.corner(1) * matrix);
-				layerBox.expandBy(nodeBox.corner(2) * matrix);
-				layerBox.expandBy(nodeBox.corner(3) * matrix);
-				layerBox.expandBy(nodeBox.corner(4) * matrix);
-				layerBox.expandBy(nodeBox.corner(5) * matrix);
-				layerBox.expandBy(nodeBox.corner(6) * matrix);
-				layerBox.expandBy(nodeBox.corner(7) * matrix);
+	//			Render::InstanceMatrix instanceMatrix;
+	//			instanceMatrix.Matrix = matrix;
+	//			instanceMatrix.Color = layerColor;
+	//			
+	//			if (!layerBox.valid())
+	//			{
+	//				layerBox.set(nodeBox.corner(0) * matrix,nodeBox.corner(0) * matrix);
+	//			}
+	//			layerBox.expandBy(nodeBox.corner(0) * matrix);
+	//			layerBox.expandBy(nodeBox.corner(1) * matrix);
+	//			layerBox.expandBy(nodeBox.corner(2) * matrix);
+	//			layerBox.expandBy(nodeBox.corner(3) * matrix);
+	//			layerBox.expandBy(nodeBox.corner(4) * matrix);
+	//			layerBox.expandBy(nodeBox.corner(5) * matrix);
+	//			layerBox.expandBy(nodeBox.corner(6) * matrix);
+	//			layerBox.expandBy(nodeBox.corner(7) * matrix);
 
-				mpRenderObject->getMatrixes().push_back(instanceMatrix);
-			}
-		}
-	}
+	//			mpRenderObject->getMatrixes().push_back(instanceMatrix);
+	//		}
+	//	}
+	//}
 
-	osg::MatrixTransform* pMatrixNode = new osg::MatrixTransform();
-	pMatrixNode->addChild(pGraphicUnit);
-	pGraphicUnit->asGeode()->getDrawable(0)->asGeometry()->setInitialBound(layerBox);
-	pGraphicUnit->setInitialBound(layerBox);
-	pMatrixNode->setMatrix(osg::Matrix::translate(referenceCenter));
-	mpRenderObject->setNode(pMatrixNode);
-	mpRenderObject->initial();
+	//osg::MatrixTransform* pMatrixNode = new osg::MatrixTransform();
+	//pMatrixNode->addChild(pGraphicUnit);
+	//pGraphicUnit->asGeode()->getDrawable(0)->asGeometry()->setInitialBound(layerBox);
+	//pGraphicUnit->setInitialBound(layerBox);
+	//pMatrixNode->setMatrix(osg::Matrix::translate(referenceCenter));
+	//mpRenderObject->setNode(pMatrixNode);
+	//mpRenderObject->initial();
 
 	return false;
 }

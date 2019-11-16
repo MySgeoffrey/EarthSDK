@@ -1,7 +1,7 @@
 #ifndef LAYERMANAGER_H
 #define LAYERMANAGER_H
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 #include <QTreeWidget>
 #include "qmenu.h"
 #include "qevent.h"

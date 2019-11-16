@@ -53,7 +53,7 @@
 #include <osgGA/EventVisitor>
 #include <osgDB/WriteFile>
 #include <osgEarth/Picker>  
-#include <QtGui/QMessageBox>
+#include <QtWidgets/QMessageBox>
 #include "framework/common/globesetting.h"
 #include "globenavigation.h"
 #include <osg/Notify>
@@ -61,8 +61,8 @@
 #include <osgViewer/Viewer>
 #include <osgEarthUtil/ExampleResources>
 #include <osgEarthQt/ViewerWidget>
-#include <QtGui/QApplication>
-#include <QtGui/QMainWindow>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
 #include <iomanip>
 #include "commontool.h"
 #include <osgEarthDrivers/sky_simple/SimpleSkyOptions>

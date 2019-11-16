@@ -56,16 +56,14 @@
     <CustomBuild Include="..\..\..\include\plugin\vr_globewidgetconfig.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\include\plugin\vr_globewidget.h">
+    <CustomBuild Include="..\..\..\include\plugin\earthmanipulator.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\plugin\globenavigation.h">
+    </CustomBuild>
+    <CustomBuild Include="..\..\..\include\plugin\globenavigation.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\plugin\earthmanipulator.h">
+    </CustomBuild>
+    <CustomBuild Include="..\..\..\include\plugin\vr_globewidget.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
+    </CustomBuild>
   </ItemGroup>
 </Project>

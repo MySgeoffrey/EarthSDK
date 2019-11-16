@@ -30,11 +30,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\datagenerater\vr_datagenerater.h">
+    <CustomBuild Include="..\..\include\datagenerater\vr_datagenerater.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\datagenerater\vr_datagenerater_global.h">
+    </CustomBuild>
+    <CustomBuild Include="..\..\include\datagenerater\vr_datagenerater_global.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
+    </CustomBuild>
   </ItemGroup>
 </Project>
