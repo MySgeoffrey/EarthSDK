@@ -6,6 +6,8 @@
 #include <QDesktopWidget>
 #include "frmmessagebox.h"
 
+#pragma execution_character_set("utf-8")
+
 class myHelper: public QObject
 {
 
@@ -34,6 +36,7 @@ public:
         QTextCodec::setCodecForCStrings(codec);
         QTextCodec::setCodecForTr(codec);
 #endif
+		
     }
 
     //设置皮肤样式

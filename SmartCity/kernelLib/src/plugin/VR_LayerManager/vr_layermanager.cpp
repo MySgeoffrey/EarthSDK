@@ -27,7 +27,7 @@
 
 #pragma comment(lib,"Wininet.lib")
 
-//#pragma execution_character_set("utf-8")
+#pragma execution_character_set("utf-8")
 std::map<std::string, osg::ref_ptr<TerrainLayer>> g_layers;
 
 std::string getUtf8String(std::string str)

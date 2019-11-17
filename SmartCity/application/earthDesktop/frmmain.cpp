@@ -136,7 +136,7 @@ QDialog(parent),
 
 	QStandardItemModel * pModel = new QStandardItemModel(); 
 	pModel->setColumnCount(4); 
-	pModel->setHeaderData(0,Qt::Horizontal,"序号"); 
+	pModel->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("序号"));
 	pModel->setHeaderData(1,Qt::Horizontal,"名称"); 
 	pModel->setHeaderData(2,Qt::Horizontal,"地址"); 
 	pModel->setHeaderData(3,Qt::Horizontal,"位置"); 
