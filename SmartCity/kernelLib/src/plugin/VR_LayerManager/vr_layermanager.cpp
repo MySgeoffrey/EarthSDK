@@ -994,7 +994,7 @@ void VRServiceManager::mouseDoubleClickEvent(QMouseEvent *event)
 		VRServiceItem* pServiceItem = dynamic_cast<VRServiceItem*>(pItem);
 		if (pServiceItem)
 		{
-			if (pServiceItem->ServiceType == 1)
+			if (pServiceItem->ServiceType == 3)
 			{
 				ModelTransformDlg* modelTransformDlg = new ModelTransformDlg(this);
 				modelTransformDlg->exec();

@@ -6,32 +6,32 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>694</width>
-    <height>500</height>
+    <width>693</width>
+    <height>530</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>模型格式转换服务</string>
+   <string>管网参数化建模</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>30</y>
-     <width>54</width>
-     <height>12</height>
+     <x>13</x>
+     <y>20</y>
+     <width>81</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>模型路径：</string>
+    <string>矢量输入目录：</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="modelSrcPath">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>29</y>
-     <width>501</width>
+     <x>100</x>
+     <y>19</y>
+     <width>481</width>
      <height>21</height>
     </rect>
    </property>
@@ -40,7 +40,7 @@
    <property name="geometry">
     <rect>
      <x>600</x>
-     <y>30</y>
+     <y>20</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -53,7 +53,7 @@
    <property name="geometry">
     <rect>
      <x>600</x>
-     <y>70</y>
+     <y>60</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -65,22 +65,22 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>70</y>
-     <width>54</width>
-     <height>12</height>
+     <x>10</x>
+     <y>60</y>
+     <width>81</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>存储路径：</string>
+    <string>模型输出目录：</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="modelDestPath">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>69</y>
-     <width>501</width>
+     <x>100</x>
+     <y>59</y>
+     <width>481</width>
      <height>21</height>
     </rect>
    </property>
@@ -88,8 +88,8 @@
   <widget class="QPushButton" name="cancelButton">
    <property name="geometry">
     <rect>
-     <x>560</x>
-     <y>460</y>
+     <x>570</x>
+     <y>500</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -104,7 +104,7 @@
      <x>20</x>
      <y>100</y>
      <width>661</width>
-     <height>351</height>
+     <height>391</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -119,8 +119,8 @@
   <widget class="QPushButton" name="okButton">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>460</y>
+     <x>470</x>
+     <y>500</y>
      <width>75</width>
      <height>23</height>
     </rect>

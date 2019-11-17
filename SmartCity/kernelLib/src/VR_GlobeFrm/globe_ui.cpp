@@ -1,8 +1,9 @@
 #include "globe_ui.h"
 #include "GeneratedFiles/ui_ImageTransparentUI.h"
 #include "GeneratedFiles/ui_modelTransformUI.h"
-
 #include "geoservice/modelreductionservice.h"
+#include "citybuilder/instancemodellayer.h"
+#include "citybuilder/instancemodellayer.h"
 #include <QFileDialog>
 
 ImageTransparentDlg::ImageTransparentDlg(QWidget *parent /*= 0*/, Qt::WindowFlags f /*= 0*/)
@@ -77,6 +78,15 @@ void ModelTransformDlg::slotSelectModelSrcPath()
 	QFileInfo fi;
 	fi = QFileInfo(modelPath);
 	QString fileName = fi.fileName();
-	//ui->domNameGdalBtn->setText(fileName);
 	ui->modelSrcPath->setText(modelPath);
+
+	if (fileName != "")
+	{
+		PipeNet::CPipeLineDataSet* inout_pDataSet = NULL;
+		if (CityBuilder::CPipeLayerDriver::load(modelPath.toLocal8Bit().constData(),
+			inout_pDataSet))
+		{
+
+		}
+	}
 }

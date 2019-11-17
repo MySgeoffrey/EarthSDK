@@ -1,0 +1,15 @@
+#ifndef MYCHARTS57DATALIB_GLOBAL_H
+#define MYCHARTS57DATALIB_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+#include <QString>
+#include <QStringList>
+#include <map>
+
+#ifdef MYCHARTS57DATALIB_LIB
+# define MYCHARTS57DATALIB_EXPORT Q_DECL_EXPORT
+#else
+# define MYCHARTS57DATALIB_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // MYCHARTS57DATALIB_GLOBAL_H

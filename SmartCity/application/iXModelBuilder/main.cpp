@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     //myHelper::SetStyle("black");//黑色风格
     //myHelper::SetStyle("gray");//灰色风格
     myHelper::SetStyle("navy");//天蓝色风格
-    //myHelper::SetChinese();
+    myHelper::SetChinese();
 
     frmMain w;
     w.show();

@@ -1,7 +1,9 @@
 #include "citybuilder/instancemodellayer.h"
-//#include "mychartdatadriverlib/mychartsdatalib.h"
-//#include "mychartmaplib/imyshaperecord.h"
-//#include "mychartmaplib/imyproperty.h"
+#include "mycharts57datalib/mycharts57datalib.h"
+#include "mychartmaplib/imyshaperecord.h"
+#include "mychartmaplib/imyproperty.h"
+#include "mychartmaplib/imylayer.h"
+#include "mycharts57datalib/imys57mapdata.h"
 #include "citybuilder/modelcreator.h"
 #include <osg/ComputeBoundsVisitor>
 #include <osgEarth/DrawInstanced>
@@ -154,73 +156,73 @@ CPipeLayerDriver::~CPipeLayerDriver()
 
 bool CPipeLayerDriver::load(const std::string& filePath,PipeNet::CPipeLineDataSet*& inout_pDataSet)
 {
-	//MyChart::CMyShpDataDriver::initial();
+	//MyChart::CMyShpDataDriver::();
 
-	//QString layerDataPath = QString::fromStdString(filePath);
-	//MyChart::IMyLayer* pDataSet = MyChart::CMyShpDataDriver::readShpLayer(layerDataPath);
-	//for (int i = 0; i < pDataSet->getRecords().size(); ++i)
-	//{
-	//	MyChart::IMyShapeRecord* pRecord = pDataSet->getRecords().at(i);
-	//	if (pRecord && pRecord->Geometry)
-	//	{
-	//		MyChart::IMyPolyline* pLine = 
-	//			dynamic_cast<MyChart::IMyPolyline*>(pRecord->Geometry);
-	//		if (pLine->Points.size() >= 2)
-	//		{
-	//			//获取管线ID
-	//			int objectIdIndex = pDataSet->getProperty()->getFieldIndex("OBJECTID");
-	//			int startPointIndex = pDataSet->getProperty()->getFieldIndex("起点点号");
-	//			int endPointIndex = pDataSet->getProperty()->getFieldIndex("终点点号");
-	//			int materialIndex = pDataSet->getProperty()->getFieldIndex("材质");
-	//			int typeIndex = pDataSet->getProperty()->getFieldIndex("线型");
-	//			int radiusIndex = pDataSet->getProperty()->getFieldIndex("管径");
+	QString layerDataPath = QString::fromStdString(filePath);
+	MyChart::CMyShpDataDriver driver;
+	MyChart::IMyLayer* pDataSet = driver.readS57Map(layerDataPath)->getLayers().at(0);
+	for (int i = 0; i < pDataSet->getRecords().size(); ++i)
+	{
+		MyChart::IMyShapeRecord* pRecord = pDataSet->getRecords().at(i);
+		if (pRecord && pRecord->Geometry)
+		{
+			MyChart::IMyPolyline* pLine = 
+				dynamic_cast<MyChart::IMyPolyline*>(pRecord->Geometry);
+			if (pLine->Points.size() >= 2)
+			{
+				//获取管线ID
+				int objectIdIndex = pDataSet->getProperty()->getFieldIndex("OBJECTID");
+				int startPointIndex = pDataSet->getProperty()->getFieldIndex("起点点号");
+				int endPointIndex = pDataSet->getProperty()->getFieldIndex("终点点号");
+				int materialIndex = pDataSet->getProperty()->getFieldIndex("材质");
+				int typeIndex = pDataSet->getProperty()->getFieldIndex("线型");
+				int radiusIndex = pDataSet->getProperty()->getFieldIndex("管径");
 
-	//			int start84XIndex = pDataSet->getProperty()->getFieldIndex("START84X");
-	//			int start84YIndex = pDataSet->getProperty()->getFieldIndex("START84Y");
-	//			int start84ZIndex = pDataSet->getProperty()->getFieldIndex("START84Z");
-	//			int end84XIndex = pDataSet->getProperty()->getFieldIndex("END84X");
-	//			int end84YIndex = pDataSet->getProperty()->getFieldIndex("END84Y");
-	//			int end84ZIndex = pDataSet->getProperty()->getFieldIndex("END84Z");
-	//			QString objectID = pDataSet->getProperty()->RecordDBFValues[i]->at(objectIdIndex);
-	//			QString startPointID = pDataSet->getProperty()->RecordDBFValues[i]->at(startPointIndex);
-	//			QString endPointID = pDataSet->getProperty()->RecordDBFValues[i]->at(endPointIndex);
+				int start84XIndex = pDataSet->getProperty()->getFieldIndex("START84X");
+				int start84YIndex = pDataSet->getProperty()->getFieldIndex("START84Y");
+				int start84ZIndex = pDataSet->getProperty()->getFieldIndex("START84Z");
+				int end84XIndex = pDataSet->getProperty()->getFieldIndex("END84X");
+				int end84YIndex = pDataSet->getProperty()->getFieldIndex("END84Y");
+				int end84ZIndex = pDataSet->getProperty()->getFieldIndex("END84Z");
+				QString objectID = pDataSet->getProperty()->RecordDBFValues[i]->at(objectIdIndex);
+				QString startPointID = pDataSet->getProperty()->RecordDBFValues[i]->at(startPointIndex);
+				QString endPointID = pDataSet->getProperty()->RecordDBFValues[i]->at(endPointIndex);
 
-	//			QString material = pDataSet->getProperty()->RecordDBFValues[i]->at(materialIndex);
-	//			QString type = pDataSet->getProperty()->RecordDBFValues[i]->at(typeIndex);
-	//			QString radius = pDataSet->getProperty()->RecordDBFValues[i]->at(radiusIndex);
-	//			double startZ = pDataSet->getProperty()->RecordDBFValues[i]->at(start84ZIndex).toDouble();
-	//			double endZ = pDataSet->getProperty()->RecordDBFValues[i]->at(end84ZIndex).toDouble();
+				QString material = pDataSet->getProperty()->RecordDBFValues[i]->at(materialIndex);
+				QString type = pDataSet->getProperty()->RecordDBFValues[i]->at(typeIndex);
+				QString radius = pDataSet->getProperty()->RecordDBFValues[i]->at(radiusIndex);
+				double startZ = pDataSet->getProperty()->RecordDBFValues[i]->at(start84ZIndex).toDouble();
+				double endZ = pDataSet->getProperty()->RecordDBFValues[i]->at(end84ZIndex).toDouble();
 
-	//			PipeNet::CPipeLine* pPipeLine = new PipeNet::CPipeLine();
-	//			pPipeLine->setID(objectID.toStdString());
-	//			pPipeLine->getStartGeoPosition() = 
-	//				osg::Vec3d(pLine->Points.at(0).X,pLine->Points.at(0).Y,startZ);
-	//			pPipeLine->getEndGeoPosition() = 
-	//				osg::Vec3d(pLine->Points.at(1).X,pLine->Points.at(1).Y,endZ);
-	//			
-	//			std::string startID = startPointID.toStdString();
-	//			std::string endID = endPointID.toStdString();
-	//			pPipeLine->getStartPointID() = startID;
-	//			pPipeLine->getEndPointID() = endID;
-	//			pPipeLine->getRadius() = 2.0;
+				PipeNet::CPipeLine* pPipeLine = new PipeNet::CPipeLine();
+				pPipeLine->setID(objectID.toStdString());
+				pPipeLine->getStartGeoPosition() = 
+					osg::Vec3d(pLine->Points.at(0).X,pLine->Points.at(0).Y,startZ);
+				pPipeLine->getEndGeoPosition() = 
+					osg::Vec3d(pLine->Points.at(1).X,pLine->Points.at(1).Y,endZ);
+				
+				std::string startID = startPointID.toStdString();
+				std::string endID = endPointID.toStdString();
+				pPipeLine->getStartPointID() = startID;
+				pPipeLine->getEndPointID() = endID;
+				pPipeLine->getRadius() = 2.0;
 
-	//			if (NULL == inout_pDataSet)
-	//			{
-	//				inout_pDataSet = new PipeNet::CPipeLineDataSet();
-	//			}
-	//			inout_pDataSet->getPipeLines().push_back(pPipeLine);
-	//		}
-	//	}
-	//}
+				if (NULL == inout_pDataSet)
+				{
+					inout_pDataSet = new PipeNet::CPipeLineDataSet();
+				}
+				inout_pDataSet->getPipeLines().push_back(pPipeLine);
+			}
+		}
+	}
 	return false;
 }
 
 bool CPipeLayerDriver::load(const std::string& filePath,PipeNet::CPipePointDataSet*& inout_pDataSet)
 {
-	/*MyChart::CMyShpDataDriver::initial();
-
 	QString layerDataPath = QString::fromStdString(filePath);
-	MyChart::IMyLayer* pDataSet = MyChart::CMyShpDataDriver::readShpLayer(layerDataPath);
+	MyChart::CMyShpDataDriver driver;
+	MyChart::IMyLayer* pDataSet = driver.readS57Map(layerDataPath)->getLayers().at(0);
 	for (int i = 0; i < pDataSet->getRecords().size(); ++i)
 	{
 		MyChart::IMyShapeRecord* pRecord = pDataSet->getRecords().at(i);
@@ -260,7 +262,7 @@ bool CPipeLayerDriver::load(const std::string& filePath,PipeNet::CPipePointDataS
 				inout_pDataSet->getPipePoints().push_back(pPipePoint);
 			}
 		}
-	}*/
+	}
 	return false;
 }
 
@@ -280,9 +282,10 @@ CInstanceModelLayer::CInstanceModelLayer(osgEarth::MapNode* pRefMapNode)
 
 bool CInstanceModelLayer::loadDataFromFile(const std::string& filePath)
 {
-	/*QString layerDataPath = QString::fromStdString(filePath);
-	MyChart::IMyLayer* pDataSet = MyChart::CMyShpDataDriver::readShpLayer(layerDataPath);
-	this->mpDataSet = pDataSet;*/
+	QString layerDataPath = QString::fromStdString(filePath);
+	MyChart::CMyShpDataDriver driver;
+	MyChart::IMyLayer* pDataSet = driver.readS57Map(layerDataPath)->getLayers().at(0);
+	this->mpDataSet = pDataSet;
 	return this->mpDataSet != NULL;
 }
 

@@ -1,0 +1,15 @@
+#ifndef MYCHARTSYMBOLLIB_GLOBAL_H
+#define MYCHARTSYMBOLLIB_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+#include <QString>
+#include <QStringList>
+
+#ifdef MYCHARTSYMBOLLIB_LIB
+# define MYCHARTSYMBOLLIB_EXPORT Q_DECL_EXPORT
+#else
+# define MYCHARTSYMBOLLIB_EXPORT Q_DECL_IMPORT
+#endif
+
+
+#endif // MYCHARTSYMBOLLIB_GLOBAL_H

@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{45FD9632
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VR_ModelBuilder", "kernelLib\src\VR_ModelBuilder\VR_ModelBuilder.vcxproj", "{F8C3EBE5-DE51-435E-994E-92D2AFFA1DC7}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VR_LayerManager", "kernelLib\src\plugin\VR_LayerManager\VR_LayerManager.vcxproj", "{F87BD0D9-855E-4B49-B7CD-5DAEED6BDE5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -69,6 +71,14 @@ Global
 		{F8C3EBE5-DE51-435E-994E-92D2AFFA1DC7}.Release|Win32.Build.0 = Release|Win32
 		{F8C3EBE5-DE51-435E-994E-92D2AFFA1DC7}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
 		{F8C3EBE5-DE51-435E-994E-92D2AFFA1DC7}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{F87BD0D9-855E-4B49-B7CD-5DAEED6BDE5D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F87BD0D9-855E-4B49-B7CD-5DAEED6BDE5D}.Debug|Win32.Build.0 = Debug|Win32
+		{F87BD0D9-855E-4B49-B7CD-5DAEED6BDE5D}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{F87BD0D9-855E-4B49-B7CD-5DAEED6BDE5D}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{F87BD0D9-855E-4B49-B7CD-5DAEED6BDE5D}.Release|Win32.ActiveCfg = Release|Win32
+		{F87BD0D9-855E-4B49-B7CD-5DAEED6BDE5D}.Release|Win32.Build.0 = Release|Win32
+		{F87BD0D9-855E-4B49-B7CD-5DAEED6BDE5D}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{F87BD0D9-855E-4B49-B7CD-5DAEED6BDE5D}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +90,7 @@ Global
 		{6802D929-D8A4-455E-BA57-62DB88CEDFF7} = {5FEC531C-325D-4691-973D-FB93898F1AFF}
 		{44CBBFD3-DAF0-44A8-B2C9-EAEE194F5447} = {5FEC531C-325D-4691-973D-FB93898F1AFF}
 		{5304AD4A-04EA-40C4-8998-C8DE7434578D} = {5FEC531C-325D-4691-973D-FB93898F1AFF}
+		{F87BD0D9-855E-4B49-B7CD-5DAEED6BDE5D} = {5FEC531C-325D-4691-973D-FB93898F1AFF}
 		{F8C3EBE5-DE51-435E-994E-92D2AFFA1DC7} = {45FD9632-B982-4C2B-ADE7-111A4EEACBB2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

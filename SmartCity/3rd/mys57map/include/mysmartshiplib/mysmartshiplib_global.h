@@ -1,0 +1,13 @@
+#ifndef MYSMARTSHIPLIB_LIB_GLOBAL_H
+#define MYSMARTSHIPLIB_LIB_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+#include <qstring.h>
+
+#ifdef MYSMARTSHIPLIB_LIB
+# define MYSMARTSHIPLIB_EXPORT Q_DECL_EXPORT
+#else
+# define MYSMARTSHIPLIB_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // MYCHARTDRAWLIB_GLOBAL_H
