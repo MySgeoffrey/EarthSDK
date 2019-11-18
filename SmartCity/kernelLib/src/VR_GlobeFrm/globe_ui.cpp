@@ -4,6 +4,8 @@
 #include "geoservice/modelreductionservice.h"
 #include "citybuilder/instancemodellayer.h"
 #include "citybuilder/instancemodellayer.h"
+#include "pipenet/pipepoint.h"
+#include "pipenet/pipeline.h"
 #include <QFileDialog>
 
 ImageTransparentDlg::ImageTransparentDlg(QWidget *parent /*= 0*/, Qt::WindowFlags f /*= 0*/)
@@ -82,11 +84,30 @@ void ModelTransformDlg::slotSelectModelSrcPath()
 
 	if (fileName != "")
 	{
-		PipeNet::CPipeLineDataSet* inout_pDataSet = NULL;
-		if (CityBuilder::CPipeLayerDriver::load(modelPath.toLocal8Bit().constData(),
-			inout_pDataSet))
+		QString linePath = "";
+		PipeNet::CPipeLineDataSet* pLineDataSet = NULL;
+		if (CityBuilder::CPipeLayerDriver::load(modelPath.toLocal8Bit().constData(),pLineDataSet))
 		{
 
+		}
+		QString pointPath = "";
+		PipeNet::CPipePointDataSet* pPointDataSet = NULL;
+		if (CityBuilder::CPipeLayerDriver::load(modelPath.toLocal8Bit().constData(), pPointDataSet))
+		{
+
+		}
+
+		if (pLineDataSet && pPointDataSet)
+		{
+			for (int i = 0; i < pPointDataSet->getPipePoints().size(); ++i)
+			{
+				PipeNet::CPipePoint* pPipePoint = pPointDataSet->getPipePoints().at(i);
+				std::vector<PipeNet::CPipeLine*> inout_pipeLines;
+				if (pLineDataSet->getPipeLines(pPipePoint->getID(), inout_pipeLines))
+				{
+					pPipePoint->setAdjcentLines(inout_pipeLines);
+				}
+			}
 		}
 	}
 }
