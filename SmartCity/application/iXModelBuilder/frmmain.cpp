@@ -166,17 +166,14 @@ QDialog(parent),
 	this->ui->placeSearchWidget->verticalHeader()->hide();
 	DataModel = pModel;
 	QObject::connect(this->ui->placeSearchWidget, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(placeSearchClicked(const QModelIndex &)));
-	this->on_btnMenu_Max_clicked();
-
+	//this->on_btnMenu_Max_clicked();
 	//pSplashScreenDlg->updateState(QString::fromLocal8Bit("safdsa"));//正在初始化应用程序
 	qApp->processEvents();
 	//pSplashScreenDlg->waitMinites();
 	delete pSplashScreenDlg;
 	pSplashScreenDlg = NULL;
 
-	this->ui->analyse_tab->setVisible(false);
-
-#if 1
+#if 0
 	osgEarth::GeoPoint p(this->mpGlobeWidget->getMapNodeRef()->getMapSRS(),
 		osg::Vec3d(116.000, 39.002, 15));
 	osg::ref_ptr<osg::Node> pModelNode = MeshGenerator::TestCase::exec(p);
@@ -494,7 +491,7 @@ void frmMain::replyFinished(QNetworkReply* reply)
 			osgEarth::Config poisConfig = config.child("pois");
 			if (poisConfig.children().size() == 0)
 			{
-				QMessageBox::information(this, "提示信息", "没有查询到相关信息!", QMessageBox::Ok);
+				QMessageBox::information(this, "Info", "result is nothing!", QMessageBox::Ok);
 				return;
 			}
 			osgEarth::ConfigSet::iterator poiItr = poisConfig.children().begin();
@@ -520,7 +517,7 @@ void frmMain::replyFinished(QNetworkReply* reply)
 		}
 		else 
 		{
-			QMessageBox::information(this, "提示信息", "没有查询到相关信息!", QMessageBox::Ok);
+			QMessageBox::information(this,"Info", "result is nothing!", QMessageBox::Ok);
 			return;
 		}
 #else
