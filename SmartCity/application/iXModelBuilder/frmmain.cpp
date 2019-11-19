@@ -19,6 +19,7 @@
 #include "pipenet/pipeline.h"
 #include "pipenet/pipepoint.h"
 #include "TestCase.h"
+#include "framework/common/languageconfig.h"
 //#include "pipenet/pipearithmetic.h"
 
 #define _use_amap_api_ 1
@@ -44,6 +45,13 @@ CSplashScreenDlg::~CSplashScreenDlg()
 void CSplashScreenDlg::updateState(QString info)
 {
 	this->ui->systemLoadInfo->setText(info);
+}
+
+std::string getUtf8String(std::string str)
+{
+	std::string utf8String;
+	CGlobeSetting::instance()->gb2312ToUtf8(str, utf8String);
+	return utf8String;
 }
 
 void CSplashScreenDlg::waitMinites()
@@ -79,6 +87,11 @@ QDialog(parent),
 	qApp->processEvents();
 	pSplashScreenDlg->waitMinites();
 #if 1 //添加地球控件
+	CLanguageConfig::setValue(CLanguageConfig::StateTextType_Longitude,"Longitude:");
+	CLanguageConfig::setValue(CLanguageConfig::StateTextType_Lantitude, "Lantitude:");
+	CLanguageConfig::setValue(CLanguageConfig::StateTextType_TerrainAltitude, "TerrainAltitude:");
+	CLanguageConfig::setValue(CLanguageConfig::StateTextType_ViewAltitude, "ViewAltitude:");
+
 	this->mpGlobeWidget = new VRGlobeWidget();
 	//获取工程的工作目录(VR-GlobeConfig3D.earth文件一般与exe在同一目录)
 	std::string runPath = osgDB::getCurrentWorkingDirectory();
@@ -137,13 +150,13 @@ QDialog(parent),
 	pBackImageLayer->setOpacity(1);*/
 #endif
 	this->processPipe();
-
+	
 	QStandardItemModel * pModel = new QStandardItemModel(); 
 	pModel->setColumnCount(4); 
-	pModel->setHeaderData(0, Qt::Horizontal, QStringLiteral("序号"));
-	pModel->setHeaderData(1,Qt::Horizontal,"名称"); 
-	pModel->setHeaderData(2,Qt::Horizontal,"地址"); 
-	pModel->setHeaderData(3,Qt::Horizontal,"位置"); 
+	pModel->setHeaderData(0, Qt::Horizontal, QString(tr("NO")));
+	pModel->setHeaderData(1, Qt::Horizontal, QString(tr("Name")));
+	pModel->setHeaderData(2, Qt::Horizontal, QString(tr("Address")));
+	pModel->setHeaderData(3, Qt::Horizontal, QString(tr("Position")));
 	//this->ui->placeSearchWidget->horizontalHeader()->setResizeMode(0,QHeaderView::Fixed); //ResizeToContents
 	//this->ui->placeSearchWidget->horizontalHeader()->setResizeMode(1,QHeaderView::Fixed); 
 	//this->ui->placeSearchWidget->horizontalHeader()->setResizeMode(2,QHeaderView::Fixed); 
@@ -422,12 +435,12 @@ void frmMain::on_btnMenu_Max_clicked()
 	if (max) {
 		this->setGeometry(location);
 		IconHelper::Instance()->SetIcon(ui->btnMenu_Max, QChar(0xf096), 10);
-		ui->btnMenu_Max->setToolTip("最大化");
+		ui->btnMenu_Max->setToolTip("Maximize");
 	} else {
 		location = this->geometry();
 		this->setGeometry(qApp->desktop()->availableGeometry());
 		IconHelper::Instance()->SetIcon(ui->btnMenu_Max, QChar(0xf079), 10);
-		ui->btnMenu_Max->setToolTip("还原");
+		ui->btnMenu_Max->setToolTip("Resume");
 	}
 	max = !max;
 	/*this->_vR_GlobeWidget->getViewer()->frame();*/

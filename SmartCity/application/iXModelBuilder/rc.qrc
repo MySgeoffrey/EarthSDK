@@ -1,7 +1,7 @@
 <RCC>
   <qresource prefix="/">
-    <file>image/iXModelBuilder.png</file>
     <file>image/png-0087.png</file>
+    <file>image/iXModelBuilder.png</file>
     <file>image/exiSystem.png</file>
     <file>image/file.png</file>
     <file>image/openProject.png</file>
@@ -18,7 +18,7 @@
     <file>image/clearDraw.png</file>
     <file>image/clearFiles.png</file>
     <file>image/curImage.png</file>
-    <file>image/drawGraphic.png</file> 
+    <file>image/drawGraphic.png</file>
     <file>image/fullExtend.png</file>
     <file>rc.qrc</file>
     <file>image/areaMeasure.png</file>

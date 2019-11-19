@@ -7,33 +7,36 @@
     <x>0</x>
     <y>0</y>
     <width>687</width>
-    <height>342</height>
+    <height>298</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>管网参数化建模</string>
+   <string>PipeNet Builder</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
      <x>13</x>
      <y>20</y>
-     <width>81</width>
+     <width>111</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>矢量输入目录：</string>
+    <string>PipeLine FilePath：</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="modelSrcPath">
+  <widget class="QLineEdit" name="PipeSrcPath">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>130</x>
      <y>19</y>
-     <width>481</width>
+     <width>451</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>E:\dataService\GX\YSGLINE_line.shp</string>
    </property>
   </widget>
   <widget class="QPushButton" name="selectModelSrcPath">
@@ -46,7 +49,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>选择..</string>
+    <string>Select</string>
    </property>
   </widget>
   <widget class="QPushButton" name="selectModelDestPath">
@@ -59,7 +62,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>选择..</string>
+    <string>Select</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -67,35 +70,38 @@
     <rect>
      <x>10</x>
      <y>60</y>
-     <width>81</width>
+     <width>181</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>模型输出目录：</string>
+    <string>Export Directory：</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="modelDestPath">
+  <widget class="QLineEdit" name="ModelExportDir">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>130</x>
      <y>59</y>
-     <width>481</width>
+     <width>451</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>D:\export</string>
    </property>
   </widget>
   <widget class="QPushButton" name="cancelButton">
    <property name="geometry">
     <rect>
      <x>540</x>
-     <y>310</y>
+     <y>270</y>
      <width>75</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
-    <string>关闭</string>
+    <string>Close</string>
    </property>
   </widget>
   <widget class="QTabWidget" name="tabWidget">
@@ -104,7 +110,7 @@
      <x>10</x>
      <y>100</y>
      <width>671</width>
-     <height>201</height>
+     <height>161</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -112,127 +118,81 @@
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
-     <string>管段参数</string>
+     <string>PipeLine Param</string>
     </attribute>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>20</y>
-       <width>91</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>起始坐标：</string>
-     </property>
-    </widget>
-    <widget class="QComboBox" name="comboBox_2">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>20</y>
-       <width>151</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QComboBox" name="comboBox_3">
-     <property name="geometry">
-      <rect>
-       <x>390</x>
-       <y>20</y>
-       <width>151</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_5">
-     <property name="geometry">
-      <rect>
-       <x>320</x>
-       <y>20</y>
-       <width>91</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>终止坐标：</string>
-     </property>
-    </widget>
-    <widget class="QComboBox" name="comboBox_4">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>70</y>
-       <width>151</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_6">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>70</y>
+       <y>60</y>
        <width>91</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>管段材质：</string>
+      <string>Color：</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_5">
+    <widget class="QComboBox" name="SizeInfo">
      <property name="geometry">
       <rect>
        <x>390</x>
-       <y>70</y>
+       <y>20</y>
        <width>151</width>
        <height>22</height>
       </rect>
      </property>
+     <item>
+      <property name="text">
+       <string>2x2</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>2x2x1</string>
+      </property>
+     </item>
     </widget>
     <widget class="QLabel" name="label_7">
      <property name="geometry">
       <rect>
        <x>320</x>
-       <y>70</y>
+       <y>20</y>
        <width>91</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>管段尺寸：</string>
+      <string>Size：</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_6">
+    <widget class="QComboBox" name="SectionType">
      <property name="geometry">
       <rect>
        <x>90</x>
-       <y>120</y>
+       <y>20</y>
        <width>151</width>
        <height>22</height>
       </rect>
      </property>
      <item>
       <property name="text">
-       <string>圆形</string>
+       <string>Circle</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>矩形</string>
+       <string>Rectangle</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>梯形</string>
+       <string>Ladder</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>拱形</string>
+       <string>Arc</string>
       </property>
      </item>
     </widget>
@@ -240,64 +200,141 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>120</y>
+       <y>20</y>
        <width>91</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>管段截面：</string>
+      <string>Section：</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pipeLineColor">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>60</y>
+       <width>151</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(194, 194, 194);</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>100</y>
+       <width>91</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Material：</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="materialTexturePath">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>100</y>
+       <width>471</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>D:\gitReource\EarthSDK\SmartCity\Resource\red.bmp</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="selectPipeLineMaterialTexturePath">
+     <property name="geometry">
+      <rect>
+       <x>580</x>
+       <y>100</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Select</string>
      </property>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
-     <string>接头参数</string>
+     <string>PipeLinker Param</string>
     </attribute>
-    <widget class="QLabel" name="label_3">
+    <widget class="QPushButton" name="selectModelDestPath_3">
+     <property name="geometry">
+      <rect>
+       <x>580</x>
+       <y>60</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Select</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_11">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>20</y>
-       <width>71</width>
+       <y>60</y>
+       <width>91</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>接头坐标：</string>
+      <string>Material：</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QLineEdit" name="modelSrcPath_3">
      <property name="geometry">
       <rect>
-       <x>80</x>
-       <y>20</y>
-       <width>151</width>
-       <height>22</height>
+       <x>90</x>
+       <y>60</y>
+       <width>471</width>
+       <height>21</height>
       </rect>
      </property>
+     <property name="text">
+      <string>D:\gitReource\EarthSDK\SmartCity\Resource\blue.bmp</string>
+     </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_7">
+    <widget class="QPushButton" name="pushButton_2">
      <property name="geometry">
       <rect>
-       <x>380</x>
+       <x>90</x>
        <y>20</y>
        <width>151</width>
-       <height>22</height>
+       <height>21</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(112, 112, 112);</string>
+     </property>
+     <property name="text">
+      <string/>
      </property>
     </widget>
     <widget class="QLabel" name="label_9">
      <property name="geometry">
       <rect>
-       <x>310</x>
+       <x>20</x>
        <y>20</y>
        <width>91</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>管段材质：</string>
+      <string>Color：</string>
      </property>
     </widget>
    </widget>
@@ -306,13 +343,13 @@
    <property name="geometry">
     <rect>
      <x>440</x>
-     <y>310</y>
+     <y>270</y>
      <width>75</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
-    <string>转换</string>
+    <string>Build</string>
    </property>
   </widget>
  </widget>
@@ -325,8 +362,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>351</x>
-     <y>38</y>
+     <x>440</x>
+     <y>270</y>
     </hint>
     <hint type="destinationlabel">
      <x>233</x>
@@ -341,8 +378,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>330</x>
-     <y>66</y>
+     <x>540</x>
+     <y>270</y>
     </hint>
     <hint type="destinationlabel">
      <x>197</x>
@@ -382,9 +419,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>selectPipeLineMaterialTexturePath</sender>
+   <signal>clicked()</signal>
+   <receiver>ModelTransformUI</receiver>
+   <slot>slotSelectPipeLineMaterialTexturePath()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>629</x>
+     <y>232</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>343</x>
+     <y>148</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>slotSelectModelSrcPath()</slot>
   <slot>slotSelectModelDestPath()</slot>
+  <slot>slotSelectPipeLineMaterialTexturePath()</slot>
  </slots>
 </ui>

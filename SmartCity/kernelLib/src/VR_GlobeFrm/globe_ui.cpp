@@ -71,7 +71,7 @@ void ModelTransformDlg::slotSelectModelDestPath()
 	fi = QFileInfo(modelPath);
 	QString fileName = fi.fileName();
 	//ui->domNameGdalBtn->setText(fileName);
-	ui->modelDestPath->setText(modelPath);
+	ui->ModelExportDir->setText(modelPath);
 }
 
 void ModelTransformDlg::slotSelectModelSrcPath()
@@ -80,7 +80,7 @@ void ModelTransformDlg::slotSelectModelSrcPath()
 	QFileInfo fi;
 	fi = QFileInfo(modelPath);
 	QString fileName = fi.fileName();
-	ui->modelSrcPath->setText(modelPath);
+	ui->PipeSrcPath->setText(modelPath);
 
 	if (fileName != "")
 	{

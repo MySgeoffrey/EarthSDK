@@ -64,6 +64,9 @@ public:
     QLabel *label_2;
     QVBoxLayout *verticalLayout_5;
     QGridLayout *layerManagerLayout;
+    QWidget *service_tab;
+    QHBoxLayout *horizontalLayout_11;
+    QGridLayout *serviceGridLayout;
     QWidget *analyse_tab;
     QHBoxLayout *horizontalLayout_10;
     QToolBox *toolBox_2;
@@ -74,15 +77,10 @@ public:
     QPushButton *clearMeatureResult;
     QWidget *page_4;
     QWidget *page;
-    QWidget *service_tab;
-    QHBoxLayout *horizontalLayout_11;
-    QGridLayout *serviceGridLayout;
     QWidget *service_tab_2;
     QHBoxLayout *horizontalLayout_9;
     QToolBox *toolBox_3;
     QWidget *page_5;
-    QWidget *page_6;
-    QWidget *page_2;
     QVBoxLayout *verticalLayout_2;
     QWidget *widget_3;
     QHBoxLayout *horizontalLayout_3;
@@ -351,56 +349,6 @@ public:
         QIcon icon2;
         icon2.addFile(QStringLiteral(":/image/fullExtend.png"), QSize(), QIcon::Normal, QIcon::Off);
         tabWidget->addTab(layer_tab, icon2, QString());
-        analyse_tab = new QWidget();
-        analyse_tab->setObjectName(QStringLiteral("analyse_tab"));
-        horizontalLayout_10 = new QHBoxLayout(analyse_tab);
-        horizontalLayout_10->setSpacing(0);
-        horizontalLayout_10->setContentsMargins(0, 0, 0, 0);
-        horizontalLayout_10->setObjectName(QStringLiteral("horizontalLayout_10"));
-        toolBox_2 = new QToolBox(analyse_tab);
-        toolBox_2->setObjectName(QStringLiteral("toolBox_2"));
-        page_3 = new QWidget();
-        page_3->setObjectName(QStringLiteral("page_3"));
-        page_3->setGeometry(QRect(0, 0, 98, 28));
-        disMeature = new QPushButton(page_3);
-        disMeature->setObjectName(QStringLiteral("disMeature"));
-        disMeature->setGeometry(QRect(10, 10, 71, 31));
-        disMeature->setStyleSheet(QStringLiteral(""));
-        disMeature->setCheckable(true);
-        disMeature->setAutoRepeat(false);
-        areaMeature = new QPushButton(page_3);
-        areaMeature->setObjectName(QStringLiteral("areaMeature"));
-        areaMeature->setGeometry(QRect(100, 10, 81, 31));
-        areaMeature->setStyleSheet(QStringLiteral(""));
-        areaMeature->setCheckable(true);
-        areaMeature->setAutoRepeat(false);
-        azimuthMeature = new QPushButton(page_3);
-        azimuthMeature->setObjectName(QStringLiteral("azimuthMeature"));
-        azimuthMeature->setGeometry(QRect(10, 50, 71, 31));
-        azimuthMeature->setStyleSheet(QStringLiteral(""));
-        azimuthMeature->setCheckable(true);
-        azimuthMeature->setAutoRepeat(false);
-        clearMeatureResult = new QPushButton(page_3);
-        clearMeatureResult->setObjectName(QStringLiteral("clearMeatureResult"));
-        clearMeatureResult->setGeometry(QRect(100, 50, 81, 31));
-        clearMeatureResult->setStyleSheet(QStringLiteral(""));
-        clearMeatureResult->setCheckable(true);
-        clearMeatureResult->setAutoRepeat(false);
-        toolBox_2->addItem(page_3, QString::fromUtf8("\346\265\213\351\207\217\345\210\206\346\236\220"));
-        page_4 = new QWidget();
-        page_4->setObjectName(QStringLiteral("page_4"));
-        page_4->setGeometry(QRect(0, 0, 98, 28));
-        toolBox_2->addItem(page_4, QString::fromUtf8("\345\234\260\345\275\242\345\210\206\346\236\220"));
-        page = new QWidget();
-        page->setObjectName(QStringLiteral("page"));
-        page->setGeometry(QRect(0, 0, 268, 387));
-        toolBox_2->addItem(page, QString::fromUtf8("\347\256\241\347\275\221\345\210\206\346\236\220"));
-
-        horizontalLayout_10->addWidget(toolBox_2);
-
-        QIcon icon3;
-        icon3.addFile(QStringLiteral(":/image/analyse.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tabWidget->addTab(analyse_tab, icon3, QString());
         service_tab = new QWidget();
         service_tab->setObjectName(QStringLiteral("service_tab"));
         horizontalLayout_11 = new QHBoxLayout(service_tab);
@@ -413,9 +361,59 @@ public:
 
         horizontalLayout_11->addLayout(serviceGridLayout);
 
+        QIcon icon3;
+        icon3.addFile(QStringLiteral(":/image/tool.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tabWidget->addTab(service_tab, icon3, QString());
+        analyse_tab = new QWidget();
+        analyse_tab->setObjectName(QStringLiteral("analyse_tab"));
+        horizontalLayout_10 = new QHBoxLayout(analyse_tab);
+        horizontalLayout_10->setSpacing(0);
+        horizontalLayout_10->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_10->setObjectName(QStringLiteral("horizontalLayout_10"));
+        toolBox_2 = new QToolBox(analyse_tab);
+        toolBox_2->setObjectName(QStringLiteral("toolBox_2"));
+        page_3 = new QWidget();
+        page_3->setObjectName(QStringLiteral("page_3"));
+        page_3->setGeometry(QRect(0, 0, 268, 387));
+        disMeature = new QPushButton(page_3);
+        disMeature->setObjectName(QStringLiteral("disMeature"));
+        disMeature->setGeometry(QRect(10, 10, 211, 31));
+        disMeature->setStyleSheet(QStringLiteral(""));
+        disMeature->setCheckable(true);
+        disMeature->setAutoRepeat(false);
+        areaMeature = new QPushButton(page_3);
+        areaMeature->setObjectName(QStringLiteral("areaMeature"));
+        areaMeature->setGeometry(QRect(10, 50, 211, 31));
+        areaMeature->setStyleSheet(QStringLiteral(""));
+        areaMeature->setCheckable(true);
+        areaMeature->setAutoRepeat(false);
+        azimuthMeature = new QPushButton(page_3);
+        azimuthMeature->setObjectName(QStringLiteral("azimuthMeature"));
+        azimuthMeature->setGeometry(QRect(10, 90, 211, 31));
+        azimuthMeature->setStyleSheet(QStringLiteral(""));
+        azimuthMeature->setCheckable(true);
+        azimuthMeature->setAutoRepeat(false);
+        clearMeatureResult = new QPushButton(page_3);
+        clearMeatureResult->setObjectName(QStringLiteral("clearMeatureResult"));
+        clearMeatureResult->setGeometry(QRect(10, 130, 211, 31));
+        clearMeatureResult->setStyleSheet(QStringLiteral(""));
+        clearMeatureResult->setCheckable(true);
+        clearMeatureResult->setAutoRepeat(false);
+        toolBox_2->addItem(page_3, QStringLiteral("Meature"));
+        page_4 = new QWidget();
+        page_4->setObjectName(QStringLiteral("page_4"));
+        page_4->setGeometry(QRect(0, 0, 98, 28));
+        toolBox_2->addItem(page_4, QString::fromUtf8("\345\234\260\345\275\242\345\210\206\346\236\220"));
+        page = new QWidget();
+        page->setObjectName(QStringLiteral("page"));
+        page->setGeometry(QRect(0, 0, 98, 28));
+        toolBox_2->addItem(page, QString::fromUtf8("\347\256\241\347\275\221\345\210\206\346\236\220"));
+
+        horizontalLayout_10->addWidget(toolBox_2);
+
         QIcon icon4;
-        icon4.addFile(QStringLiteral(":/image/tool.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tabWidget->addTab(service_tab, icon4, QString());
+        icon4.addFile(QStringLiteral(":/image/analyse.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tabWidget->addTab(analyse_tab, icon4, QString());
         service_tab_2 = new QWidget();
         service_tab_2->setObjectName(QStringLiteral("service_tab_2"));
         horizontalLayout_9 = new QHBoxLayout(service_tab_2);
@@ -426,16 +424,8 @@ public:
         toolBox_3->setObjectName(QStringLiteral("toolBox_3"));
         page_5 = new QWidget();
         page_5->setObjectName(QStringLiteral("page_5"));
-        page_5->setGeometry(QRect(0, 0, 98, 28));
-        toolBox_3->addItem(page_5, QString::fromUtf8("\345\237\272\347\241\200\345\234\272\346\231\257"));
-        page_6 = new QWidget();
-        page_6->setObjectName(QStringLiteral("page_6"));
-        page_6->setGeometry(QRect(0, 0, 98, 28));
-        toolBox_3->addItem(page_6, QString::fromUtf8("\345\210\206\346\236\220\351\243\216\346\240\274"));
-        page_2 = new QWidget();
-        page_2->setObjectName(QStringLiteral("page_2"));
-        page_2->setGeometry(QRect(0, 0, 268, 387));
-        toolBox_3->addItem(page_2, QString::fromUtf8("\346\265\267\345\233\276\345\217\202\346\225\260"));
+        page_5->setGeometry(QRect(0, 0, 268, 435));
+        toolBox_3->addItem(page_5, QStringLiteral("BaseScene"));
 
         horizontalLayout_9->addWidget(toolBox_3);
 
@@ -483,11 +473,11 @@ public:
         QObject::connect(azimuthMeature, SIGNAL(clicked()), frmMain, SLOT(slotAzimuthMeature()));
         QObject::connect(clearMeatureResult, SIGNAL(clicked()), frmMain, SLOT(slotClearMeatureResult()));
 
-        tabWidget->setCurrentIndex(2);
-        toolBox_2->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(1);
+        toolBox_2->setCurrentIndex(0);
         toolBox_2->layout()->setSpacing(0);
-        toolBox_3->setCurrentIndex(2);
-        toolBox_3->layout()->setSpacing(0);
+        toolBox_3->setCurrentIndex(0);
+        toolBox_3->layout()->setSpacing(6);
 
 
         QMetaObject::connectSlotsByName(frmMain);
@@ -495,48 +485,46 @@ public:
 
     void retranslateUi(QDialog *frmMain)
     {
-        frmMain->setWindowTitle(QApplication::translate("frmMain", "\350\232\202\350\232\201\344\270\211\347\273\264\345\217\202\346\225\260\345\214\226\345\273\272\346\250\241\345\271\263\345\217\260", Q_NULLPTR));
+        frmMain->setWindowTitle(QApplication::translate("frmMain", "iXModelBuilder", Q_NULLPTR));
         pushButton->setText(QString());
         lab_Title->setText(QApplication::translate("frmMain", "iXModelBuilder ", Q_NULLPTR));
         lab_Ico->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        btnMenu_About->setToolTip(QApplication::translate("frmMain", "\345\205\263\344\272\216", Q_NULLPTR));
+        btnMenu_About->setToolTip(QApplication::translate("frmMain", "About", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         btnMenu_About->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        btnMenu->setToolTip(QApplication::translate("frmMain", "\345\233\276\345\261\202\351\235\242\346\235\277", Q_NULLPTR));
+        btnMenu->setToolTip(QApplication::translate("frmMain", "LayerPanel", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         btnMenu->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        btnMenu_Min->setToolTip(QApplication::translate("frmMain", "\346\234\200\345\260\217\345\214\226", Q_NULLPTR));
+        btnMenu_Min->setToolTip(QApplication::translate("frmMain", "Minimize", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         btnMenu_Min->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        btnMenu_Max->setToolTip(QApplication::translate("frmMain", "\346\234\200\345\244\247\345\214\226", Q_NULLPTR));
+        btnMenu_Max->setToolTip(QApplication::translate("frmMain", "Maximize", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         btnMenu_Max->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        btnMenu_Close->setToolTip(QApplication::translate("frmMain", "\345\205\263\351\227\255", Q_NULLPTR));
+        btnMenu_Close->setToolTip(QApplication::translate("frmMain", "Close", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         btnMenu_Close->setText(QString());
-        label->setText(QApplication::translate("frmMain", "\345\234\260\345\220\215\346\237\245\350\257\242", Q_NULLPTR));
+        label->setText(QApplication::translate("frmMain", "PlaceName Searching\357\274\232", Q_NULLPTR));
         keyPlaceName->setText(QApplication::translate("frmMain", "\345\214\227\344\272\254", Q_NULLPTR));
-        searchPlaceName->setText(QApplication::translate("frmMain", "\346\220\234\344\270\200\344\270\213", Q_NULLPTR));
-        label_2->setText(QApplication::translate("frmMain", "\345\233\276\345\261\202\347\256\241\347\220\206", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(layer_tab), QApplication::translate("frmMain", "\345\233\276\345\261\202", Q_NULLPTR));
-        disMeature->setText(QApplication::translate("frmMain", "\350\267\235\347\246\273\346\265\213\351\207\217", Q_NULLPTR));
-        areaMeature->setText(QApplication::translate("frmMain", "\351\235\242\347\247\257\346\265\213\351\207\217", Q_NULLPTR));
-        azimuthMeature->setText(QApplication::translate("frmMain", "\346\226\271\344\275\215\346\265\213\351\207\217", Q_NULLPTR));
-        clearMeatureResult->setText(QApplication::translate("frmMain", "\346\270\205\351\231\244\347\273\223\346\236\234", Q_NULLPTR));
-        toolBox_2->setItemText(toolBox_2->indexOf(page_3), QApplication::translate("frmMain", "\346\265\213\351\207\217\345\210\206\346\236\220", Q_NULLPTR));
+        searchPlaceName->setText(QApplication::translate("frmMain", "Query", Q_NULLPTR));
+        label_2->setText(QApplication::translate("frmMain", "Layer Manager\357\274\232", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(layer_tab), QApplication::translate("frmMain", "Layer", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(service_tab), QApplication::translate("frmMain", "Service", Q_NULLPTR));
+        disMeature->setText(QApplication::translate("frmMain", "Distance", Q_NULLPTR));
+        areaMeature->setText(QApplication::translate("frmMain", "Area", Q_NULLPTR));
+        azimuthMeature->setText(QApplication::translate("frmMain", "Azimuth", Q_NULLPTR));
+        clearMeatureResult->setText(QApplication::translate("frmMain", "Clear", Q_NULLPTR));
+        toolBox_2->setItemText(toolBox_2->indexOf(page_3), QApplication::translate("frmMain", "Meature", Q_NULLPTR));
         toolBox_2->setItemText(toolBox_2->indexOf(page_4), QApplication::translate("frmMain", "\345\234\260\345\275\242\345\210\206\346\236\220", Q_NULLPTR));
         toolBox_2->setItemText(toolBox_2->indexOf(page), QApplication::translate("frmMain", "\347\256\241\347\275\221\345\210\206\346\236\220", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(analyse_tab), QApplication::translate("frmMain", "\345\210\206\346\236\220", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(service_tab), QApplication::translate("frmMain", "\346\234\215\345\212\241", Q_NULLPTR));
-        toolBox_3->setItemText(toolBox_3->indexOf(page_5), QApplication::translate("frmMain", "\345\237\272\347\241\200\345\234\272\346\231\257", Q_NULLPTR));
-        toolBox_3->setItemText(toolBox_3->indexOf(page_6), QApplication::translate("frmMain", "\345\210\206\346\236\220\351\243\216\346\240\274", Q_NULLPTR));
-        toolBox_3->setItemText(toolBox_3->indexOf(page_2), QApplication::translate("frmMain", "\346\265\267\345\233\276\345\217\202\346\225\260", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(service_tab_2), QApplication::translate("frmMain", "\350\256\276\347\275\256", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(analyse_tab), QApplication::translate("frmMain", "Analyse", Q_NULLPTR));
+        toolBox_3->setItemText(toolBox_3->indexOf(page_5), QApplication::translate("frmMain", "BaseScene", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(service_tab_2), QApplication::translate("frmMain", "Setting", Q_NULLPTR));
     } // retranslateUi
 
 };

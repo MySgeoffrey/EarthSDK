@@ -39,6 +39,8 @@ std::string getUtf8String(std::string str)
 VRLayerManager::VRLayerManager(QWidget *parent)
 	: QTreeWidget(parent),mpModelMenu(NULL)
 {
+	QTextCodec::setCodecForLocale(QTextCodec::codecForLocale());
+	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 	this->mpRefGlobeWidget = NULL;
 	this->mpCurrentModelParentItem = NULL;
 	this->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
@@ -72,7 +74,7 @@ void VRLayerManager::createDefaultItems()
 
 	//创建场景根节点
 	this->mpRootItem = new VRLayerItem();
-	this->mpRootItem->setText(0,QString(getUtf8String("地理图层组").c_str()).arg(1));
+	this->mpRootItem->setText(0,QString(getUtf8String("GeoLayers").c_str()).arg(1));
 	std::string iconName = "systemImages\\layermangericon\\layer.png";
 	this->mpRootItem->setIcon(0,QIcon(iconName.c_str()));
 	this->addTopLevelItem(this->mpRootItem);
@@ -292,14 +294,14 @@ void VRLayerManager::slotModelProperty()
 void VRLayerManager::intialWebMapItem()
 {
 	VRLayerItem* pWebMapItem = new VRLayerItem();
-	pWebMapItem->setText(0, QString(getUtf8String("在线地图").c_str()).arg(1));
+	pWebMapItem->setText(0, QString(getUtf8String("Online Map").c_str()).arg(1));
 	pWebMapItem->setIcon(0, QIcon("systemImages/layermangericon/webData.png"));
 	this->mpRootItem->addChild(pWebMapItem);
 	DWORD flag;
 	BOOL con = InternetGetConnectedState(&flag, 0);
 	{
 		VRWebImageLayerItem* pGoogleMapItem = new VRWebImageLayerItem();
-		pGoogleMapItem->setText(0, QString(getUtf8String("谷歌影像图").c_str()).arg(1));
+		pGoogleMapItem->setText(0, QString(getUtf8String("Google Image").c_str()).arg(1));
 		pGoogleMapItem->setCheckState(0, Qt::Checked);
 		pGoogleMapItem->setIcon(0, QIcon("systemImages\\layermangericon\\googleMap.png"));
 
@@ -321,7 +323,7 @@ void VRLayerManager::intialWebMapItem()
 
 	{
 		VRWebImageLayerItem* pGoogleMapItem = new VRWebImageLayerItem();
-		pGoogleMapItem->setText(0, QString(getUtf8String("谷歌地形图").c_str()).arg(1));
+		pGoogleMapItem->setText(0, QString(getUtf8String("Google TerrainMap").c_str()).arg(1));
 		pGoogleMapItem->setCheckState(0, Qt::Checked);
 		pGoogleMapItem->setIcon(0, QIcon("systemImages\\layermangericon\\googleMap.png"));
 
@@ -345,7 +347,7 @@ void VRLayerManager::intialWebMapItem()
 
 	{
 		VRWebImageLayerItem* pGoogleMapItem = new VRWebImageLayerItem();
-		pGoogleMapItem->setText(0, QString(getUtf8String("谷歌标签层").c_str()).arg(1));
+		pGoogleMapItem->setText(0, QString(getUtf8String("Google LabelMap").c_str()).arg(1));
 		pGoogleMapItem->setIcon(0, QIcon("systemImages\\layermangericon\\googleMap.png"));
 
 		//////谷歌影像
@@ -367,7 +369,7 @@ void VRLayerManager::intialWebMapItem()
 
 	{
 		VRWebImageLayerItem* pBingMapItem = new VRWebImageLayerItem();
-		pBingMapItem->setText(0, QString(getUtf8String("Bing地图").c_str()).arg(1));
+		pBingMapItem->setText(0, QString(getUtf8String("Bing Map").c_str()).arg(1));
 		pBingMapItem->setCheckState(0, Qt::Checked);
 		pBingMapItem->setIcon(0, QIcon("systemImages\\layermangericon\\bing.png"));
 
@@ -389,7 +391,7 @@ void VRLayerManager::intialWebMapItem()
 
 	{
 		VRWebImageLayerItem* pGaoDeMapItem = new VRWebImageLayerItem();
-		pGaoDeMapItem->setText(0, QString(getUtf8String("高德影像").c_str()).arg(1));
+		pGaoDeMapItem->setText(0, QString(getUtf8String("GaoDe Image").c_str()).arg(1));
 		pGaoDeMapItem->setIcon(0, QIcon("systemImages\\layermangericon\\gaodeMap.png"));
 
 		//////gaoDe影像
@@ -407,7 +409,7 @@ void VRLayerManager::intialWebMapItem()
 
 	{
 		VRWebImageLayerItem* pGaoDeMapItem = new VRWebImageLayerItem();
-		pGaoDeMapItem->setText(0, QString(getUtf8String("高德地图").c_str()).arg(1));
+		pGaoDeMapItem->setText(0, QString(getUtf8String("GaoDe Map").c_str()).arg(1));
 		pGaoDeMapItem->setIcon(0, QIcon("systemImages\\layermangericon\\gaodeMap.png"));
 
 		//////gaoDe影像
@@ -425,7 +427,7 @@ void VRLayerManager::intialWebMapItem()
 
 	{
 		VRWebImageLayerItem* pGaoDeMapItem = new VRWebImageLayerItem();
-		pGaoDeMapItem->setText(0, QString(getUtf8String("高德路网").c_str()).arg(1));
+		pGaoDeMapItem->setText(0, QString(getUtf8String("GaoDe RoadNet").c_str()).arg(1));
 		pGaoDeMapItem->setIcon(0, QIcon("systemImages\\layermangericon\\gaodeMap.png"));
 
 		//////gaoDe影像
@@ -443,7 +445,7 @@ void VRLayerManager::intialWebMapItem()
 
 	{
 		VRWebImageLayerItem* pTDTMapItem = new VRWebImageLayerItem();
-		pTDTMapItem->setText(0, QString(getUtf8String("天地图矢量").c_str()).arg(1));
+		pTDTMapItem->setText(0, QString(getUtf8String("TDT VectorMap").c_str()).arg(1));
 		pTDTMapItem->setCheckState(0, Qt::Checked);
 		pTDTMapItem->setIcon(0, QIcon("systemImages\\layermangericon\\tdtVector.png"));
 
@@ -460,7 +462,7 @@ void VRLayerManager::intialWebMapItem()
 	}
 	{
 		VRWebImageLayerItem* pTDTImageItem = new VRWebImageLayerItem();
-		pTDTImageItem->setText(0, QString(getUtf8String("天地图影像").c_str()).arg(1));
+		pTDTImageItem->setText(0, QString(getUtf8String("TDT Image").c_str()).arg(1));
 		pTDTImageItem->setCheckState(0,Qt::Checked);
 		pTDTImageItem->setIcon(0, QIcon("systemImages\\layermangericon\\tdtMap.png"));
 
@@ -523,7 +525,7 @@ void VRLayerManager::intialWebMapItem()
 	//}
 
 	VRLayerItem* pWebDemItem = new VRLayerItem();
-	pWebDemItem->setText(0, QString(getUtf8String("在线高程").c_str()).arg(1));
+	pWebDemItem->setText(0, QString(getUtf8String("Online Dem").c_str()).arg(1));
 	pWebDemItem->setIcon(0, QIcon("systemImages\\layermangericon\\webData.png"));
 	this->mpRootItem->addChild(pWebDemItem);
 #if 0
@@ -556,32 +558,32 @@ void VRLayerManager::intialWebMapItem()
 	}
 
 	VRLayerItem* pLocalDataItem = new VRLayerItem();
-	pLocalDataItem->setText(0, QString(getUtf8String("本地图层").c_str()).arg(1));
+	pLocalDataItem->setText(0, QString(getUtf8String("Local Layers").c_str()).arg(1));
 	pLocalDataItem->setIcon(0, QIcon("systemImages\\layermangericon\\local.png"));
 	this->mpRootItem->addChild(pLocalDataItem);
 	{
 		VRLocalImageGroupItem* pLocalImageItem = new VRLocalImageGroupItem();
-		pLocalImageItem->setText(0, QString(getUtf8String("影像数据").c_str()).arg(1));
+		pLocalImageItem->setText(0, QString(getUtf8String("Image Data").c_str()).arg(1));
 		pLocalImageItem->setIcon(0, QIcon("systemImages\\layermangericon\\image.png"));
 		pLocalDataItem->addChild(pLocalImageItem);
 
 		VRLocalDemGroupItem* pLocalDemItem = new VRLocalDemGroupItem();
-		pLocalDemItem->setText(0, QString(getUtf8String("高程数据").c_str()).arg(1));
+		pLocalDemItem->setText(0, QString(getUtf8String("Dem Data").c_str()).arg(1));
 		pLocalDemItem->setIcon(0, QIcon("systemImages\\layermangericon\\dem.png"));
 		pLocalDataItem->addChild(pLocalDemItem);
 
 		VRLocalVectorGroupItem* pLocalVectorItem = new VRLocalVectorGroupItem();
-		pLocalVectorItem->setText(0, QString(getUtf8String("矢量数据").c_str()).arg(1));
+		pLocalVectorItem->setText(0, QString(getUtf8String("Vector Data").c_str()).arg(1));
 		pLocalVectorItem->setIcon(0, QIcon("systemImages\\layermangericon\\vector.png"));
 		pLocalDataItem->addChild(pLocalVectorItem);
 
 		VRLocalVectorGroupItem* pLocalQinXieItem = new VRLocalVectorGroupItem();
 		pLocalQinXieItem->setText(0, QString(getUtf8String("倾斜数据").c_str()).arg(1));
 		pLocalQinXieItem->setIcon(0, QIcon("systemImages\\layermangericon\\vector.png"));
-		pLocalDataItem->addChild(pLocalQinXieItem);
+		//pLocalDataItem->addChild(pLocalQinXieItem);
 
 		VRLocalModelLayerItem* pLocalModelItem = new VRLocalModelLayerItem();
-		pLocalModelItem->setText(0, QString(getUtf8String("模型数据").c_str()).arg(1));
+		pLocalModelItem->setText(0, QString(getUtf8String("Model Data").c_str()).arg(1));
 		pLocalModelItem->setIcon(0, QIcon("systemImages\\layermangericon\\surfacemodel.png"));
 		pLocalDataItem->addChild(pLocalModelItem);
 	}
@@ -589,7 +591,7 @@ void VRLayerManager::intialWebMapItem()
 	VRGeoDrawGroupItem* pGeoDrawDataItem = new VRGeoDrawGroupItem();
 	pGeoDrawDataItem->setText(0, QString(getUtf8String("地理标注").c_str()).arg(1));
 	pGeoDrawDataItem->setIcon(0, QIcon("systemImages\\layermangericon\\draw.png"));
-	this->mpRootItem->addChild(pGeoDrawDataItem);
+	//this->mpRootItem->addChild(pGeoDrawDataItem);
 }
 
 void VRLayerManager::contextMenuEvent(QContextMenuEvent * event )
@@ -599,6 +601,7 @@ void VRLayerManager::contextMenuEvent(QContextMenuEvent * event )
 	QTreeWidgetItem *item = this->itemAt(point);
 	if (item != NULL)
 	{
+		return;
 		if (dynamic_cast<VRLocalModelLayerItem*>(item))
 		{
 			this->mpCurrentModelParentItem= item;
@@ -930,7 +933,7 @@ void VRServiceManager::createDefaultItems()
 
 	//创建场景根节点
 	this->mpRootItem = new VRServiceItem();
-	this->mpRootItem->setText(0,QString(getUtf8String("服务列表").c_str()).arg(1));
+	this->mpRootItem->setText(0,QString(getUtf8String("Service List").c_str()).arg(1));
 	std::string iconName = "systemImages\\layermangericon\\layer.png";
 	this->mpRootItem->setIcon(0,QIcon(iconName.c_str()));
 	this->addTopLevelItem(this->mpRootItem);
@@ -938,15 +941,15 @@ void VRServiceManager::createDefaultItems()
 	{
 		VRServiceItem* pModelHandlerItem = new VRServiceItem();
 		pModelHandlerItem->ServiceType = 1;
-		pModelHandlerItem->setText(0, QString(getUtf8String("模型轻量化服务").c_str()).arg(1));
+		pModelHandlerItem->setText(0, QString(getUtf8String("Model Simplify Service").c_str()).arg(1));
 		pModelHandlerItem->setIcon(0, QIcon("systemImages/layermangericon/webData.png"));
-		this->mpRootItem->addChild(pModelHandlerItem);
+		//this->mpRootItem->addChild(pModelHandlerItem);
 	}
 	//模型格式转换服务
 	{
 		VRServiceItem* pModelTransformItem = new VRServiceItem();
 		pModelTransformItem->ServiceType = 2;
-		pModelTransformItem->setText(0, QString(getUtf8String("模型格式转换服务").c_str()).arg(1));
+		pModelTransformItem->setText(0, QString(getUtf8String("Model Exchange Service").c_str()).arg(1));
 		pModelTransformItem->setIcon(0, QIcon("systemImages/layermangericon/webData.png"));
 		this->mpRootItem->addChild(pModelTransformItem);
 	}
@@ -954,7 +957,7 @@ void VRServiceManager::createDefaultItems()
 	{
 		VRServiceItem* pPipeModelerItem = new VRServiceItem();
 		pPipeModelerItem->ServiceType = 3;
-		pPipeModelerItem->setText(0, QString(getUtf8String("管网三维建模服务").c_str()).arg(1));
+		pPipeModelerItem->setText(0, QString(getUtf8String("PipeNet Model Service").c_str()).arg(1));
 		pPipeModelerItem->setIcon(0, QIcon("systemImages/layermangericon/webData.png"));
 		this->mpRootItem->addChild(pPipeModelerItem);
 	}

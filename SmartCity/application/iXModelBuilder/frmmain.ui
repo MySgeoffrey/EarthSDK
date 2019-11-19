@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>蚂蚁三维参数化建模平台</string>
+   <string>iXModelBuilder</string>
   </property>
   <property name="windowIcon">
    <iconset resource="rc.qrc">
@@ -182,7 +182,7 @@ color: rgb(255, 255, 255);
               <enum>Qt::NoFocus</enum>
              </property>
              <property name="toolTip">
-              <string>关于</string>
+              <string>About</string>
              </property>
              <property name="text">
               <string/>
@@ -213,7 +213,7 @@ color: rgb(255, 255, 255);
               <enum>Qt::NoFocus</enum>
              </property>
              <property name="toolTip">
-              <string>图层面板</string>
+              <string>LayerPanel</string>
              </property>
              <property name="text">
               <string/>
@@ -244,7 +244,7 @@ color: rgb(255, 255, 255);
               <enum>Qt::NoFocus</enum>
              </property>
              <property name="toolTip">
-              <string>最小化</string>
+              <string>Minimize</string>
              </property>
              <property name="text">
               <string/>
@@ -275,7 +275,7 @@ color: rgb(255, 255, 255);
               <enum>Qt::NoFocus</enum>
              </property>
              <property name="toolTip">
-              <string>最大化</string>
+              <string>Maximize</string>
              </property>
              <property name="text">
               <string/>
@@ -306,7 +306,7 @@ color: rgb(255, 255, 255);
               <enum>Qt::NoFocus</enum>
              </property>
              <property name="toolTip">
-              <string>关闭</string>
+              <string>Close</string>
              </property>
              <property name="text">
               <string/>
@@ -369,7 +369,7 @@ color: rgb(255, 255, 255);
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>1</number>
          </property>
          <property name="iconSize">
           <size>
@@ -386,7 +386,7 @@ color: rgb(255, 255, 255);
             <normaloff>:/image/fullExtend.png</normaloff>:/image/fullExtend.png</iconset>
           </attribute>
           <attribute name="title">
-           <string>图层</string>
+           <string>Layer</string>
           </attribute>
           <layout class="QHBoxLayout" name="horizontalLayout_8">
            <property name="spacing">
@@ -435,7 +435,7 @@ color: rgb(255, 255, 255);
                      <string notr="true">font: 10pt &quot;微软雅黑&quot;;</string>
                     </property>
                     <property name="text">
-                     <string>地名查询</string>
+                     <string>PlaceName Searching：</string>
                     </property>
                    </widget>
                   </item>
@@ -472,7 +472,7 @@ color: rgb(255, 255, 255);
                        <string notr="true">color: rgb(255, 255, 255);</string>
                       </property>
                       <property name="text">
-                       <string>搜一下</string>
+                       <string>Query</string>
                       </property>
                       <property name="icon">
                        <iconset resource="rc.qrc">
@@ -505,7 +505,7 @@ color: rgb(255, 255, 255);
                      <string notr="true">font: 10pt &quot;微软雅黑&quot;;</string>
                     </property>
                     <property name="text">
-                     <string>图层管理</string>
+                     <string>Layer Manager：</string>
                     </property>
                    </widget>
                   </item>
@@ -531,13 +531,37 @@ color: rgb(255, 255, 255);
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="service_tab">
+          <attribute name="icon">
+           <iconset resource="rc.qrc">
+            <normaloff>:/image/tool.png</normaloff>:/image/tool.png</iconset>
+          </attribute>
+          <attribute name="title">
+           <string>Service</string>
+          </attribute>
+          <layout class="QHBoxLayout" name="horizontalLayout_11">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="margin">
+            <number>0</number>
+           </property>
+           <item>
+            <layout class="QGridLayout" name="serviceGridLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+            </layout>
+           </item>
+          </layout>
+         </widget>
          <widget class="QWidget" name="analyse_tab">
           <attribute name="icon">
            <iconset resource="rc.qrc">
             <normaloff>:/image/analyse.png</normaloff>:/image/analyse.png</iconset>
           </attribute>
           <attribute name="title">
-           <string>分析</string>
+           <string>Analyse</string>
           </attribute>
           <layout class="QHBoxLayout" name="horizontalLayout_10">
            <property name="spacing">
@@ -549,7 +573,7 @@ color: rgb(255, 255, 255);
            <item>
             <widget class="QToolBox" name="toolBox_2">
              <property name="currentIndex">
-              <number>2</number>
+              <number>0</number>
              </property>
              <property name="tabSpacing">
               <number>0</number>
@@ -559,19 +583,19 @@ color: rgb(255, 255, 255);
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
-                <height>28</height>
+                <width>268</width>
+                <height>387</height>
                </rect>
               </property>
               <attribute name="label">
-               <string>测量分析</string>
+               <string>Meature</string>
               </attribute>
               <widget class="QPushButton" name="disMeature">
                <property name="geometry">
                 <rect>
                  <x>10</x>
                  <y>10</y>
-                 <width>71</width>
+                 <width>211</width>
                  <height>31</height>
                 </rect>
                </property>
@@ -579,7 +603,7 @@ color: rgb(255, 255, 255);
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string>距离测量</string>
+                <string>Distance</string>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -591,9 +615,9 @@ color: rgb(255, 255, 255);
               <widget class="QPushButton" name="areaMeature">
                <property name="geometry">
                 <rect>
-                 <x>100</x>
-                 <y>10</y>
-                 <width>81</width>
+                 <x>10</x>
+                 <y>50</y>
+                 <width>211</width>
                  <height>31</height>
                 </rect>
                </property>
@@ -601,7 +625,7 @@ color: rgb(255, 255, 255);
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string>面积测量</string>
+                <string>Area</string>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -614,8 +638,8 @@ color: rgb(255, 255, 255);
                <property name="geometry">
                 <rect>
                  <x>10</x>
-                 <y>50</y>
-                 <width>71</width>
+                 <y>90</y>
+                 <width>211</width>
                  <height>31</height>
                 </rect>
                </property>
@@ -623,7 +647,7 @@ color: rgb(255, 255, 255);
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string>方位测量</string>
+                <string>Azimuth</string>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -635,9 +659,9 @@ color: rgb(255, 255, 255);
               <widget class="QPushButton" name="clearMeatureResult">
                <property name="geometry">
                 <rect>
-                 <x>100</x>
-                 <y>50</y>
-                 <width>81</width>
+                 <x>10</x>
+                 <y>130</y>
+                 <width>211</width>
                  <height>31</height>
                 </rect>
                </property>
@@ -645,7 +669,7 @@ color: rgb(255, 255, 255);
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string>清除结果</string>
+                <string>Clear</string>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -673,8 +697,8 @@ color: rgb(255, 255, 255);
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>268</width>
-                <height>387</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <attribute name="label">
@@ -685,37 +709,13 @@ color: rgb(255, 255, 255);
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="service_tab">
-          <attribute name="icon">
-           <iconset resource="rc.qrc">
-            <normaloff>:/image/tool.png</normaloff>:/image/tool.png</iconset>
-          </attribute>
-          <attribute name="title">
-           <string>服务</string>
-          </attribute>
-          <layout class="QHBoxLayout" name="horizontalLayout_11">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="margin">
-            <number>0</number>
-           </property>
-           <item>
-            <layout class="QGridLayout" name="serviceGridLayout">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-            </layout>
-           </item>
-          </layout>
-         </widget>
          <widget class="QWidget" name="service_tab_2">
           <attribute name="icon">
            <iconset resource="rc.qrc">
             <normaloff>:/image/setting.png</normaloff>:/image/setting.png</iconset>
           </attribute>
           <attribute name="title">
-           <string>设置</string>
+           <string>Setting</string>
           </attribute>
           <layout class="QHBoxLayout" name="horizontalLayout_9">
            <property name="spacing">
@@ -727,48 +727,22 @@ color: rgb(255, 255, 255);
            <item>
             <widget class="QToolBox" name="toolBox_3">
              <property name="currentIndex">
-              <number>2</number>
+              <number>0</number>
              </property>
              <property name="tabSpacing">
-              <number>0</number>
+              <number>6</number>
              </property>
              <widget class="QWidget" name="page_5">
               <property name="geometry">
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
-                <height>28</height>
-               </rect>
-              </property>
-              <attribute name="label">
-               <string>基础场景</string>
-              </attribute>
-             </widget>
-             <widget class="QWidget" name="page_6">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>98</width>
-                <height>28</height>
-               </rect>
-              </property>
-              <attribute name="label">
-               <string>分析风格</string>
-              </attribute>
-             </widget>
-             <widget class="QWidget" name="page_2">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
                 <width>268</width>
-                <height>387</height>
+                <height>435</height>
                </rect>
               </property>
               <attribute name="label">
-               <string>海图参数</string>
+               <string>BaseScene</string>
               </attribute>
              </widget>
             </widget>
