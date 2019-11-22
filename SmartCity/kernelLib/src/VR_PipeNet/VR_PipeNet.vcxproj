@@ -72,7 +72,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)\Osgearth280\lib;$(SolutionDir)\Osg340\lib;$(OutDir);$(SolutionDir)\Osgearth280\lib</AdditionalLibraryDirectories>

@@ -12,12 +12,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MeshUtil.cpp" />
+    <ClCompile Include="ModelBuilder.cpp" />
     <ClCompile Include="SectionCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\modelbuilder\Macro.h" />
     <ClInclude Include="..\..\include\modelbuilder\MeshDefine.h" />
     <ClInclude Include="..\..\include\modelbuilder\MeshUtil.h" />
+    <ClInclude Include="..\..\include\modelbuilder\ModelBuilder.h" />
     <ClInclude Include="..\..\include\modelbuilder\SectionCreator.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

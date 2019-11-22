@@ -80,17 +80,17 @@
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VR_CITYBUILDER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VR_CITYBUILDEREX_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)\kernelLib\include;$(SolutionDir)\Osg340\include;$(SolutionDir)\Osgearth280;$(SolutionDir)\mymaplib\include\include;$(QTDIR)\include\QtCore;$(QTDIR)\include;$(SolutionDir)\mymaplib/include/include;.\GeneratedFiles;.;.\GeneratedFiles\$(ConfigurationName);$(SolutionDir)sdk\include;$(SolutionDir)\mymaplib/include\depends\include\gdal;$(SolutionDir)\mymaplib/include\depends\include\gdal\port;$(SolutionDir)\mymaplib/include\depends\include\gdal\gcore;$(SolutionDir)\mymaplib/include\depends\include\gdal\ogr;$(SolutionDir)\mymaplib/include\depends\include;$(SolutionDir)\mymaplib/include\include\mychartmapcontrol;$(SolutionDir)\mymaplib/include\include\mychartmanagercontrol;%(AdditionalIncludeDirectories);$(SolutionDir)\Osgearth280\include;$(SolutionDir)\mymaplib/include;$(SolutionDir)\3rd\mys57map\depends\include\gdal;$(SolutionDir)\3rd\mys57map\include</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(SolutionDir)\Osg340\lib;$(SolutionDir)\Osgearth280\lib;$(OutDir);$(SolutionDir)\mymaplib\lib;$(SolutionDir)\3rdParty\x86\lib;$(QTDIR480)\lib;$(SolutionDir)\3rd\mys57map\depends\lib\gdal;$(SolutionDir)\3rd\mys57map\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

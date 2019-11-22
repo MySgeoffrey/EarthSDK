@@ -172,18 +172,18 @@ bool CPipeLayerDriver::load(const std::string& filePath,PipeNet::CPipeLineDataSe
 			{
 				//获取管线ID
 				int objectIdIndex = pDataSet->getProperty()->getFieldIndex("OBJECTID");
-				int startPointIndex = pDataSet->getProperty()->getFieldIndex("起点点号");
-				int endPointIndex = pDataSet->getProperty()->getFieldIndex("终点点号");
-				int materialIndex = pDataSet->getProperty()->getFieldIndex("材质");
-				int typeIndex = pDataSet->getProperty()->getFieldIndex("线型");
-				int radiusIndex = pDataSet->getProperty()->getFieldIndex("管径");
+				int startPointIndex = 1;// pDataSet->getProperty()->getFieldIndex("起点点号");
+				int endPointIndex = 2;// pDataSet->getProperty()->getFieldIndex("终点点号");
+				int materialIndex = 7;// pDataSet->getProperty()->getFieldIndex("材质");
+				int typeIndex = 9;// pDataSet->getProperty()->getFieldIndex("线型");
+				int radiusIndex = 10;// pDataSet->getProperty()->getFieldIndex("管径");
 
-				int start84XIndex = pDataSet->getProperty()->getFieldIndex("START84X");
-				int start84YIndex = pDataSet->getProperty()->getFieldIndex("START84Y");
-				int start84ZIndex = pDataSet->getProperty()->getFieldIndex("START84Z");
-				int end84XIndex = pDataSet->getProperty()->getFieldIndex("END84X");
-				int end84YIndex = pDataSet->getProperty()->getFieldIndex("END84Y");
-				int end84ZIndex = pDataSet->getProperty()->getFieldIndex("END84Z");
+				int start84XIndex = 33;// pDataSet->getProperty()->getFieldIndex("START84X");
+				int start84YIndex = 34;//pDataSet->getProperty()->getFieldIndex("START84Y");
+				int start84ZIndex = 35;//pDataSet->getProperty()->getFieldIndex("START84Z");
+				int end84XIndex = 36;//pDataSet->getProperty()->getFieldIndex("END84X");
+				int end84YIndex = 37;//pDataSet->getProperty()->getFieldIndex("END84Y");
+				int end84ZIndex = 38;//pDataSet->getProperty()->getFieldIndex("END84Z");
 				QString objectID = pDataSet->getProperty()->RecordDBFValues[i]->at(objectIdIndex);
 				QString startPointID = pDataSet->getProperty()->RecordDBFValues[i]->at(startPointIndex);
 				QString endPointID = pDataSet->getProperty()->RecordDBFValues[i]->at(endPointIndex);
@@ -191,21 +191,26 @@ bool CPipeLayerDriver::load(const std::string& filePath,PipeNet::CPipeLineDataSe
 				QString material = pDataSet->getProperty()->RecordDBFValues[i]->at(materialIndex);
 				QString type = pDataSet->getProperty()->RecordDBFValues[i]->at(typeIndex);
 				QString radius = pDataSet->getProperty()->RecordDBFValues[i]->at(radiusIndex);
-				double startZ = pDataSet->getProperty()->RecordDBFValues[i]->at(start84ZIndex).toDouble();
-				double endZ = pDataSet->getProperty()->RecordDBFValues[i]->at(end84ZIndex).toDouble();
+				double startX = pDataSet->getProperty()->RecordDBFValues[i]->at(start84XIndex).toDouble();
+				double startY = pDataSet->getProperty()->RecordDBFValues[i]->at(start84YIndex).toDouble();
+				double startZ = 4;// pDataSet->getProperty()->RecordDBFValues[i]->at(start84ZIndex).toDouble();
+				double endX = pDataSet->getProperty()->RecordDBFValues[i]->at(end84XIndex).toDouble();
+				double endY = pDataSet->getProperty()->RecordDBFValues[i]->at(end84YIndex).toDouble();
+				double endZ = 4;//pDataSet->getProperty()->RecordDBFValues[i]->at(end84ZIndex).toDouble();
 
 				PipeNet::CPipeLine* pPipeLine = new PipeNet::CPipeLine();
 				pPipeLine->setID(objectID.toStdString());
 				pPipeLine->getStartGeoPosition() = 
-					osg::Vec3d(pLine->Points.at(0).X,pLine->Points.at(0).Y,startZ);
+					osg::Vec3d(startX, startY, startZ);
 				pPipeLine->getEndGeoPosition() = 
-					osg::Vec3d(pLine->Points.at(1).X,pLine->Points.at(1).Y,endZ);
+					osg::Vec3d(endX,endY,endZ);
 				
 				std::string startID = startPointID.toStdString();
 				std::string endID = endPointID.toStdString();
 				pPipeLine->getStartPointID() = startID;
 				pPipeLine->getEndPointID() = endID;
-				pPipeLine->getRadius() = 2.0;
+				double r = radius.toDouble() / 1000.0;
+				pPipeLine->getRadius() = r;
 
 				if (NULL == inout_pDataSet)
 				{
@@ -232,14 +237,14 @@ bool CPipeLayerDriver::load(const std::string& filePath,PipeNet::CPipePointDataS
 				dynamic_cast<MyChart::IMyPoint*>(pRecord->Geometry);
 			if (pPoint)
 			{
-				int objectIdIndex = pDataSet->getProperty()->getFieldIndex("OBJECTID");
-				int pointIDIndex = pDataSet->getProperty()->getFieldIndex("管点编号");
-				int featureIndex = pDataSet->getProperty()->getFieldIndex("特征");
-				int attachmentIndex = pDataSet->getProperty()->getFieldIndex("附属物");
+				int objectIdIndex = 0;//pDataSet->getProperty()->getFieldIndex("OBJECTID");
+				int pointIDIndex = 1;// pDataSet->getProperty()->getFieldIndex("管点编号");
+				int featureIndex = 6;// pDataSet->getProperty()->getFieldIndex("特征");
+				int attachmentIndex = 7;// pDataSet->getProperty()->getFieldIndex("附属物");
 
-				int wgs84XIndex = pDataSet->getProperty()->getFieldIndex("WGS84X");
-				int wgs84YIndex = pDataSet->getProperty()->getFieldIndex("WGS84Y");
-				int wgs84ZIndex = pDataSet->getProperty()->getFieldIndex("WGS84Z");
+				int wgs84XIndex = 31;// pDataSet->getProperty()->getFieldIndex("WGS84X");
+				int wgs84YIndex = 32;//pDataSet->getProperty()->getFieldIndex("WGS84Y");
+				int wgs84ZIndex = 33;//pDataSet->getProperty()->getFieldIndex("WGS84Z");
 				
 				QString objectID = pDataSet->getProperty()->RecordDBFValues[i]->at(objectIdIndex);
 				QString pointID = pDataSet->getProperty()->RecordDBFValues[i]->at(pointIDIndex);
@@ -248,12 +253,12 @@ bool CPipeLayerDriver::load(const std::string& filePath,PipeNet::CPipePointDataS
 
 				double wgs84X = pDataSet->getProperty()->RecordDBFValues[i]->at(wgs84XIndex).toDouble();
 				double wgs84Y = pDataSet->getProperty()->RecordDBFValues[i]->at(wgs84YIndex).toDouble();
-				double wgs84Z = pDataSet->getProperty()->RecordDBFValues[i]->at(wgs84ZIndex).toDouble();
+				double wgs84Z = 4;// pDataSet->getProperty()->RecordDBFValues[i]->at(wgs84ZIndex).toDouble();
 
 				PipeNet::CPipePoint* pPipePoint = new PipeNet::CPipePoint();
 				pPipePoint->setID(pointID.toStdString());
 				pPipePoint->getGeoPosition() = osg::Vec3d(
-					pPoint->Position.X,pPoint->Position.Y,wgs84Z);
+					wgs84X, wgs84Y, wgs84Z);
 				pPipePoint->getAttachmentType() = attachment.toStdString();
 				if (NULL == inout_pDataSet)
 				{

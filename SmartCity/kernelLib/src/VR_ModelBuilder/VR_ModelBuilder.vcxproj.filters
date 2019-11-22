@@ -21,6 +21,9 @@
     <ClCompile Include="SectionCreator.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ModelBuilder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\modelbuilder\Macro.h">
@@ -33,6 +36,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\modelbuilder\SectionCreator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\modelbuilder\ModelBuilder.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

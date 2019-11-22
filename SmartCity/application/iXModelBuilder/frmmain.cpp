@@ -20,6 +20,7 @@
 #include "pipenet/pipepoint.h"
 #include "TestCase.h"
 #include "framework/common/languageconfig.h"
+#include "modelbuilder/ModelBuilder.h"
 //#include "pipenet/pipearithmetic.h"
 
 #define _use_amap_api_ 1
@@ -190,111 +191,118 @@ frmMain::~frmMain()
 
 void frmMain::processPipe()
 {
-	//PipeNet::CPipeLineDataSet* pPipeLineDataSet = NULL;
-	//PipeNet::CPipePointDataSet* pPipePointDataSet = NULL;
-	//QString dirPath = "D:/dataService/testPipeData";
-	//QDir dir(dirPath);
-	//if (dir.exists())
-	//{
-	//	QStringList namefilters;
-	//	namefilters << "*.shp";
-	//	QStringList files = dir.entryList(namefilters,QDir::Files | QDir::Readable,QDir::Name);
-	//	if (!files.empty())
-	//	{
-	//		for (int i = 0 ; i < files.size(); ++i)
-	//		{
-	//			QString lPath = files.at(i);
-	//			QString pipePath = dirPath + "/" + files.at(i);
-	//			if (lPath.contains("YSLine"))
-	//			{
-	//				CityBuilder::CPipeLayerDriver::load(pipePath.toLocal8Bit().constData(),pPipeLineDataSet);
-	//				CityBuilder::CInstanceModelLayer* pPipeLayer_GDLine = new CityBuilder::CInstanceModelLayer(this->mpGlobeWidget->getMapNodeRef());
-	//				//pPipeLayer_GDLine->loadDataFromFile(pipePath.toLocal8Bit().constData());
-	//				pPipeLayer_GDLine->loadToScene(pPipeLineDataSet);
-	//				pPipeLayer_GDLine->renderToScene();
-	//			}
-	//			else if (lPath.contains("YSPoint"))
-	//			{
-	//				CityBuilder::CPipeLayerDriver::load(pipePath.toLocal8Bit().constData(),pPipePointDataSet);
-	//			}
-	//		}			
-	//	}
-	//}
-	//if (pPipeLineDataSet && pPipePointDataSet)
-	//{
-	//	for (int i = 0; i < pPipePointDataSet->getPipePoints().size(); ++i)
-	//	{
-	//		PipeNet::CPipePoint* pPipePoint = pPipePointDataSet->getPipePoints().at(i);
-	//		std::vector<PipeNet::CPipeLine*> inout_pipeLines;
-	//		if (pPipeLineDataSet->getPipeLines(pPipePoint->getID(),inout_pipeLines))
-	//		{
-	//			pPipePoint->setAdjcentLines(inout_pipeLines);
-	//		}
-	//	}
-	//}
+	PipeNet::CPipeLineDataSet* pPipeLineDataSet = NULL;
+	PipeNet::CPipePointDataSet* pPipePointDataSet = NULL;
+	QString dirPath = "D:/3dDataService/testPipeData";
+	QDir dir(dirPath);
+	if (dir.exists())
+	{
+		QStringList namefilters;
+		namefilters << "*.shp";
+		QStringList files = dir.entryList(namefilters,QDir::Files | QDir::Readable,QDir::Name);
+		if (!files.empty())
+		{
+			for (int i = 0 ; i < files.size(); ++i)
+			{
+				QString lPath = files.at(i);
+				QString pipePath = dirPath + "/" + files.at(i);
+				if (lPath.contains("YSLine"))
+				{
+					CityBuilder::CPipeLayerDriver::load(pipePath.toLocal8Bit().constData(),pPipeLineDataSet);
+					/*CityBuilder::CInstanceModelLayer* pPipeLayer_GDLine = new CityBuilder::CInstanceModelLayer(this->mpGlobeWidget->getMapNodeRef());
+					pPipeLayer_GDLine->loadToScene(pPipeLineDataSet);
+					pPipeLayer_GDLine->renderToScene();*/
+				}
+				else if (lPath.contains("YSPoint"))
+				{
+					CityBuilder::CPipeLayerDriver::load(pipePath.toLocal8Bit().constData(),pPipePointDataSet);
+				}
+			}			
+		}
+	}
+	if (pPipeLineDataSet && pPipePointDataSet)
+	{
+		for (int i = 0; i < pPipePointDataSet->getPipePoints().size(); ++i)
+		{
+			PipeNet::CPipePoint* pPipePoint = pPipePointDataSet->getPipePoints().at(i);
+			std::vector<PipeNet::CPipeLine*> inout_pipeLines;
+			if (pPipeLineDataSet->getPipeLines(pPipePoint->getID(),inout_pipeLines))
+			{
+				pPipePoint->setAdjcentLines(inout_pipeLines);
+			}
+		}
+	}
 
-	//for (int i = 0; i < pPipePointDataSet->getPipePoints().size(); ++i)
-	//{
-	//	PipeNet::CPipePoint* pPipePoint = pPipePointDataSet->getPipePoints().at(i);
-	//	if (pPipePoint->getAdjcentLines().size() >= 2)
-	//	{
-	//		double radius = -0.5;
-	//		//弯头建模参数
-	//		CPipeLinkerParameter pParameter;
-	//		pParameter.LinkerBackDistance = radius * 4;
-	//		//处理中心点坐标
-	//		osgEarth::GeoPoint centerGeoPos = osgEarth::GeoPoint(
-	//			this->mpGlobeWidget->getMapNodeRef()->getMapSRS(),
-	//			pPipePoint->getGeoPosition(),
-	//			osgEarth::AltitudeMode::ALTMODE_ABSOLUTE);
-	//		centerGeoPos.toWorld(pParameter.LinkerWorldPos);
-	//		std::vector<PipeNet::CPipeLine*>& adjcentPipeLines = pPipePoint->getAdjcentLines();
-	//		for (int j = 0; j < adjcentPipeLines.size(); ++j)
-	//		{
-	//			PipeNet::CPipeLine* pPipeLine = adjcentPipeLines.at(j);
-	//			PipeNet::CPipePoint* pAdjencentPoint = NULL;
-	//			if (pPipeLine->getStartPointID() == pPipePoint->getID())
-	//			{
-	//				std::string adjencentID = pPipeLine->getEndPointID();
-	//				pAdjencentPoint = dynamic_cast<PipeNet::CPipePoint*>(pPipePointDataSet->getPipePoint(adjencentID));
-	//			}
-	//			else
-	//			{
-	//				std::string adjencentID = pPipeLine->getStartPointID();
-	//				pAdjencentPoint = dynamic_cast<PipeNet::CPipePoint*>(pPipePointDataSet->getPipePoint(adjencentID));
-	//			}
-	//			if (pAdjencentPoint != NULL)
-	//			{
-	//				SubLinkerParameter* pSublinker = new SubLinkerParameter();
-	//				pSublinker->Radius = pPipeLine->getRadius();
-	//				pSublinker->NeedRingflange = true;
-	//				pSublinker->RingflangeThick = pSublinker->Radius / 2;
-	//				pSublinker->RingflangeRadius = pSublinker->Radius * 1.5;
-	//				osgEarth::GeoPoint otherGeoPos = osgEarth::GeoPoint(
-	//					this->mpGlobeWidget->getMapNodeRef()->getMapSRS(),
-	//					pAdjencentPoint->getGeoPosition(),
-	//					osgEarth::AltitudeMode::ALTMODE_ABSOLUTE);
-	//				otherGeoPos.toWorld(pSublinker->WorldPos);
+	double radius = 1.0;
+	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
+	std::string texturePath = "D:/gitReource/EarthSDK/SmartCity/Resource/blue.bmp";
+	auto pGroupGeoTransform = new osgEarth::GeoTransform();
+	osgEarth::GeoPoint geoPoint = osgEarth::GeoPoint(this->mpGlobeWidget->getMapNodeRef()->getMapSRS(),
+		osg::Vec3d(118.3717, 35.1306, 0));
+	pGroupGeoTransform->setPosition(geoPoint);
+	MeshGenerator::CModelCreator modelCreator;
+	MeshGenerator::MeshUtil::getInstance()->setReferenceCenter(geoPoint);
+	MeshGenerator::MeshUtil::getInstance()->setTextureRepeatLength(15.f);
+	std::map<std::string, MeshGenerator::JointData> jointDatas;
+	for (int i = 0; i < pPipePointDataSet->getPipePoints().size(); ++i)
+	{
+		PipeNet::CPipePoint* pPipePoint = pPipePointDataSet->getPipePoints().at(i);
+		if (pPipePoint->getAdjcentLines().size() >= 2)
+		{
+			std::vector<osg::Vec3d> adjcentPoints;
+			//弯头建模参数
+			std::vector<PipeNet::CPipeLine*>& adjcentPipeLines = pPipePoint->getAdjcentLines();
+			for (int j = 0; j < adjcentPipeLines.size(); ++j)
+			{
+				PipeNet::CPipeLine* pPipeLine = adjcentPipeLines.at(j);
+				PipeNet::CPipePoint* pAdjencentPoint = NULL;
+				if (pPipeLine->getStartPointID() == pPipePoint->getID())
+				{
+					std::string adjencentID = pPipeLine->getEndPointID();
+					pAdjencentPoint = dynamic_cast<PipeNet::CPipePoint*>(pPipePointDataSet->getPipePoint(adjencentID));
+				}
+				else
+				{
+					std::string adjencentID = pPipeLine->getStartPointID();
+					pAdjencentPoint = dynamic_cast<PipeNet::CPipePoint*>(pPipePointDataSet->getPipePoint(adjencentID));
+				}
+				if (pAdjencentPoint != NULL)
+				{
+					adjcentPoints.push_back(pAdjencentPoint->getGeoPosition());
+				}
+			}
 
-	//				pParameter.SubLinkerParameters.push_back(pSublinker);
-
-	//				pParameter.LinkerBackDistance = pPipeLine->getRadius() * 1.8;
-	//			}
-	//		}
-	//		//建模，且生成场景节点
-	//		CPipeRenderData* pData = CPipeModelArithmetic::createModel(&pParameter);
-	//		if (pData)
-	//		{
-	//			osg::Node* pNode = CPipeModelArithmetic::createNodeByData(pData);
-	//			osg::LOD* pLod = new osg::LOD();
-	//			pLod->addChild(pNode,0,1000);
-	//			this->mpGlobeWidget->getRootRef()->addChild(pLod);
-	//		}
-	//	}
-	//}
-	//this->mpGlobeWidget->flyTo(118.3717, 35.1306,3000,0);//
-	//osgEarth::Viewpoint vp("", 118.3717, 35.1306, 3000, 0, -90, 0.0);
-	//this->mpGlobeWidget->getEarthManipulator()->setHomeViewpoint(vp);
+			if (!adjcentPoints.empty())
+			{
+				MeshGenerator::JointData jointData = modelCreator.createCircleJointData(
+					pPipePoint->getGeoPosition(),
+					adjcentPoints, radius);
+				jointDatas[pPipePoint->getID()] = jointData;
+				osg::ref_ptr<osg::Node> pLinkerNode = modelCreator.createLinkerModel(jointData, color, texturePath);
+				osg::ref_ptr<osg::LOD> pLod = new osg::LOD();
+				pLod->addChild(pLinkerNode, 0, 500);
+				pGroupGeoTransform->addChild(pLod);
+			}
+		}
+	}
+	texturePath = "D:/gitReource/EarthSDK/SmartCity/Resource/red.bmp";
+	for (int i = 0; i < pPipeLineDataSet->getPipeLines().size(); ++i)
+	{
+		PipeNet::CPipeLine* pipe = pPipeLineDataSet->getPipeLines().at(i);
+		if (pipe)
+		{
+			MeshGenerator::JointData startJointData = jointDatas[pipe->getStartPointID()];
+			MeshGenerator::JointData endJointData = jointDatas[pipe->getEndPointID()];
+			osg::ref_ptr<osg::Node> pPipeNode = modelCreator.createPipeModel(startJointData, endJointData, color, texturePath);
+			osg::ref_ptr<osg::LOD> pLod = new osg::LOD();
+			pLod->addChild(pPipeNode, 0, 1000);
+			pGroupGeoTransform->addChild(pLod);
+		}
+	}
+	this->mpGlobeWidget->getMapNodeRef()->addChild(pGroupGeoTransform);
+	this->mpGlobeWidget->flyTo(118.3717, 35.1306,30,0);//
+	osgEarth::Viewpoint vp("", 118.3717, 35.1306, 30, 0, -90, 0.0);
+	this->mpGlobeWidget->getEarthManipulator()->setHomeViewpoint(vp);
 }
 
 void frmMain::InitStyle()
