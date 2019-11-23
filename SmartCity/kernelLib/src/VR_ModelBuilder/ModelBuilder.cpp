@@ -16,7 +16,7 @@ namespace MeshGenerator
 			joint.pos = in_geoPosition;
 
 			SectionDesc desc;
-#if 0
+#if 1
 			desc.type = SectionType::Circle;
 			desc.params[0] = in_radius;
 #else

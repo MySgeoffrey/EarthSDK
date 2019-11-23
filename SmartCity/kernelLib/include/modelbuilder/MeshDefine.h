@@ -65,9 +65,11 @@ namespace MeshGenerator
 			case SectionType::Circle:
 				return params[0] * 2.f;
 			case SectionType::Rect:
-			case SectionType::Arc:
 			case SectionType::Ladder:
 				result = std::max<float>(params[0],params[1]);
+				break;
+			case SectionType::Arc:
+				result = std::max<float>(params[0], params[1] + params[2]);
 				break;
 			default:
 				break;

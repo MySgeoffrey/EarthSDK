@@ -8,7 +8,7 @@
 #include "osg\MatrixTransform"
 #include "osgEarth\GeoTransform"
 #include "osg\PolygonMode"
-#include "..\Osg340\include\osg\Material"
+#include "osg\Material"
 
 namespace MeshGenerator
 {
@@ -17,7 +17,14 @@ namespace MeshGenerator
 		auto dirN = dir;
 		dirN.normalize();
 
-		auto right = dirN ^ up;
+		auto newUp = up;
+		auto t = dirN * up;
+		if (t > 0.997f || t < -0.997f)
+		{
+			newUp = osg::X_AXIS;
+		}
+
+		auto right = dirN ^ newUp;
 		right.normalize();
 
 		auto realUp = right ^ dir;
@@ -25,7 +32,7 @@ namespace MeshGenerator
 
 		osg::Matrix mat;
 		mat.makeRotate(osg::Y_AXIS, dirN);
-		auto v = up * mat;
+		auto v = newUp * mat;
 		v.normalize();
 
 		osg::Matrix mat2;
@@ -107,8 +114,13 @@ namespace MeshGenerator
 	osg::Node* MeshUtil::createGeodeFromMeshData(const std::vector<MeshData*>& meshDatas,
 		const osg::Vec4& color, const std::string& imgPath)
 	{
-		osg::ref_ptr<osg::Geode> root = new osg::Geode;
+		osg::ref_ptr<osg::Image> img = osgDB::readImageFile(imgPath);
+		return createGeodeFromMeshData(meshDatas, color, img);
+	}
 
+	osg::Node* MeshUtil::createGeodeFromMeshData(const std::vector<MeshData*>& meshDatas, const osg::Vec4& color /*= osg::Vec4(1.f, 1.f, 1.f, 1.f)*/, osg::ref_ptr<osg::Image> image /*= nullptr*/)
+	{
+		osg::ref_ptr<osg::Geode> root = new osg::Geode;
 		osg::ref_ptr<osg::Vec3Array> pts = new osg::Vec3Array;
 		osg::ref_ptr<osg::Vec2Array> uvs = new osg::Vec2Array;
 		osg::ref_ptr<osg::Vec4Array> colors = new osg::Vec4Array;
@@ -129,24 +141,19 @@ namespace MeshGenerator
 
 		osg::ref_ptr<osg::Geometry> gm = new osg::Geometry;
 		gm->setVertexArray(pts.get());
-		//colors->push_back(color);
-		//gm->setColorArray(colors.get());
-		//gm->setColorBinding(osg::Geometry::AttributeBinding::BIND_OVERALL);
 		gm->setNormalArray(normals.get());
 		gm->setNormalBinding(osg::Geometry::AttributeBinding::BIND_PER_VERTEX);
 
-		//gm->getOrCreateStateSet()->setAttribute(new osg::PolygonMode(osg::PolygonMode::FRONT_AND_BACK, osg::PolygonMode::LINE));
 		osg::Material *material = new osg::Material;
-		auto img = osgDB::readImageFile(imgPath);
-		if (img)
+		if (image)
 		{
 			gm->setTexCoordArray(0, uvs.get());
-			osg::ref_ptr<osg::Texture2D> texture = new osg::Texture2D(img);
+			osg::ref_ptr<osg::Texture2D> texture = new osg::Texture2D(image);
 			texture->setFilter(osg::Texture::MIN_FILTER, osg::Texture::LINEAR);
 			texture->setFilter(osg::Texture::MAG_FILTER, osg::Texture::LINEAR);
 			texture->setWrap(osg::Texture::WRAP_S, osg::Texture::REPEAT);
 			texture->setWrap(osg::Texture::WRAP_T, osg::Texture::REPEAT);
-			gm->getOrCreateStateSet()->setTextureAttributeAndModes(0, texture.get(), osg::StateAttribute::ON);
+			gm->getOrCreateStateSet()->setTextureAttributeAndModes(0, texture, osg::StateAttribute::ON);
 		}
 		else
 		{
@@ -346,7 +353,7 @@ namespace MeshGenerator
 		return nullptr;
 	}
 
-	MeshData* MeshUtil::createJointCircle(const JointData& joint)
+	MeshData* MeshUtil::createJointCircle(const JointData& joint, bool withHat /* = true */)
 	{
 		auto count = joint.adjacents.size();
 		if (count < 2)
@@ -361,28 +368,37 @@ namespace MeshGenerator
 			const auto& p0 = joint.adjacents[0].pos;
 			const auto& p1 = joint.pos;
 			const auto& p2 = joint.adjacents[1].pos;
-			for (int i = 0; i <= 10; ++i)
+
+			auto dir = p1 - p0;
+			dir.normalize();
+			auto dir2 = p2 - p1;
+			dir2.normalize();
+
+			float angle = acos(dir * dir2);
+			float per = (1.f * _blendParam + 10.f * (1.f - _blendParam)) * osg::PI / 180.f;
+			int count = angle / per;
+			count = std::max(2, count);
+			float countI = 1.f / count;
+			for (int i = 0; i <= count; ++i)
 			{
-				float t = 0.2f * i;
+				float t = i * countI;
 				pts.emplace_back(osg::Vec3());
 				pts.back() = p0 * (1.f - t) * (1.f - t) + p1 * 2.f * (1.f - t) * t + p2 * t * t;
 			}
-
-			auto dir = joint.pos - joint.adjacents[0].pos;
-			dir.normalize();
-			auto dir2 = joint.adjacents[1].pos - joint.pos;
-			dir2.normalize();
 
 			std::vector<MeshData*> tempMesh;
 
 			auto mesh = createLoft(pts, joint.adjacents[0].sectionDesc, dir, dir2);
 			tempMesh.emplace_back(mesh);
 
-			auto outlineMesh = createJointHat(joint.adjacents[0].sectionDesc, joint.adjacents[0].pos, joint.adjacents[0].pos - joint.pos);
-			tempMesh.emplace_back(outlineMesh);
+			if (withHat)
+			{
+				auto outlineMesh = createJointHat(joint.adjacents[0].sectionDesc, joint.adjacents[0].pos, joint.adjacents[0].pos - joint.pos);
+				tempMesh.emplace_back(outlineMesh);
 
-			auto outlineMesh2 = createJointHat(joint.adjacents[0].sectionDesc, joint.adjacents[1].pos, joint.adjacents[1].pos - joint.pos);
-			tempMesh.emplace_back(outlineMesh2);
+				auto outlineMesh2 = createJointHat(joint.adjacents[0].sectionDesc, joint.adjacents[1].pos, joint.adjacents[1].pos - joint.pos);
+				tempMesh.emplace_back(outlineMesh2);
+			}
 
 			return mergeMeshDatas(tempMesh);
 		}
@@ -402,54 +418,91 @@ namespace MeshGenerator
 		}
 	}
 
-	MeshData* MeshUtil::createJointGeneral(const JointData& joint)
+	MeshData* MeshUtil::createJointGeneral(const JointData& joint, bool withHat /* = true */)
 	{
+		JointData newJoint;
+		newJoint.pos = joint.pos;
+		std::vector<JointAdjacent> upAdjacents;
+		for (size_t i = 0; i < joint.adjacents.size(); ++i)
+		{
+			auto v = joint.adjacents[i].pos - joint.pos;
+			v.normalize();
+			float angle = acos(v * osg::Z_AXIS);
+			if (angle < osg::PI / 6.f || angle > osg::PI * 5.f / 6.f)
+			{
+				upAdjacents.emplace_back(joint.adjacents[i]);
+			}
+			else
+			{
+				newJoint.adjacents.emplace_back(joint.adjacents[i]);
+			}
+			
+		}
+
 		std::vector<MeshData*> tempMeshs;
 		std::vector<osg::Matrix> transform;
 		std::vector<SectionBase*> sections;
 
-		for (size_t i = 0; i < joint.adjacents.size(); ++i)
+		for (size_t i = 0; i < newJoint.adjacents.size(); ++i)
 		{
-			auto section = SectionCreator::createStandardSection(joint.adjacents[i].sectionDesc);
+			auto section = SectionCreator::createStandardSection(newJoint.adjacents[i].sectionDesc);
 			sections.emplace_back(section);
 		}
 
-		for (size_t i = 0; i < joint.adjacents.size(); ++i)
+		for (size_t i = 0; i < upAdjacents.size(); ++i)
 		{
-			auto preIndex = (i == 0 ? joint.adjacents.size() - 1 : i - 1);
-			auto nextIndex = (i == joint.adjacents.size() - 1 ? 0 : i + 1);
+			auto v = upAdjacents[i].pos - newJoint.pos;
 
-			auto v = joint.adjacents[i].pos - joint.pos;
-			auto preV = joint.adjacents[preIndex].pos - joint.pos;
-			auto nextV = joint.adjacents[nextIndex].pos - joint.pos;
+			auto mesh = createLoft(newJoint.pos, upAdjacents[i].pos, upAdjacents[i].sectionDesc);
+			auto rotate = generateRotateMatrix(v, osg::Z_AXIS);
+			tempMeshs.emplace_back(mesh);
+
+			if (withHat)
+			{
+				auto hat = createJointHat(upAdjacents[i].sectionDesc, upAdjacents[i].pos, upAdjacents[i].pos - newJoint.pos);
+				tempMeshs.emplace_back(hat);
+			}
+		}
+
+		for (size_t i = 0; i < newJoint.adjacents.size(); ++i)
+		{
+			auto preIndex = (i == 0 ? newJoint.adjacents.size() - 1 : i - 1);
+			auto nextIndex = (i == newJoint.adjacents.size() - 1 ? 0 : i + 1);
+
+			auto v = newJoint.adjacents[i].pos - newJoint.pos;
+			auto preV = newJoint.adjacents[preIndex].pos - newJoint.pos;
+			auto nextV = newJoint.adjacents[nextIndex].pos - newJoint.pos;
 
 			v.normalize();
 			preV.normalize();
 			nextV.normalize();
 
-			float offset1 = calcuteOffset(v, preV, joint.adjacents[i].sectionDesc.getWidth(), joint.adjacents[preIndex].sectionDesc.getWidth());
-			float offset2 = calcuteOffset(v, nextV, joint.adjacents[i].sectionDesc.getWidth(), joint.adjacents[nextIndex].sectionDesc.getWidth());
+			float offset1 = calcuteOffset(v, preV, newJoint.adjacents[i].sectionDesc.getWidth(), newJoint.adjacents[preIndex].sectionDesc.getWidth());
+			float offset2 = calcuteOffset(v, nextV, newJoint.adjacents[i].sectionDesc.getWidth(), newJoint.adjacents[nextIndex].sectionDesc.getWidth());
 			float offset = std::max(offset1, offset2);
 
-			auto mesh = createLoft(v * offset + joint.pos, joint.adjacents[i].pos, joint.adjacents[i].sectionDesc);
-			auto hat = createJointHat(joint.adjacents[i].sectionDesc, joint.adjacents[i].pos, joint.adjacents[i].pos - joint.pos);
-
+			auto mesh = createLoft(v * offset + newJoint.pos, newJoint.adjacents[i].pos, newJoint.adjacents[i].sectionDesc);
 			auto rotate = generateRotateMatrix(v, osg::Z_AXIS);
-			transform.emplace_back(rotate * osg::Matrix::translate(v* offset + joint.pos));
+			transform.emplace_back(rotate * osg::Matrix::translate(v* offset + newJoint.pos));
 
 			tempMeshs.emplace_back(mesh);
-			tempMeshs.emplace_back(hat);
+
+			if (withHat)
+			{
+				auto hat = createJointHat(newJoint.adjacents[i].sectionDesc, newJoint.adjacents[i].pos, newJoint.adjacents[i].pos - newJoint.pos);
+				tempMeshs.emplace_back(hat);
+			}
 		}
 
-		tempMeshs.emplace_back(createJointGeneralCrossBottom(joint, sections, transform));
-		tempMeshs.emplace_back(createJointGeneralCrossTop(joint, sections, transform));
-		tempMeshs.emplace_back(createJointGeneralCrossBodySide(joint, sections, transform));
-		tempMeshs.emplace_back(createJointGeneralCrossTopSide(joint, sections, transform));
+		tempMeshs.emplace_back(createJointGeneralCrossBottom(newJoint, sections, transform));
+		tempMeshs.emplace_back(createJointGeneralCrossTop(newJoint, sections, transform));
+		tempMeshs.emplace_back(createJointGeneralCrossBodySide(newJoint, sections, transform));
+		tempMeshs.emplace_back(createJointGeneralCrossTopSide(newJoint, sections, transform));
 
 		return mergeMeshDatas(tempMeshs);
 	}
 
-	MeshData* MeshUtil::createJoint(const JointData& joint)
+	MeshData* MeshUtil::createJoint(const JointData& joint, bool withHat)
 	{
 		auto count = joint.adjacents.size();
 		if (count < 2)
@@ -460,32 +513,34 @@ namespace MeshGenerator
 
 		if (count == 2 && joint.adjacents[0].sectionDesc == joint.adjacents[1].sectionDesc)
 		{
-			return createJointOnlyTwo(newJoint);
+			return createJointOnlyTwo(newJoint,withHat);
 		}
 
-#if 1 // all sections are circle type
-		bool isCircleType = true;
-		for (size_t i = 1; i < newJoint.adjacents.size(); ++i)
+	    // all sections are circle type
+		if (_circleSpecialProcess)
 		{
-			isCircleType &= (newJoint.adjacents[i].sectionDesc.type == SectionType::Circle);
-			if (!isCircleType)
+			bool flag = false;
+			for (size_t i = 0; i < newJoint.adjacents.size(); ++i)
 			{
-				break;
+				if (newJoint.adjacents[i].sectionDesc.type == SectionType::Circle)
+				{
+					flag = true;
+					break;
+				}
+			}
+
+			if (flag)
+			{
+				return createJointCircle(newJoint, withHat);
+			}
+			else
+			{
+				return createJointGeneral(newJoint,withHat);
 			}
 		}
-
-		if (isCircleType)
-		{
-			return createJointCircle(newJoint);
-		}
-		else
-		{
+		else{
 			return createJointGeneral(newJoint);
-		}
-#else if
-		return createJointGeneral(newJoint);
-#endif
-		
+		}		
 	}
 
 	MeshData* MeshUtil::mergeMeshDatas(const std::vector<MeshData*>& meshDatas, bool clearOldData /* = true */)
@@ -541,9 +596,9 @@ namespace MeshGenerator
 	MeshData* MeshUtil::createJointHat(const SectionDesc& desc, const osg::Vec3& pos, const osg::Vec3& dir)
 	{
 		auto mesh = new MeshData;
-		auto section = SectionCreator::createStandardSection(desc);
-		auto sectionExtend = SectionCreator::createStandardSection(desc.extent(0.5f));
-		float width = 1.f;
+		auto section = SectionCreator::createStandardSection(desc.extent(-_hatThickness * 0.5f));
+		auto sectionExtend = SectionCreator::createStandardSection(desc.extent(_hatThickness * 0.5f));
+		float width = _hatLength;
 		if (section && sectionExtend)
 		{
 			float dis = (sectionExtend->getMeshVertexs()[0].position - section->getMeshVertexs()[0].position).length();
@@ -551,6 +606,8 @@ namespace MeshGenerator
 			osg::Vec3 dir2 = dir;
 			dir2.normalize();
 			auto rotate = generateRotateMatrix(dir2, osg::Z_AXIS);
+
+			auto count = section->getMeshVertexs().size();
 
 			for (auto& v : section->getMeshVertexs())
 			{
@@ -564,6 +621,12 @@ namespace MeshGenerator
 				mesh->vertexs.emplace_back(MeshVertex());
 				TransformMeshVertex(v, rotate * osg::Matrix::translate(pos), mesh->vertexs.back());
 				mesh->vertexs.back().uv.x() = totalLength / _textureRepeatLength;
+			}
+
+			int index = mesh->vertexs.size() - count;
+			for (int i = 0; i < count; ++i)
+			{
+				mesh->vertexs.emplace_back(MeshVertex(mesh->vertexs[i + index]));
 			}
 
 			totalLength += width;
@@ -574,12 +637,24 @@ namespace MeshGenerator
 				mesh->vertexs.back().uv.x() = totalLength / _textureRepeatLength;
 			}
 
+			index = mesh->vertexs.size() - count;
+			for (int i = 0; i < count; ++i)
+			{
+				mesh->vertexs.emplace_back(MeshVertex(mesh->vertexs[i + index]));
+			}
+
 			totalLength += dis;
 			for (auto& v : section->getMeshVertexs())
 			{
 				mesh->vertexs.emplace_back(MeshVertex());
 				TransformMeshVertex(v, rotate * osg::Matrix::translate(pos + dir2 *width), mesh->vertexs.back());
 				mesh->vertexs.back().uv.x() = totalLength / _textureRepeatLength;
+			}
+
+			index = mesh->vertexs.size() - count;
+			for (int i = 0; i < count; ++i)
+			{
+				mesh->vertexs.emplace_back(MeshVertex(mesh->vertexs[i + index]));
 			}
 
 			totalLength += width;
@@ -591,7 +666,7 @@ namespace MeshGenerator
 			}
 
 			mesh->subMeshs.emplace_back(SubMeshData());
-			generateIndices(4, section->getMeshVertexs().size() - 1, mesh->subMeshs.back().indices);
+			generateIndices(7, section->getMeshVertexs().size() - 1, mesh->subMeshs.back().indices);
 			calcuteNormals(mesh, false);
 			return mesh;
 		}
@@ -627,7 +702,7 @@ namespace MeshGenerator
 		_referencePos.createWorldToLocal(_w2l);
 	}
 
-	MeshData* MeshUtil::createJointLonLat(const JointData& joint)
+	MeshData* MeshUtil::createJointLonLat(const JointData& joint, bool withHat /* = true */)
 	{
 		JointData newJoint = joint;
 		convertToLocalFromLonLat(joint.pos, newJoint.pos);
@@ -635,7 +710,7 @@ namespace MeshGenerator
 		{
 			convertToLocalFromLonLat(joint.adjacents[i].pos, newJoint.adjacents[i].pos);
 		}
-		return createJoint(newJoint);
+		return createJoint(newJoint,withHat);
 	}
 
 	MeshData* MeshUtil::createJointGeneralCrossBottom(const JointData& joint, const std::vector<SectionBase*>& sections, const std::vector<osg::Matrix>& transform)
@@ -685,7 +760,7 @@ namespace MeshGenerator
 				bottomMesh->subMeshs.back().indices.emplace_back(i);
 			}
 		}
-		calcuteNormals(bottomMesh, false);
+		calcuteNormals(bottomMesh, true);
 		return bottomMesh;
 	}
 
@@ -920,11 +995,11 @@ namespace MeshGenerator
 		float gap = 0.001f;
 		if ((angle - osg::PI) > -gap && (angle - osg::PI) < gap)
 		{
-			offset = widthV;
+			offset = 0.5f * widthV;
 		}
 		if ((angle - osg::PI_2) > -gap && (angle - osg::PI_2) < gap)
 		{
-			offset = widthRefV;
+			offset = 0.5f * widthRefV;
 		}
 		if ((angle - osg::PI_2) < -gap)
 		{
@@ -949,8 +1024,6 @@ namespace MeshGenerator
 
 		clockWiseSortJoint(newJoint);
 
-		float fixOffset = 2.f;
-
 		if (newJoint.adjacents.size() == 2)
 		{
 			auto v1 = newJoint.adjacents[0].pos - newJoint.pos;
@@ -966,12 +1039,20 @@ namespace MeshGenerator
 			float offset2 = calcuteOffset(v2, v1, newJoint.adjacents[1].sectionDesc.getWidth(),
 				newJoint.adjacents[0].sectionDesc.getWidth());
 
-			newJoint.adjacents[0].pos = joint.pos + v1 * std::min((offset1 + fixOffset), l1);
-			newJoint.adjacents[1].pos = joint.pos + v2 * std::min((offset2 + fixOffset), l2);
+			if (_sameOffset)
+			{
+				auto v = std::max(offset1, offset2);
+				offset1 = v;
+				offset2 = v;
+			}
+
+			newJoint.adjacents[0].pos = joint.pos + v1 * std::min((offset1 + _fixedOffset), l1);
+			newJoint.adjacents[1].pos = joint.pos + v2 * std::min((offset2 + _fixedOffset), l2);
 		}
 		else
 		{
 			std::vector<osg::Vec3> newPos;
+			float maxOffset = 0.f;
 			for (size_t i = 0; i < newJoint.adjacents.size(); ++i)
 			{
 				osg::Vec3 preV, v, nextV;
@@ -992,7 +1073,22 @@ namespace MeshGenerator
 				float offset2 = calcuteOffset(v, nextV, newJoint.adjacents[i].sectionDesc.getWidth(),
 					newJoint.adjacents[nextIndex].sectionDesc.getWidth());
 
-				newPos.emplace_back(joint.pos + v * std::min(std::max(offset1 + fixOffset, offset2 + fixOffset), l));
+				maxOffset = std::max(maxOffset,std::max(offset1, offset2));
+
+				if (!_sameOffset)
+				{
+					newPos.emplace_back(joint.pos + v * std::min(std::max(offset1 + _fixedOffset, offset2 + _fixedOffset), l));
+				}			
+			}
+
+			if (_sameOffset)
+			{
+				for (size_t i = 0; i < newJoint.adjacents.size(); ++i)
+				{
+					auto v = newJoint.adjacents[i].pos - newJoint.pos;
+					v.normalize();
+					newPos.emplace_back(joint.pos + v * (maxOffset + _fixedOffset));
+				}
 			}
 
 			for (size_t i = 0; i < joint.adjacents.size(); ++i)
@@ -1121,7 +1217,7 @@ namespace MeshGenerator
 		return createLoft(posStart, posEnd, desc);
 	}
 
-	MeshData* MeshUtil::createJointOnlyTwo(const JointData& joint)
+	MeshData* MeshUtil::createJointOnlyTwo(const JointData& joint, bool withHat /* = true */)
 	{
 		if (joint.adjacents.size() != 2)
 		{
@@ -1133,35 +1229,273 @@ namespace MeshGenerator
 		const auto& p0 = joint.adjacents[0].pos;
 		const auto& p1 = joint.pos;
 		const auto& p2 = joint.adjacents[1].pos;
-		for (int i = 0; i <= 5; ++i)
+
+		auto dir = p1 - p0;
+		dir.normalize();
+		auto dir2 = p2 - p1;
+		dir2.normalize();
+
+		float angle = acos(dir * dir2);
+		float per = (1.f * _blendParam + 10.f * (1.f - _blendParam)) * osg::PI / 180.f;
+		int count = angle / per;
+		count = std::max(2, count);
+		float countI = 1.f / count;
+		for (int i = 0; i <= count; ++i)
 		{
-			float t = 0.2f * i;
+			float t = i * countI;
 			pts.emplace_back(osg::Vec3());
 			pts.back() = p0 * (1.f - t) * (1.f - t) + p1 * 2.f * (1.f - t) * t + p2 * t * t;
 		}
-
-		auto dir = joint.pos - joint.adjacents[0].pos;
-		dir.normalize();
-		auto dir2 = joint.adjacents[1].pos - joint.pos;
-		dir2.normalize();
 
 		std::vector<MeshData*> tempMesh;
 
 		auto mesh = createLoft(pts, joint.adjacents[0].sectionDesc, dir, dir2);
 		tempMesh.emplace_back(mesh);
 
-		auto outlineMesh = createJointHat(joint.adjacents[0].sectionDesc, joint.adjacents[0].pos, joint.adjacents[0].pos - joint.pos);
-		tempMesh.emplace_back(outlineMesh);
+		if (withHat)
+		{
+			auto outlineMesh = createJointHat(joint.adjacents[0].sectionDesc, joint.adjacents[0].pos, joint.adjacents[0].pos - joint.pos);
+			tempMesh.emplace_back(outlineMesh);
 
-		auto outlineMesh2 = createJointHat(joint.adjacents[0].sectionDesc, joint.adjacents[1].pos, joint.adjacents[1].pos - joint.pos);
-		tempMesh.emplace_back(outlineMesh2);
-
+			auto outlineMesh2 = createJointHat(joint.adjacents[0].sectionDesc, joint.adjacents[1].pos, joint.adjacents[1].pos - joint.pos);
+			tempMesh.emplace_back(outlineMesh2);
+		}
+		
 		return mergeMeshDatas(tempMesh);
 	}
 
 	void MeshUtil::setTextureRepeatLength(float l)
 	{
 		_textureRepeatLength = std::max(0.f, l);
+	}
+
+	void MeshUtil::setBlendParam(float p)
+	{
+		_blendParam = std::max(0.f, std::min(1.f, p));
+	}
+
+	void MeshUtil::setHatParam(float length, float thickness)
+	{
+		_hatLength = length;
+		_hatThickness = thickness;
+	}
+
+	void MeshUtil::setReferenceCenterXYZ(const osg::Vec3& xyz)
+	{
+		_referenceXYZ = xyz;
+	}
+
+	MeshData* MeshUtil::createJointXYZ(const JointData& joint, bool withHat /*= true*/)
+	{
+		JointData newJoint = joint;
+		convertToLocalFromXYZ(joint.pos, newJoint.pos);
+		for (size_t i = 0; i < joint.adjacents.size(); ++i)
+		{
+			convertToLocalFromXYZ(joint.adjacents[i].pos, newJoint.adjacents[i].pos);
+		}
+		return createJoint(newJoint, withHat);
+	}
+
+	MeshData* MeshUtil::createPipeSegmentXYZ(const JointData& first, const JointData& second)
+	{
+		JointData newJoint1 = first;
+		convertToLocalFromXYZ(first.pos, newJoint1.pos);
+		for (size_t i = 0; i < first.adjacents.size(); ++i)
+		{
+			convertToLocalFromXYZ(first.adjacents[i].pos, newJoint1.adjacents[i].pos);
+		}
+
+		JointData newJoint2 = second;
+		convertToLocalFromXYZ(second.pos, newJoint2.pos);
+		for (size_t i = 0; i < second.adjacents.size(); ++i)
+		{
+			convertToLocalFromXYZ(second.adjacents[i].pos, newJoint2.adjacents[i].pos);
+		}
+
+		return createPipeSegment(newJoint1, newJoint2);
+	}
+
+	bool MeshUtil::convertToLocalFromXYZ(const osg::Vec3d& xyz, osg::Vec3d& local)
+	{
+		local = xyz - _referenceXYZ;
+		return true;
+	}
+
+	bool MeshUtil::calcutePipeSegmentPosLonLat(const JointData& first, const JointData& second, osg::Vec3d& start, osg::Vec3d& end)
+	{
+		return calcutePipeSegmentPosImpl(first, second, start, end, true);
+	}
+
+	bool MeshUtil::convertToLonlatFromLocal(const osg::Vec3d& local, osg::Vec3d& lla)
+	{
+		const auto& m = osg::Matrix::inverse(_w2l);
+		const auto& world = local * m;
+
+		osgEarth::GeoPoint geoLLa;
+		bool result = geoLLa.fromWorld(_referencePos.getSRS(), world);
+		if (result)
+		{
+			lla = geoLLa.vec3d();
+		}
+		
+		return result;
+	}
+
+	bool MeshUtil::convertToXYZFromLocal(const osg::Vec3d& local, osg::Vec3d& xyz)
+	{
+		xyz = local + _referenceXYZ;
+		return true;
+	}
+
+	bool MeshUtil::calcutePipeSegmentPosXYZ(const JointData& first, const JointData& second, osg::Vec3d& start, osg::Vec3d& end)
+	{
+		return calcutePipeSegmentPosImpl(first, second, start, end, false);
+	}
+
+	bool MeshUtil::calcutePipeSegmentPosImpl(const JointData& first, const JointData& second, osg::Vec3d& start, osg::Vec3d& end, bool islla)
+	{
+		if (first.adjacents.empty() || second.adjacents.empty())
+		{
+			return false;
+		}
+
+		JointData newJoint1 = first;
+		JointData newJoint2 = second;
+		if (islla)
+		{
+			convertToLocalFromLonLat(first.pos, newJoint1.pos);
+			for (size_t i = 0; i < first.adjacents.size(); ++i)
+			{
+				convertToLocalFromLonLat(first.adjacents[i].pos, newJoint1.adjacents[i].pos);
+			}
+
+			convertToLocalFromLonLat(second.pos, newJoint2.pos);
+			for (size_t i = 0; i < second.adjacents.size(); ++i)
+			{
+				convertToLocalFromLonLat(second.adjacents[i].pos, newJoint2.adjacents[i].pos);
+			}
+		}
+		else{
+			convertToLocalFromXYZ(first.pos, newJoint1.pos);
+			for (size_t i = 0; i < first.adjacents.size(); ++i)
+			{
+				convertToLocalFromXYZ(first.adjacents[i].pos, newJoint1.adjacents[i].pos);
+			}
+
+			convertToLocalFromXYZ(second.pos, newJoint2.pos);
+			for (size_t i = 0; i < second.adjacents.size(); ++i)
+			{
+				convertToLocalFromXYZ(second.adjacents[i].pos, newJoint2.adjacents[i].pos);
+			}
+		}
+		
+
+		osg::Vec3 posStart;
+		SectionDesc desc;
+		if (first.adjacents.size() == 1)
+		{
+			posStart = first.pos;
+			desc = first.adjacents[0].sectionDesc;
+		}
+		else
+		{
+			auto dir = second.pos - first.pos;
+			dir.normalize();
+			auto j1 = calcuteJointData(first);
+			bool flag = false;
+			for (size_t i = 0; i < j1.adjacents.size(); ++i)
+			{
+				auto v = j1.adjacents[i].pos - first.pos;
+				v.normalize();
+				auto angle = v * dir;
+				if (angle - 1.0 > -0.0001f && angle - 1.0 < 0.0001f)
+				{
+					posStart = j1.adjacents[i].pos;
+					flag = true;
+					desc = j1.adjacents[i].sectionDesc;
+					break;
+				}
+			}
+
+			if (!flag)
+			{
+				return false;
+			}
+
+		}
+
+		osg::Vec3 posEnd;
+		if (second.adjacents.size() <= 1)
+		{
+			posEnd = second.pos;
+		}
+		else
+		{
+			auto dir = first.pos - second.pos;
+			dir.normalize();
+			auto j2 = calcuteJointData(second);
+			bool flag = false;
+			for (size_t i = 0; i < j2.adjacents.size(); ++i)
+			{
+				auto v = j2.adjacents[i].pos - second.pos;
+				v.normalize();
+				auto angle = v * dir;
+				if (angle - 1.0 > -0.0001f && angle - 1.0 < 0.0001f)
+				{
+					posEnd = j2.adjacents[i].pos;
+					flag = true;
+					break;
+				}
+			}
+
+			if (!flag)
+			{
+				return false;
+			}
+		}
+
+		if (islla)
+		{
+			return convertToLonlatFromLocal(posStart, start) && convertToLonlatFromLocal(posEnd, end);
+		}
+		else{
+			return convertToXYZFromLocal(posStart, start) && convertToXYZFromLocal(posEnd, end);
+		}		
+	}
+
+	MeshData* MeshUtil::createRadius(osg::Vec3& pos, float radius)
+	{
+		return nullptr;
+		//int kRow , kCol = 16;
+		//for (int i = 0; i < nSegment; ++i)
+		//{		
+		//	float radius = radius - (nSegment / 2 - i)
+		//	for (int j = 0; j < nSegment; ++j)
+		//	{
+		//		osg::Matrix mat;
+		//		mat = osg::Matrix::rotate(osg::Quat((i * 2.f * osg::PI / nSegment), osg::Z_AXIS));
+		//	}
+		//}
+
+		//float step_z = osg::PI / kRow;
+		//float step_xy = 2 * osg::PI / kCol; 
+
+		//float angle_z = 0; //ÆðÊ¼½Ç¶È
+		//float angle_xy = 0;
+		//int i = 0, j = 0;
+
+		//for (i = 0; i < kRow; i++)
+		//{
+		//	angle_z = i * step_z;
+
+		//	for (j = 0; j < kCol; j++)
+		//	{
+		//		angle_xy = j * step_xy;
+		//		x[0] = radius * sin(angle_z) * cos(angle_xy);
+		//		y[0] = radius * sin(angle_z) * sin(angle_xy);
+		//		z[0] = radius * cos(angle_z);
+		//	}
+		//}
 	}
 
 }
