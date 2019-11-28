@@ -154,10 +154,61 @@ CPipeLayerDriver::~CPipeLayerDriver()
 
 }
 
+bool CPipeLayerDriver::loadEx(const std::string& filePath, PipeNet::CPipeLineDataSet*& inout_pDataSet)
+{
+	bool success = false;
+	QString layerDataPath = QString::fromStdString(filePath);
+	MyChart::CMyShpDataDriver driver;
+	MyChart::IMyLayer* pDataSet = driver.readS57Map(layerDataPath)->getLayers().at(0);
+	for (int i = 0; i < pDataSet->getRecords().size(); ++i)
+	{
+		MyChart::IMyShapeRecord* pRecord = pDataSet->getRecords().at(i);
+		if (pRecord && pRecord->Geometry)
+		{
+			MyChart::IMyPolyline* pLine =
+				dynamic_cast<MyChart::IMyPolyline*>(pRecord->Geometry);
+			if (pLine->Points.size() >= 2)
+			{
+				//获取管线ID
+				int objectIdIndex = pDataSet->getProperty()->getFieldIndex("OBJECTID");
+				int radiusIndex = pDataSet->getProperty()->getFieldIndex("PipeWidth");
+
+				int start84ZIndex = pDataSet->getProperty()->getFieldIndex("StartDeep");
+				int end84ZIndex = pDataSet->getProperty()->getFieldIndex("EndDeep");
+				//QString objectID = pDataSet->getProperty()->RecordDBFValues[i]->at(objectIdIndex);
+				QString radius = pDataSet->getProperty()->RecordDBFValues[i]->at(radiusIndex);
+				double startZ = pDataSet->getProperty()->RecordDBFValues[i]->at(start84ZIndex).toDouble();
+				double endZ = pDataSet->getProperty()->RecordDBFValues[i]->at(end84ZIndex).toDouble();
+
+				PipeNet::CPipeLine* pPipeLine = new PipeNet::CPipeLine();
+				//pPipeLine->setID(objectID.toStdString());
+				pPipeLine->getStartGeoPosition() =
+					osg::Vec3d(pLine->Points.at(0).X, pLine->Points.at(0).Y, startZ);
+				pPipeLine->getEndGeoPosition() =
+					osg::Vec3d(pLine->Points.at(1).X, pLine->Points.at(1).Y, endZ);
+
+				/*std::string startID = startPointID.toStdString();
+				std::string endID = endPointID.toStdString();
+				pPipeLine->getStartPointID() = startID;
+				pPipeLine->getEndPointID() = endID;*/
+				double r = radius.toDouble() / 1000.0;
+				pPipeLine->getRadius() = r;
+
+				if (NULL == inout_pDataSet)
+				{
+					inout_pDataSet = new PipeNet::CPipeLineDataSet();
+				}
+				inout_pDataSet->getPipeLines().push_back(pPipeLine);
+				success = true;
+			}
+		}
+	}
+	return success;
+}
+
+
 bool CPipeLayerDriver::load(const std::string& filePath,PipeNet::CPipeLineDataSet*& inout_pDataSet)
 {
-	//MyChart::CMyShpDataDriver::();
-
 	QString layerDataPath = QString::fromStdString(filePath);
 	MyChart::CMyShpDataDriver driver;
 	MyChart::IMyLayer* pDataSet = driver.readS57Map(layerDataPath)->getLayers().at(0);
@@ -270,6 +321,53 @@ bool CPipeLayerDriver::load(const std::string& filePath,PipeNet::CPipePointDataS
 	}
 	return false;
 }
+
+bool CPipeLayerDriver::loadEx(const std::string& filePath, PipeNet::CPipePointDataSet*& inout_pDataSet)
+{
+	bool r = false;
+	QString layerDataPath = QString::fromStdString(filePath);
+	MyChart::CMyShpDataDriver driver;
+	MyChart::IMyLayer* pDataSet = driver.readS57Map(layerDataPath)->getLayers().at(0);
+	for (int i = 0; i < pDataSet->getRecords().size(); ++i)
+	{
+		MyChart::IMyShapeRecord* pRecord = pDataSet->getRecords().at(i);
+		if (pRecord && pRecord->Geometry)
+		{
+			MyChart::IMyPolyline* pPolyline =
+				dynamic_cast<MyChart::IMyPolyline*>(pRecord->Geometry);
+			if (pPolyline && pPolyline->Points.size() >= 02)
+			{
+				int objectIdIndex = pDataSet->getProperty()->getFieldIndex("OBJECTID");
+				int radiusIndex = pDataSet->getProperty()->getFieldIndex("PipeWidth");
+
+				int start84ZIndex = pDataSet->getProperty()->getFieldIndex("StartDeep");
+				int end84ZIndex = pDataSet->getProperty()->getFieldIndex("EndDeep");
+				//QString objectID = pDataSet->getProperty()->RecordDBFValues[i]->at(objectIdIndex);
+				QString radius = pDataSet->getProperty()->RecordDBFValues[i]->at(radiusIndex);
+				double startZ = pDataSet->getProperty()->RecordDBFValues[i]->at(start84ZIndex).toDouble();
+				double endZ = pDataSet->getProperty()->RecordDBFValues[i]->at(end84ZIndex).toDouble();
+
+
+				PipeNet::CPipePoint* pPipePoint1 = new PipeNet::CPipePoint();
+				pPipePoint1->getGeoPosition() = osg::Vec3d(
+					pPolyline->Points.at(0).X, pPolyline->Points.at(0).Y,startZ);
+
+				PipeNet::CPipePoint* pPipePoint2 = new PipeNet::CPipePoint();
+				pPipePoint2->getGeoPosition() = osg::Vec3d(
+					pPolyline->Points.at(1).X, pPolyline->Points.at(1).Y, endZ);
+				if (NULL == inout_pDataSet)
+				{
+					inout_pDataSet = new PipeNet::CPipePointDataSet();
+				}
+				inout_pDataSet->getPipePoints().push_back(pPipePoint1);
+				inout_pDataSet->getPipePoints().push_back(pPipePoint2);
+				r = true;
+			}
+		}
+	}
+	return r;
+}
+
 
 CInstanceModelLayer::CInstanceModelLayer()
 	: Core::ILayer()

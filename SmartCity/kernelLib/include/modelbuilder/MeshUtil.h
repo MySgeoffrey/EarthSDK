@@ -107,7 +107,7 @@ namespace MeshGenerator
 
 		void clockWiseSortJoint(JointData& joint);
 
-		MeshData* createRadius(osg::Vec3& pos, float radius);
+		MeshData* createSphere(const osg::Vec3& pos, float radius);
 	private:
 		MeshUtil() = default;
 		~MeshUtil() = default;

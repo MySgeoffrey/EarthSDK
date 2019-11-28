@@ -6,6 +6,7 @@
 namespace PipeNet
 {
 	class CPipeLine;
+	class CPipePoint;
 	class VR_PIPENET_EXPORT CPipeLineDataSet
 	{
 	public:
@@ -16,6 +17,8 @@ namespace PipeNet
 		std::vector<CPipeLine*>& getPipeLines();
 
 		bool getPipeLines(const std::string& in_pipePointID,std::vector<CPipeLine*>& inout_pipeLines);
+
+		bool getPipeLines(CPipePoint* in_pipePoint, std::vector<CPipeLine*>& inout_pipeLines);
 	protected:
 		std::vector<CPipeLine*> mPipeLines;
 		std::map<std::string,std::vector<CPipeLine*>> mPipeLinesEx;

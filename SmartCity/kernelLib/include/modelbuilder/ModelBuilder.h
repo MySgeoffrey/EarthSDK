@@ -28,6 +28,11 @@ namespace MeshGenerator
 			const std::vector<osg::Vec3d>& in_adjacentPoints,
 			const double& in_radius);
 
+		JointData createCircleJointData(
+			const osg::Vec3d& in_geoPosition,
+			const std::vector<osg::Vec3d>& in_adjacentPoints,
+			const std::vector<double>& in_radiusVecs);
+
 		/**
 		* 构建方形连接头数据
 		*
@@ -41,6 +46,47 @@ namespace MeshGenerator
 			const osg::Vec3d& in_geoPosition,
 			const std::vector<osg::Vec3d>& in_adjacentPoints,
 			const double& in_width,
+			const double& in_height);
+
+		JointData createRectJointData(
+			const osg::Vec3d& in_geoPosition,
+			const std::vector<osg::Vec3d>& in_adjacentPoints,
+			const std::vector<double>& in_widths,
+			const std::vector<double>& in_heights);
+
+		/**
+		* 构建拱形连接头数据
+		*
+		*@param in_geoPosition		:	连接头的地理坐标
+		*@param in_adjacentPoints	:	邻接点集合
+		*@param in_width			:	宽度(单位：米)
+		*@param in_height			:	高度(单位：米)
+		*@param in_arcHeight		:	拱高(单位：米)
+		*@param return				:	连接头数据
+		*/
+		JointData createArcJointData(
+			const osg::Vec3d& in_geoPosition,
+			const std::vector<osg::Vec3d>& in_adjacentPoints,
+			const double& in_width,
+			const double& in_height,
+			const double& in_arcHeight);
+
+
+		/**
+		* 构建梯形连接头数据
+		*
+		*@param in_geoPosition		:	连接头的地理坐标
+		*@param in_adjacentPoints	:	邻接点集合
+		*@param in_upEdge			:	上底长(单位：米)
+		*@param in_downEdge			:	下底长(单位：米)
+		*@param in_arcHeight		:	高(单位：米)
+		*@param return				:	连接头数据
+		*/
+		JointData createLadderJointData(
+			const osg::Vec3d& in_geoPosition,
+			const std::vector<osg::Vec3d>& in_adjacentPoints,
+			const double& in_upEdge,
+			const double& in_downEdge,
 			const double& in_height);
 
 		/**
@@ -72,43 +118,6 @@ namespace MeshGenerator
 			const osg::Vec4& in_color,
 			const std::string& in_texturePath);
 
-		///**
-		//* 构建方形截面的连接头模型
-		//*
-		//*@param in_geoPosition		:	连接头的地理坐标
-		//*@param in_adjacentPoints	:	邻接点集合
-		//*@param in_width			:	截面宽度(单位：米)
-		//*@param in_height			:	截面高度(单位：米)
-		//*@param in_color			:	颜色
-		//*@param in_texturePath		:	纹理路径
-		//*@param return				:	模型节点
-		//*/
-		//osg::ref_ptr<osg::Node> createLinkerModelByRectSection(
-		//	const osg::Vec3d& in_geoPosition,
-		//	const std::vector<osg::Vec3d>& in_adjacentPoints,
-		//	const double& in_width,
-		//	const double& in_height,
-		//	const osg::Vec4& in_color,
-		//	const std::string& in_texturePath);
-
-		///**
-		//* 构建方形截面的管道模型
-		//*
-		//*@param in_startGeoPosition	:	管道起始点坐标
-		//*@param in_endGeoPosition	:	管道终止点坐标
-		//*@param in_width			:	截面宽度(单位：米)
-		//*@param in_height			:	截面高度(单位：米)
-		//*@param in_color			:	颜色
-		//*@param in_texturePath		:	纹理路径
-		//*@param return				:	模型节点
-		//*/
-		//osg::ref_ptr<osg::Node> createPipeModelByRectSection(
-		//	const osg::Vec3d& in_startGeoPosition,
-		//	const osg::Vec3d& in_endGeoPosition,
-		//	const double& in_width,
-		//	const double& in_height,
-		//	const osg::Vec4& in_color,
-		//	const std::string& in_texturePath);
 	};
 
 	/**

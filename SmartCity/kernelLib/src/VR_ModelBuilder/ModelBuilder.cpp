@@ -6,6 +6,32 @@ namespace MeshGenerator
 	JointData CModelCreator::createCircleJointData(
 		const osg::Vec3d& in_geoPosition,
 		const std::vector<osg::Vec3d>& in_adjacentPoints,
+		const std::vector<double>& in_radiusVecs)
+	{
+		JointData joint;
+		if (in_geoPosition.length() > 10
+			&& in_radiusVecs.size() > 0
+			&& in_adjacentPoints.size() > 0)
+		{
+			joint.pos = in_geoPosition;
+
+			SectionDesc desc;
+			desc.type = SectionType::Circle;
+
+			for (int i = 0; i < in_adjacentPoints.size(); ++i)
+			{
+				joint.adjacents.emplace_back(JointAdjacent());
+				joint.adjacents.back().pos = in_adjacentPoints.at(i);
+				desc.params[0] = (in_radiusVecs.size() == in_adjacentPoints.size()) ? in_radiusVecs.at(i) : in_radiusVecs.at(0);
+				joint.adjacents.back().sectionDesc = desc;
+			}
+		}
+		return joint;
+	}
+
+	JointData CModelCreator::createCircleJointData(
+		const osg::Vec3d& in_geoPosition,
+		const std::vector<osg::Vec3d>& in_adjacentPoints,
 		const double& in_radius)
 	{
 		JointData joint;
@@ -39,6 +65,45 @@ namespace MeshGenerator
 	JointData CModelCreator::createRectJointData(
 		const osg::Vec3d& in_geoPosition,
 		const std::vector<osg::Vec3d>& in_adjacentPoints,
+		const std::vector<double>& in_widths,
+		const std::vector<double>& in_heights)
+	{
+		JointData joint;
+		if (in_geoPosition.length() > 10
+			&& in_widths.size() > 1
+			&& in_heights.size() > 1
+			&& in_adjacentPoints.size() > 0)
+		{
+			joint.pos = in_geoPosition;
+
+			SectionDesc desc;
+			desc.type = SectionType::Rect;
+			
+
+			for (int i = 0; i < in_adjacentPoints.size(); ++i)
+			{
+				joint.adjacents.emplace_back(JointAdjacent());
+				joint.adjacents.back().pos = in_adjacentPoints.at(i);
+				if (in_widths.size() == in_adjacentPoints.size()
+					&& in_heights.size() == in_adjacentPoints.size())
+				{
+					desc.params[0] = in_widths.at(i);
+					desc.params[1] = in_heights.at(i);
+				}
+				else
+				{
+					desc.params[0] = in_widths.at(0);
+					desc.params[1] = in_heights.at(0);
+				}
+				joint.adjacents.back().sectionDesc = desc;
+			}
+		}
+		return joint;
+	}
+
+	JointData CModelCreator::createRectJointData(
+		const osg::Vec3d& in_geoPosition,
+		const std::vector<osg::Vec3d>& in_adjacentPoints,
 		const double& in_width,
 		const double& in_height)
 	{
@@ -54,6 +119,70 @@ namespace MeshGenerator
 			desc.type = SectionType::Rect;
 			desc.params[0] = in_width;
 			desc.params[1] = in_height;
+
+			for (int i = 0; i < in_adjacentPoints.size(); ++i)
+			{
+				joint.adjacents.emplace_back(JointAdjacent());
+				joint.adjacents.back().pos = in_adjacentPoints.at(i);
+				joint.adjacents.back().sectionDesc = desc;
+			}
+		}
+		return joint;
+	}
+
+	JointData CModelCreator::createArcJointData(
+		const osg::Vec3d& in_geoPosition,
+		const std::vector<osg::Vec3d>& in_adjacentPoints,
+		const double& in_width,
+		const double& in_height,
+		const double& in_arcHeight)
+	{
+		JointData joint;
+		if (in_geoPosition.length() > 10
+			&& in_width > 0.01
+			&& in_height > 0.01
+			&& in_arcHeight > 0.01
+			&& in_adjacentPoints.size() > 0)
+		{
+			joint.pos = in_geoPosition;
+
+			SectionDesc desc;
+			desc.type = SectionType::Arc;
+			desc.params[0] = in_width;
+			desc.params[1] = in_height;
+			desc.params[2] = in_arcHeight;
+
+			for (int i = 0; i < in_adjacentPoints.size(); ++i)
+			{
+				joint.adjacents.emplace_back(JointAdjacent());
+				joint.adjacents.back().pos = in_adjacentPoints.at(i);
+				joint.adjacents.back().sectionDesc = desc;
+			}
+		}
+		return joint;
+	}
+
+	JointData CModelCreator::createLadderJointData(
+		const osg::Vec3d& in_geoPosition,
+		const std::vector<osg::Vec3d>& in_adjacentPoints,
+		const double& in_upEdge,
+		const double& in_downEdge,
+		const double& in_height)
+	{
+		JointData joint;
+		if (in_geoPosition.length() > 10
+			&& in_upEdge > 0.01
+			&& in_downEdge > 0.01
+			&& in_height > 0.01
+			&& in_adjacentPoints.size() > 0)
+		{
+			joint.pos = in_geoPosition;
+
+			SectionDesc desc;
+			desc.type = SectionType::Ladder;
+			desc.params[0] = in_upEdge;
+			desc.params[1] = in_downEdge;
+			desc.params[2] = in_height;
 
 			for (int i = 0; i < in_adjacentPoints.size(); ++i)
 			{

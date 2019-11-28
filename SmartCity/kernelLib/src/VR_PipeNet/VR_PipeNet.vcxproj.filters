@@ -32,9 +32,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pipelinelayer.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="pipepointdataset.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -42,6 +39,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="pipepoint.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="pipelinedataset.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

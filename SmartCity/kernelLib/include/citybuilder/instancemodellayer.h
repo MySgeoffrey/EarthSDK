@@ -23,7 +23,11 @@ namespace CityBuilder
 
 		static bool load(const std::string& filePath,PipeNet::CPipeLineDataSet*& inout_pDataSet);
 
+		static bool loadEx(const std::string& filePath, PipeNet::CPipeLineDataSet*& inout_pDataSet);
+
 		static bool load(const std::string& filePath,PipeNet::CPipePointDataSet*& inout_pDataSet);
+
+		static bool loadEx(const std::string& filePath, PipeNet::CPipePointDataSet*& inout_pDataSet);
 	};
 
 	class VR_CITYBUILDER_DLL CInstanceModelLayer

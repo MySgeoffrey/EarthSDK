@@ -2,6 +2,7 @@
 #define _PIPEPOINTLAYER_H_
 
 #include "pipenet/pipenetconfig.h"
+#include "osg/Array"
 
 namespace PipeNet
 {
@@ -16,6 +17,8 @@ namespace PipeNet
 		std::vector<CPipePoint*>& getPipePoints();
 
 		CPipePoint* getPipePoint(const std::string& in_pipePointId);
+
+		CPipePoint* getPipePoint(const osg::Vec3d& in_geoPosition);
 
 	protected:
 		std::vector<CPipePoint*> mPipePoints;

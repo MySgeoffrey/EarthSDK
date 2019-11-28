@@ -81,7 +81,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="pipeline.cpp" />
-    <ClCompile Include="pipelinelayer.cpp" />
+    <ClCompile Include="pipelinedataset.cpp" />
     <ClCompile Include="pipepoint.cpp" />
     <ClCompile Include="pipepointdataset.cpp" />
   </ItemGroup>

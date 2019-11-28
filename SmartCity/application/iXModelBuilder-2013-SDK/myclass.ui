@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>iXModeBuilderSDK</class>
+ <widget class="QMainWindow" name="iXModeBuilderSDK">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>770</width>
+    <height>386</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>iXModelBuilder-2013-SDK</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="margin">
+     <number>0</number>
+    </property>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>150</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>150</height>
+         </size>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab">
+         <attribute name="title">
+          <string>管道接头参数化</string>
+         </attribute>
+         <widget class="QPushButton" name="circlePipe_1">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>圆形截面： 两通弯头建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="rectPipe_1">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>10</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>方形截面：两通弯头建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="circlePipe_2">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>40</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>圆形截面： 水平三通建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="circlePipe_4">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>100</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>圆形截面： 四通接头建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="circlePipe_3">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>70</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>圆形截面： 竖直三通建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="rectPipe_2">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>40</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>方形截面：水平三通建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="rectPipe_3">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>70</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>方形截面：竖直三通建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="rectPipe_4">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>100</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>方形截面：四通接头建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="rectPipeLine">
+          <property name="geometry">
+           <rect>
+            <x>490</x>
+            <y>40</y>
+            <width>181</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>方形截面：管段建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="circlePipeLine">
+          <property name="geometry">
+           <rect>
+            <x>490</x>
+            <y>10</y>
+            <width>181</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>圆形截面：管段建模与输出</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="tab_2">
+         <attribute name="title">
+          <string>通道管廊参数化</string>
+         </attribute>
+         <widget class="QPushButton" name="rectPipe_5">
+          <property name="geometry">
+           <rect>
+            <x>240</x>
+            <y>70</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>梯形截面：水平四通建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="rectPipe_6">
+          <property name="geometry">
+           <rect>
+            <x>240</x>
+            <y>100</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>梯形截面：四通接头建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="rectPipe_7">
+          <property name="geometry">
+           <rect>
+            <x>240</x>
+            <y>40</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>梯形截面：水平三通建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="circlePipe_5">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>100</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>拱形截面： 四通接头建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="rectPipe_8">
+          <property name="geometry">
+           <rect>
+            <x>240</x>
+            <y>10</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>梯形截面：两通弯头建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="circlePipe_6">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>拱形截面： 两通弯头建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="circlePipe_7">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>70</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>拱形截面： 水平四通建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="circlePipe_8">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>40</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>拱形截面： 水平三通建模与输出</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <action name="action">
+   <property name="text">
+    <string>圆形截面管道建模</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>方形截面管道建模</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="myclass.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>circlePipe_1</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotCirclePipe1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>292</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>circlePipe_2</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotCirclePipe2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>384</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>circlePipe_3</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotCirclePipe3()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>103</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>384</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>circlePipe_4</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotCirclePipe4()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>384</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rectPipe_1</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotRectPipe1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>348</x>
+     <y>43</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>384</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rectPipe_2</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotRectPipe2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>348</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>384</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rectPipe_3</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotRectPipe3()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>348</x>
+     <y>103</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>384</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rectPipe_4</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotRectPipe4()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>348</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>384</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>circlePipeLine</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotCirclePipeLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>583</x>
+     <y>43</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>384</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rectPipeLine</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotRectPipeLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>583</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>384</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>slotCirclePipe1()</slot>
+  <slot>slotCirclePipe2()</slot>
+  <slot>slotCirclePipe3()</slot>
+  <slot>slotCirclePipe4()</slot>
+  <slot>slotRectPipe1()</slot>
+  <slot>slotRectPipe2()</slot>
+  <slot>slotRectPipe3()</slot>
+  <slot>slotRectPipe4()</slot>
+  <slot>slotCirclePipeLine()</slot>
+  <slot>slotRectPipeLine()</slot>
+ </slots>
+</ui>

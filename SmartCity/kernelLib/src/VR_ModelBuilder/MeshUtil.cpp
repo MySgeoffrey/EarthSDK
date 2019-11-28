@@ -12,22 +12,30 @@
 
 namespace MeshGenerator
 {
-	static osg::Matrix generateRotateMatrix(const osg::Vec3& dir, const osg::Vec3& up)
+	static osg::Matrix generateRotateMatrix(const osg::Vec3& dir, const osg::Vec3& up,osg::Vec3& realUp)
 	{
 		auto dirN = dir;
 		dirN.normalize();
 
 		auto newUp = up;
-		auto t = dirN * up;
-		if (t > 0.997f || t < -0.997f)
+		newUp.normalize();
+
+		auto t = dirN * newUp;
+		if (t > 0.997f)
 		{
 			newUp = osg::X_AXIS;
+		}
+
+		if (t < -0.997f)
+		{
+			newUp = osg::X_AXIS;
+			newUp.x() *= -1;
 		}
 
 		auto right = dirN ^ newUp;
 		right.normalize();
 
-		auto realUp = right ^ dir;
+		realUp = right ^ dir;
 		realUp.normalize();
 
 		osg::Matrix mat;
@@ -38,6 +46,12 @@ namespace MeshGenerator
 		osg::Matrix mat2;
 		mat2.makeRotate(v, realUp);
 		return mat * mat2;
+	}
+
+	static osg::Matrix generateRotateMatrix(const osg::Vec3& dir, const osg::Vec3& up)
+	{
+		osg::Vec3 realUp;
+		return generateRotateMatrix(dir, up, realUp);
 	}
 
 	static void TransformMeshVertex(const MeshVertex& vertex, const osg::Matrix& transfrom, MeshVertex& out)
@@ -88,7 +102,24 @@ namespace MeshGenerator
 					const auto& v2 = mesh->vertexs[mesh->subMeshs[i].indices[j * 3 + 1]].position;
 					const auto& v3 = mesh->vertexs[mesh->subMeshs[i].indices[j * 3 + 2]].position;
 
-					osg::Vec3 triNormal = (v2 - v1) ^ (v3 - v2);
+					auto t = v2 - v1;
+					auto t2 = v3 - v2;
+
+					if (t.length() < 0.001f || t2.length() < 0.001f)
+					{
+						continue;
+					}
+
+					t.normalize();
+					t2.normalize();
+
+					auto d = t * t2;
+					if (d > 0.997 || d < -0.997)
+					{
+						continue;
+					}
+
+					osg::Vec3 triNormal = t ^ t2;
 					triNormal.normalize();
 					if (!cw)
 					{
@@ -144,6 +175,7 @@ namespace MeshGenerator
 		gm->setNormalArray(normals.get());
 		gm->setNormalBinding(osg::Geometry::AttributeBinding::BIND_PER_VERTEX);
 
+		//gm->getOrCreateStateSet()->setAttribute(new osg::PolygonMode(osg::PolygonMode::FRONT_AND_BACK, osg::PolygonMode::LINE));
 		osg::Material *material = new osg::Material;
 		if (image)
 		{
@@ -290,11 +322,12 @@ namespace MeshGenerator
 			mesh->vertexs.reserve(vertexs.size() * count);
 
 			float totalLength = 0.f;
+			osg::Vec3 lastUpDir = osg::Z_AXIS;
 			for (int i = 0; i < count; ++i)
 			{
 				if (i == 0)
 				{
-					auto rotate = generateRotateMatrix(startFront, osg::Z_AXIS);
+					auto rotate = generateRotateMatrix(startFront, lastUpDir);
 					const auto& m = rotate * osg::Matrix::translate(pts[0]);
 					for (const auto& v : vertexs)
 					{
@@ -305,7 +338,7 @@ namespace MeshGenerator
 				else if (i == count - 1)
 				{
 					totalLength += (pts[i] - pts[i - 1]).length();
-					auto rotate = generateRotateMatrix(endFront, osg::Z_AXIS);
+					auto rotate = generateRotateMatrix(endFront, lastUpDir);
 
 					const auto& m = rotate  * osg::Matrix::translate(pts[i]);
 					for (const auto& v : vertexs)
@@ -327,7 +360,7 @@ namespace MeshGenerator
 					osg::Vec3 midDir = v1 + v2;
 					midDir.normalize();
 
-					auto rotate = generateRotateMatrix(midDir, osg::Z_AXIS);
+					auto rotate = generateRotateMatrix(midDir, lastUpDir);
 
 					const auto& m = rotate * osg::Matrix::translate(pts[i]);
 					for (const auto& v : vertexs)
@@ -375,7 +408,7 @@ namespace MeshGenerator
 			dir2.normalize();
 
 			float angle = acos(dir * dir2);
-			float per = (1.f * _blendParam + 10.f * (1.f - _blendParam)) * osg::PI / 180.f;
+			float per = (10.f * _blendParam + 20.f * (1.f - _blendParam)) * osg::PI / 180.f;
 			int count = angle / per;
 			count = std::max(2, count);
 			float countI = 1.f / count;
@@ -464,6 +497,7 @@ namespace MeshGenerator
 			}
 		}
 
+		float radius = 0.f;
 		for (size_t i = 0; i < newJoint.adjacents.size(); ++i)
 		{
 			auto preIndex = (i == 0 ? newJoint.adjacents.size() - 1 : i - 1);
@@ -481,6 +515,8 @@ namespace MeshGenerator
 			float offset2 = calcuteOffset(v, nextV, newJoint.adjacents[i].sectionDesc.getWidth(), newJoint.adjacents[nextIndex].sectionDesc.getWidth());
 			float offset = std::max(offset1, offset2);
 
+			radius = std::max(radius, offset);
+
 			auto mesh = createLoft(v * offset + newJoint.pos, newJoint.adjacents[i].pos, newJoint.adjacents[i].sectionDesc);
 			auto rotate = generateRotateMatrix(v, osg::Z_AXIS);
 			transform.emplace_back(rotate * osg::Matrix::translate(v* offset + newJoint.pos));
@@ -490,9 +526,12 @@ namespace MeshGenerator
 			if (withHat)
 			{
 				auto hat = createJointHat(newJoint.adjacents[i].sectionDesc, newJoint.adjacents[i].pos, newJoint.adjacents[i].pos - newJoint.pos);
-				tempMeshs.emplace_back(hat);
+				tempMeshs.emplace_back(hat);		
 			}
 		}
+
+		/*	auto sphere = createSphere(newJoint.pos, radius + _fixedOffset);
+			tempMeshs.emplace_back(sphere);*/
 
 		tempMeshs.emplace_back(createJointGeneralCrossBottom(newJoint, sections, transform));
 		tempMeshs.emplace_back(createJointGeneralCrossTop(newJoint, sections, transform));
@@ -760,7 +799,7 @@ namespace MeshGenerator
 				bottomMesh->subMeshs.back().indices.emplace_back(i);
 			}
 		}
-		calcuteNormals(bottomMesh, true);
+		calcuteNormals(bottomMesh, false);
 		return bottomMesh;
 	}
 
@@ -1034,20 +1073,15 @@ namespace MeshGenerator
 			float l2 = v2.length();
 			v2.normalize();
 
-			float offset1 = calcuteOffset(v1, v2, newJoint.adjacents[0].sectionDesc.getWidth(),
+			float offset1 = 2.f * calcuteOffset(v1, v2, newJoint.adjacents[0].sectionDesc.getWidth(),
 				newJoint.adjacents[1].sectionDesc.getWidth());
-			float offset2 = calcuteOffset(v2, v1, newJoint.adjacents[1].sectionDesc.getWidth(),
+			float offset2 = 2.f * calcuteOffset(v2, v1, newJoint.adjacents[1].sectionDesc.getWidth(),
 				newJoint.adjacents[0].sectionDesc.getWidth());
 
-			if (_sameOffset)
-			{
-				auto v = std::max(offset1, offset2);
-				offset1 = v;
-				offset2 = v;
-			}
+			auto v = std::max(offset1, offset2);
 
-			newJoint.adjacents[0].pos = joint.pos + v1 * std::min((offset1 + _fixedOffset), l1);
-			newJoint.adjacents[1].pos = joint.pos + v2 * std::min((offset2 + _fixedOffset), l2);
+			newJoint.adjacents[0].pos = joint.pos + v1 * std::min((v + _fixedOffset), l1);
+			newJoint.adjacents[1].pos = joint.pos + v2 * std::min((v + _fixedOffset), l2);
 		}
 		else
 		{
@@ -1236,7 +1270,7 @@ namespace MeshGenerator
 		dir2.normalize();
 
 		float angle = acos(dir * dir2);
-		float per = (1.f * _blendParam + 10.f * (1.f - _blendParam)) * osg::PI / 180.f;
+		float per = (10.f * _blendParam + 20.f * (1.f - _blendParam)) * osg::PI / 180.f;
 		int count = angle / per;
 		count = std::max(2, count);
 		float countI = 1.f / count;
@@ -1463,39 +1497,42 @@ namespace MeshGenerator
 		}		
 	}
 
-	MeshData* MeshUtil::createRadius(osg::Vec3& pos, float radius)
+	MeshData* MeshUtil::createSphere(const osg::Vec3& pos, float radius)
 	{
-		return nullptr;
-		//int kRow , kCol = 16;
-		//for (int i = 0; i < nSegment; ++i)
-		//{		
-		//	float radius = radius - (nSegment / 2 - i)
-		//	for (int j = 0; j < nSegment; ++j)
-		//	{
-		//		osg::Matrix mat;
-		//		mat = osg::Matrix::rotate(osg::Quat((i * 2.f * osg::PI / nSegment), osg::Z_AXIS));
-		//	}
-		//}
+		MeshData* sphere = new MeshData;
 
-		//float step_z = osg::PI / kRow;
-		//float step_xy = 2 * osg::PI / kCol; 
+		int kRow  = 16, kCol = 16;
 
-		//float angle_z = 0; //ÆðÊ¼½Ç¶È
-		//float angle_xy = 0;
-		//int i = 0, j = 0;
+		float step_z = osg::PI / kRow;
+		float step_xy = 2 * osg::PI / kCol; 
 
-		//for (i = 0; i < kRow; i++)
-		//{
-		//	angle_z = i * step_z;
+		float angle_z = 0;
+		float angle_xy = 0;
 
-		//	for (j = 0; j < kCol; j++)
-		//	{
-		//		angle_xy = j * step_xy;
-		//		x[0] = radius * sin(angle_z) * cos(angle_xy);
-		//		y[0] = radius * sin(angle_z) * sin(angle_xy);
-		//		z[0] = radius * cos(angle_z);
-		//	}
-		//}
+		for (int i = 0; i <= kRow; i++)
+		{
+			angle_z = i * step_z;
+
+			for (int j = 0; j <= kCol; j++)
+			{
+				angle_xy = j * step_xy;
+				sphere->vertexs.emplace_back(MeshVertex());
+				sphere->vertexs.back().position.x() = radius * sin(angle_z) * cos(angle_xy);
+				sphere->vertexs.back().position.y() = radius * sin(angle_z) * sin(angle_xy);
+				sphere->vertexs.back().position.z() = radius * cos(angle_z);
+
+				sphere->vertexs.back().normal = sphere->vertexs.back().position;
+				sphere->vertexs.back().normal.normalize();
+
+				sphere->vertexs.back().position += pos;
+				sphere->vertexs.back().uv = osg::Vec2(float(i) / (kRow - 1), float(j) / (kCol - 1));
+			}
+		}
+
+		sphere->subMeshs.emplace_back(SubMeshData());
+		generateIndices(kRow, kCol, sphere->subMeshs.back().indices);
+
+		return sphere;
 	}
 
 }
