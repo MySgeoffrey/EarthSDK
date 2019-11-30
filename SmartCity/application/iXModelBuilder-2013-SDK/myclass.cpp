@@ -66,7 +66,7 @@ void MyClass::init()
 	this->mpGlobeWidget->getMapNodeRef()->addChild(this->mpGroup);
 
 	//临时测试管网
-	loadPipeData();
+	//loadPipeData();
 }
 
 void MyClass::loadPipeData()
@@ -416,32 +416,201 @@ MeshGenerator::JointData MyClass::createRectJoint_4_h()
 		return jointData;
 }
 
+MeshGenerator::JointData MyClass::createArcJoint_2_h()
+{
+	//水平两通圆形接头
+	osg::Vec3d offset(0.0, 0.009, 0);
+	//@1：弯头的位置
+	osg::Vec3d jointGeoPosition(116.0, 39.0, 3);
+	jointGeoPosition += offset;
+	//@2：第一个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point1(116.0, 39.0001, 3);
+	//@3：第二个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point2(116.0001, 39.0000, 3.3);
+	jointAdjacentGeoPosition_Point1 += offset;
+	jointAdjacentGeoPosition_Point2 += offset;
+
+	//@4：
+	double height = 3.0;
+	double width = 2.5;
+	double arcHeight = 1.0;
+	//@5：模型构建对象，根据用户输入构建相应的jointData
+	MeshGenerator::CModelCreator modelCreator;
+	MeshGenerator::JointData jointData = modelCreator.createArcJointData(
+		jointGeoPosition,
+		{
+		jointAdjacentGeoPosition_Point1,
+		jointAdjacentGeoPosition_Point2 },
+		height, width, arcHeight);
+		return jointData;
+}
+
+MeshGenerator::JointData MyClass::createArcJoint_3_h()
+{
+	//水平三通圆形接头
+	osg::Vec3d offset(0.0, 0.01, 0);
+	//@1：接头的位置
+	osg::Vec3d jointGeoPosition(116.0, 39.0, 3);
+	jointGeoPosition += offset;
+	//@2：第一个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point1(116.0, 39.0001, 3);
+	//@3：第二个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point2(116.0001, 39.0000, 3.3);
+	//@3：第三个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point3(115.9999, 38.9999, 2.9);
+	jointAdjacentGeoPosition_Point1 += offset;
+	jointAdjacentGeoPosition_Point2 += offset;
+	jointAdjacentGeoPosition_Point3 += offset;
+
+	//@4：弯头的半径（与对应管道的半径保持一致）
+	double height = 3.0;
+	double width = 2.5;
+	double arcHeight = 1.0;
+	//@5：模型构建对象，根据用户输入构建相应的jointData
+	MeshGenerator::CModelCreator modelCreator;
+	MeshGenerator::JointData jointData = modelCreator.createArcJointData(
+		jointGeoPosition,
+		{
+		jointAdjacentGeoPosition_Point1,
+		jointAdjacentGeoPosition_Point2,
+		jointAdjacentGeoPosition_Point3 },
+		height, width, arcHeight);
+		return jointData;
+}
+
+MeshGenerator::JointData MyClass::createArcJoint_4_h()
+{
+	osg::Vec3d offset(0.0, 0.011, 0);
+	//@1：接头的位置
+	osg::Vec3d jointGeoPosition(116.0, 39.0, 3);
+	jointGeoPosition += offset;
+	//@2：第一个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point1(116.0, 39.0001, 3);
+	//@3：第二个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point2(116.0001, 39.0000, 3.3);
+	//@4：第三个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point3(115.9999, 39.0000, 2.9);
+	//@5：第四个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point4(116.0, 38.999, 2.9);
+	jointAdjacentGeoPosition_Point1 += offset;
+	jointAdjacentGeoPosition_Point2 += offset;
+	jointAdjacentGeoPosition_Point3 += offset;
+	jointAdjacentGeoPosition_Point4 += offset;
+
+	double height = 3.0;
+	double width = 2.5;
+	double arcHeight = 1.0;
+
+	MeshGenerator::CModelCreator modelCreator;
+	MeshGenerator::JointData jointData = modelCreator.createArcJointData(
+		jointGeoPosition,
+		{
+		jointAdjacentGeoPosition_Point1,
+		jointAdjacentGeoPosition_Point2,
+		jointAdjacentGeoPosition_Point3,
+		jointAdjacentGeoPosition_Point4 },
+		height, width, arcHeight);
+		return jointData;
+}
+
+MeshGenerator::JointData MyClass::createLadderJoint_2_h()
+{
+	osg::Vec3d offset(0.0, 0.012, 0);
+	//@1：接头的位置
+	osg::Vec3d jointGeoPosition(116.0, 39.0, 3);
+	jointGeoPosition += offset;
+	//@2：第一个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point1(116.0, 39.0001, 3);
+	//@3：第二个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point2(116.0001, 39.0000, 3.3);
+	jointAdjacentGeoPosition_Point1 += offset;
+	jointAdjacentGeoPosition_Point2 += offset;
+
+	double upwidth = 3.0;
+	double bottomWidth = 5;
+	double height = 2.0;
+
+	MeshGenerator::CModelCreator modelCreator;
+	MeshGenerator::JointData jointData = modelCreator.createLadderJointData(
+		jointGeoPosition,
+		{
+		jointAdjacentGeoPosition_Point1,
+		jointAdjacentGeoPosition_Point2 },
+		upwidth, bottomWidth, height);
+		return jointData;
+}
+
+MeshGenerator::JointData MyClass::createLadderJoint_3_h()
+{
+	osg::Vec3d offset(0.0, 0.013, 0);
+	//@1：接头的位置
+	osg::Vec3d jointGeoPosition(116.0, 39.0, 3);
+	jointGeoPosition += offset;
+	//@2：第一个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point1(116.0, 39.0001, 3);
+	//@3：第二个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point2(116.0001, 39.0000, 3.3);
+	//@4：第三个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point3(115.9999, 39.0000, 2.9);
+	jointAdjacentGeoPosition_Point1 += offset;
+	jointAdjacentGeoPosition_Point2 += offset;
+	jointAdjacentGeoPosition_Point3 += offset;
+
+	double upwidth = 3.0;
+	double bottomWidth = 5;
+	double height = 2.0;
+
+	MeshGenerator::CModelCreator modelCreator;
+	MeshGenerator::JointData jointData = modelCreator.createLadderJointData(
+		jointGeoPosition,
+		{
+		jointAdjacentGeoPosition_Point1,
+		jointAdjacentGeoPosition_Point2,
+		jointAdjacentGeoPosition_Point3},
+		upwidth, bottomWidth, height);
+		return jointData;
+}
+
+MeshGenerator::JointData MyClass::createLadderJoint_4_h()
+{
+	osg::Vec3d offset(0.0, 0.014, 0);
+	//@1：接头的位置
+	osg::Vec3d jointGeoPosition(116.0, 39.0, 3);
+	jointGeoPosition += offset;
+	//@2：第一个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point1(116.0, 39.0001, 3);
+	//@3：第二个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point2(116.0001, 39.0000, 3.3);
+	//@4：第三个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point3(115.9999, 39.0000, 2.9);
+	//@5：第四个相邻的点位置
+	osg::Vec3d jointAdjacentGeoPosition_Point4(116.0, 38.999, 2.9);
+	jointAdjacentGeoPosition_Point1 += offset;
+	jointAdjacentGeoPosition_Point2 += offset;
+	jointAdjacentGeoPosition_Point3 += offset;
+	jointAdjacentGeoPosition_Point4 += offset;
+
+	double upwidth = 3.0;
+	double bottomWidth = 5;
+	double height = 2.0;
+
+	MeshGenerator::CModelCreator modelCreator;
+	MeshGenerator::JointData jointData = modelCreator.createLadderJointData(
+		jointGeoPosition,
+		{
+		jointAdjacentGeoPosition_Point1,
+		jointAdjacentGeoPosition_Point2,
+		jointAdjacentGeoPosition_Point3,
+		jointAdjacentGeoPosition_Point4 },
+		upwidth, bottomWidth, height);
+		return jointData;
+}
+
 void MyClass::slotCirclePipe1()
 {
-	//两通圆形接头
-	//@1：构建JointData
 	MeshGenerator::JointData jointData = createCircleJoint_2_h();
-	//@2：模型颜色
 	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
-	//@3：模型构建对象，根据用户输入的jointData生成模型数据节点
-	//当用户输入纹理时，以纹理显示，若纹理为空"",则以颜色显示
-	MeshGenerator::CModelCreator modelCreator;
-	osg::ref_ptr<osg::Node> pJointNode = modelCreator.createLinkerModel(
-		jointData, color, this->mLinkerTexturePath);
-
-	//@4：模型导出
-	if (pJointNode)
-	{
-		MeshGenerator::CModelExporter::execute(
-			pJointNode, MeshGenerator::ModelFileType::OBJ,"d:", "circle_2");
-	}
-	
-	//@5：可视化
-	if (pJointNode)
-	{
-		this->mpGroup->addChild(pJointNode);
-		this->mpGlobeWidget->flyTo(jointData.pos.x(), jointData.pos.y(), 20);
-	}
+	this->createJointModelAndExport(jointData, color, "CircleJoint_2_h", this->mLinkerTexturePath);
 }
 
 void MyClass::slotCirclePipe2()
@@ -451,25 +620,7 @@ void MyClass::slotCirclePipe2()
 	MeshGenerator::JointData jointData = createCircleJoint_3_h();
 	//@2：模型颜色
 	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
-	//@3：模型构建对象，根据用户输入的jointData生成模型数据节点
-	//当用户输入纹理时，以纹理显示，若纹理为空"",则以颜色显示
-	MeshGenerator::CModelCreator modelCreator;
-	osg::ref_ptr<osg::Node> pJointNode = modelCreator.createLinkerModel(
-		jointData, color, this->mLinkerTexturePath);
-
-	//@4：模型导出
-	if (pJointNode)
-	{
-		MeshGenerator::CModelExporter::execute(
-			pJointNode, MeshGenerator::ModelFileType::OBJ, "d:", "circle_3");
-	}
-
-	//@5：可视化
-	if (pJointNode)
-	{
-		this->mpGroup->addChild(pJointNode);
-		this->mpGlobeWidget->flyTo(jointData.pos.x(), jointData.pos.y(), 20);
-	}
+	this->createJointModelAndExport(jointData, color, "CircleJoint_3_h", this->mLinkerTexturePath);
 }
 
 void MyClass::slotCirclePipe3()
@@ -479,25 +630,7 @@ void MyClass::slotCirclePipe3()
 	MeshGenerator::JointData jointData = createCircleJoint_3_v();
 	//@2：模型颜色
 	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
-	//@3：模型构建对象，根据用户输入的jointData生成模型数据节点
-	//当用户输入纹理时，以纹理显示，若纹理为空"",则以颜色显示
-	MeshGenerator::CModelCreator modelCreator;
-	osg::ref_ptr<osg::Node> pJointNode = modelCreator.createLinkerModel(
-		jointData, color, this->mLinkerTexturePath);
-
-	//@4：模型导出
-	if (pJointNode)
-	{
-		MeshGenerator::CModelExporter::execute(
-			pJointNode, MeshGenerator::ModelFileType::OBJ, "d:", "circle_3_1");
-	}
-
-	//@5：可视化
-	if (pJointNode)
-	{
-		this->mpGroup->addChild(pJointNode);
-		this->mpGlobeWidget->flyTo(jointData.pos.x(), jointData.pos.y(), 20);
-	}
+	this->createJointModelAndExport(jointData, color, "CircleJoint_3_v", this->mLinkerTexturePath);
 }
 
 void MyClass::slotCirclePipe4()
@@ -507,25 +640,7 @@ void MyClass::slotCirclePipe4()
 	MeshGenerator::JointData jointData = createCircleJoint_4_h();
 	//@2：模型颜色
 	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
-	//@3：模型构建对象，根据用户输入的jointData生成模型数据节点
-	//当用户输入纹理时，以纹理显示，若纹理为空"",则以颜色显示
-	MeshGenerator::CModelCreator modelCreator;
-	osg::ref_ptr<osg::Node> pJointNode = modelCreator.createLinkerModel(
-		jointData, color, this->mLinkerTexturePath);
-
-	//@4：模型导出
-	if (pJointNode)
-	{
-		MeshGenerator::CModelExporter::execute(
-			pJointNode, MeshGenerator::ModelFileType::OBJ, "d:", "circle_3");
-	}
-
-	//@5：可视化
-	if (pJointNode)
-	{
-		this->mpGroup->addChild(pJointNode);
-		this->mpGlobeWidget->flyTo(jointData.pos.x(), jointData.pos.y(), 20);
-	}
+	this->createJointModelAndExport(jointData, color, "CircleJoint_4_h", this->mLinkerTexturePath);
 }
 
 void MyClass::slotRectPipe1()
@@ -534,23 +649,7 @@ void MyClass::slotRectPipe1()
 	//@1：建模
 	MeshGenerator::JointData jointData = createRectJoint_2_h();
 	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
-	MeshGenerator::CModelCreator modelCreator;
-	osg::ref_ptr<osg::Node> pJointNode = modelCreator.createLinkerModel(
-		jointData, color, this->mLinkerTexturePath);
-
-	//@2：导出
-	if (pJointNode)
-	{
-		MeshGenerator::CModelExporter::execute(
-			pJointNode, MeshGenerator::ModelFileType::OBJ, "d:", "rect_2");
-	}
-
-	//@3：可视化
-	if (pJointNode)
-	{
-		this->mpGroup->addChild(pJointNode);
-		this->mpGlobeWidget->flyTo(jointData.pos.x(), jointData.pos.y(), 20);
-	}
+	this->createJointModelAndExport(jointData, color, "RectJoint_2_h", this->mLinkerTexturePath);
 }
 
 void MyClass::slotRectPipe2()
@@ -559,23 +658,7 @@ void MyClass::slotRectPipe2()
 	//@1：建模
 	MeshGenerator::JointData jointData = createRectJoint_3_h();
 	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
-	MeshGenerator::CModelCreator modelCreator;
-	osg::ref_ptr<osg::Node> pJointNode = modelCreator.createLinkerModel(
-		jointData, color, this->mLinkerTexturePath);
-
-	//@2：导出
-	if (pJointNode)
-	{
-		MeshGenerator::CModelExporter::execute(
-			pJointNode, MeshGenerator::ModelFileType::OBJ, "d:", "rect_3_h");
-	}
-
-	//@3：可视化
-	if (pJointNode)
-	{
-		this->mpGroup->addChild(pJointNode);
-		this->mpGlobeWidget->flyTo(jointData.pos.x(), jointData.pos.y(), 20);
-	}
+	this->createJointModelAndExport(jointData, color, "RectJoint_3_h", this->mLinkerTexturePath);
 }
 
 void MyClass::slotRectPipe3()
@@ -584,23 +667,7 @@ void MyClass::slotRectPipe3()
 	//@1：建模
 	MeshGenerator::JointData jointData = createRectJoint_3_v();
 	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
-	MeshGenerator::CModelCreator modelCreator;
-	osg::ref_ptr<osg::Node> pJointNode = modelCreator.createLinkerModel(
-		jointData, color, this->mLinkerTexturePath);
-
-	//@2：导出
-	if (pJointNode)
-	{
-		MeshGenerator::CModelExporter::execute(
-			pJointNode, MeshGenerator::ModelFileType::OBJ, "d:", "rect_3_v");
-	}
-
-	//@3：可视化
-	if (pJointNode)
-	{
-		this->mpGroup->addChild(pJointNode);
-		this->mpGlobeWidget->flyTo(jointData.pos.x(), jointData.pos.y(), 20);
-	}
+	this->createJointModelAndExport(jointData, color, "RectJoint_3_v", this->mLinkerTexturePath);
 }
 
 void MyClass::slotRectPipe4()
@@ -609,23 +676,7 @@ void MyClass::slotRectPipe4()
 	//@1：建模
 	MeshGenerator::JointData jointData = createRectJoint_4_h();
 	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
-	MeshGenerator::CModelCreator modelCreator;
-	osg::ref_ptr<osg::Node> pJointNode = modelCreator.createLinkerModel(
-		jointData, color, this->mLinkerTexturePath);
-
-	//@2：导出
-	if (pJointNode)
-	{
-		MeshGenerator::CModelExporter::execute(
-			pJointNode, MeshGenerator::ModelFileType::OBJ, "d:", "rect_4_h");
-	}
-
-	//@3：可视化
-	if (pJointNode)
-	{
-		this->mpGroup->addChild(pJointNode);
-		this->mpGlobeWidget->flyTo(jointData.pos.x(), jointData.pos.y(), 20);
-	}
+	this->createJointModelAndExport(jointData, color, "RectJoint_4_h", this->mLinkerTexturePath);
 }
 
 void MyClass::slotCirclePipeLine()
@@ -633,23 +684,7 @@ void MyClass::slotCirclePipeLine()
 	MeshGenerator::JointData jointData1 = createCircleJoint_3_v();
 	MeshGenerator::JointData jointData2 = createCircleJoint_4_h();
 	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
-	MeshGenerator::CModelCreator modelCreator;
-	osg::ref_ptr<osg::Node> pJointNode = modelCreator.createPipeModel(
-		jointData1, jointData2,color, this->mPipeTexturePath);
-
-	//@2：导出
-	if (pJointNode)
-	{
-		MeshGenerator::CModelExporter::execute(
-			pJointNode, MeshGenerator::ModelFileType::OBJ, "d:", "circle_pipe_2");
-	}
-
-	//@3：可视化
-	if (pJointNode)
-	{
-		this->mpGroup->addChild(pJointNode);
-		this->mpGlobeWidget->flyTo(jointData1.pos.x(), jointData1.pos.y(), 20);
-	}
+	this->createSegmentModelAndExport(jointData1, jointData2, color, "CirclePipeLine", this->mPipeTexturePath);
 }
 
 void MyClass::slotRectPipeLine()
@@ -657,21 +692,131 @@ void MyClass::slotRectPipeLine()
 	MeshGenerator::JointData jointData1 = createRectJoint_3_v();
 	MeshGenerator::JointData jointData2 = createRectJoint_4_h();
 	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
+	this->createSegmentModelAndExport(jointData1, jointData2, color, "CirclePipeLine", this->mPipeTexturePath);
+}
+
+void MyClass::slotArcPipe_2()
+{
+	//两通圆形接头
+	//@1：构建JointData
+	MeshGenerator::JointData jointData = createArcJoint_2_h();
+	//@2：模型颜色
+	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
+	this->createJointModelAndExport(jointData, color, "ArcJoint_2_h", this->mLinkerTexturePath);
+}
+
+void MyClass::slotArcPipe_3_h()
+{
+	//两通圆形接头
+	//@1：构建JointData
+	MeshGenerator::JointData jointData = createArcJoint_3_h();
+	//@2：模型颜色
+	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
+	this->createJointModelAndExport(jointData, color, "ArcJoint_3_h", this->mLinkerTexturePath);
+}
+
+void MyClass::slotArcPipe_4_h()
+{
+	//两通圆形接头
+	//@1：构建JointData
+	MeshGenerator::JointData jointData = createArcJoint_4_h();
+	//@2：模型颜色
+	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
+	this->createJointModelAndExport(jointData, color, "ArcJoint_4_h", this->mLinkerTexturePath);
+}
+
+void MyClass::slotArcPipeLine()
+{
+	MeshGenerator::JointData jointData1 = createArcJoint_3_h();
+	MeshGenerator::JointData jointData2 = createArcJoint_4_h();
+	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
+	this->createSegmentModelAndExport(jointData1, jointData2, color, "ArcPipeLine", this->mPipeTexturePath);
+}
+
+void MyClass::slotLadderPipe_2()
+{
+	//两通圆形接头
+	//@1：构建JointData
+	MeshGenerator::JointData jointData = createLadderJoint_2_h();
+	//@2：模型颜色
+	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
+	this->createJointModelAndExport(jointData, color, "LadderJoint_2_h", this->mLinkerTexturePath);
+}
+
+void MyClass::slotLadderPipe_3_h()
+{
+	//两通圆形接头
+	//@1：构建JointData
+	MeshGenerator::JointData jointData = createLadderJoint_3_h();
+	//@2：模型颜色
+	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
+	this->createJointModelAndExport(jointData, color, "LadderJoint_3_h", this->mLinkerTexturePath);
+}
+
+void MyClass::slotLadderPipe_4_h()
+{
+	//两通圆形接头
+	//@1：构建JointData
+	MeshGenerator::JointData jointData = createLadderJoint_4_h();
+	//@2：模型颜色
+	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
+	this->createJointModelAndExport(jointData, color, "LadderJoint_4_h", this->mLinkerTexturePath);
+}
+
+void MyClass::slotLadderPipeLine()
+{
+	MeshGenerator::JointData jointData1 = createLadderJoint_3_h();
+	MeshGenerator::JointData jointData2 = createLadderJoint_4_h();
+	osg::Vec4 color(1.0, 0.0, 0.0, 1.0);
+	this->createSegmentModelAndExport(jointData1, jointData2, color, "LadderPipeLine", this->mPipeTexturePath);
+}
+
+void MyClass::createJointModelAndExport(const MeshGenerator::JointData& in_jointData,
+	const osg::Vec4& in_color, const std::string& in_name, const std::string& in_texturePath)
+{
+	//@2：模型颜色
+	//@3：模型构建对象，根据用户输入的jointData生成模型数据节点
+	//当用户输入纹理时，以纹理显示，若纹理为空"",则以颜色显示
+	MeshGenerator::CModelCreator modelCreator;
+	osg::ref_ptr<osg::Node> pJointNode = modelCreator.createLinkerModel(
+		in_jointData, in_color, in_texturePath);
+
+	//@4：模型导出
+	if (pJointNode)
+	{
+		std::string runPath = osgDB::getCurrentWorkingDirectory();
+		MeshGenerator::CModelExporter::execute(
+			pJointNode, MeshGenerator::ModelFileType::OBJ, runPath, in_name);
+	}
+
+	//@5：可视化
+	if (pJointNode)
+	{
+		this->mpGroup->addChild(pJointNode);
+		this->mpGlobeWidget->flyTo(in_jointData.pos.x(), in_jointData.pos.y(), 20);
+	}
+}
+
+void MyClass::createSegmentModelAndExport(const MeshGenerator::JointData& in_jointData1,
+	const MeshGenerator::JointData& in_jointData2,
+	const osg::Vec4& in_color, const std::string& in_name, const std::string& in_texturePath)
+{
 	MeshGenerator::CModelCreator modelCreator;
 	osg::ref_ptr<osg::Node> pJointNode = modelCreator.createPipeModel(
-		jointData1, jointData2, color, this->mPipeTexturePath);
+		in_jointData1, in_jointData2, in_color, in_texturePath);
 
 	//@2：导出
 	if (pJointNode)
 	{
+		std::string runPath = osgDB::getCurrentWorkingDirectory();
 		MeshGenerator::CModelExporter::execute(
-			pJointNode, MeshGenerator::ModelFileType::OBJ, "d:", "rect_pipe_2");
+			pJointNode, MeshGenerator::ModelFileType::OBJ, runPath, in_name);
 	}
 
 	//@3：可视化
 	if (pJointNode)
 	{
 		this->mpGroup->addChild(pJointNode);
-		this->mpGlobeWidget->flyTo(jointData1.pos.x(), jointData1.pos.y(), 20);
+		this->mpGlobeWidget->flyTo(in_jointData1.pos.x(), in_jointData1.pos.y(), 20);
 	}
 }

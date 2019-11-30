@@ -28,6 +28,14 @@ public:
 	void slotRectPipe4();
 	void slotCirclePipeLine();
 	void slotRectPipeLine();
+	void slotArcPipe_2();
+	void slotArcPipe_3_h();
+	void slotArcPipe_4_h();
+	void slotArcPipeLine();
+	void slotLadderPipe_2();
+	void slotLadderPipe_3_h();
+	void slotLadderPipe_4_h();
+	void slotLadderPipeLine();
 
 	void init();
 	void loadPipeData();
@@ -40,6 +48,23 @@ public:
 	MeshGenerator::JointData createRectJoint_3_h();
 	MeshGenerator::JointData createRectJoint_3_v();
 	MeshGenerator::JointData createRectJoint_4_h();
+
+	MeshGenerator::JointData createArcJoint_2_h();
+	MeshGenerator::JointData createArcJoint_3_h();
+	MeshGenerator::JointData createArcJoint_4_h();
+	
+	MeshGenerator::JointData createLadderJoint_2_h();
+	MeshGenerator::JointData createLadderJoint_3_h();
+	MeshGenerator::JointData createLadderJoint_4_h();
+
+	void createJointModelAndExport(const MeshGenerator::JointData& in_jointData,
+		const osg::Vec4& in_color,const std::string& in_name,
+		const std::string& in_texturePath);
+
+	void createSegmentModelAndExport(const MeshGenerator::JointData& in_jointData1,
+		const MeshGenerator::JointData& in_jointData2,
+		const osg::Vec4& in_color, const std::string& in_name,
+		const std::string& in_texturePath);
 
 private:
 	Ui::iXModeBuilderSDK ui;

@@ -1,4 +1,5 @@
 <RCC>
-    <qresource prefix="MyClass">
-    </qresource>
+  <qresource prefix="MyClass">
+    <file>main.ico</file>
+  </qresource>
 </RCC>

@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>770</width>
+    <width>649</width>
     <height>386</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>iXModelBuilder-2013-SDK</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="myclass.qrc">
+    <normaloff>:/MyClass/main.ico</normaloff>:/MyClass/main.ico</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -47,7 +51,7 @@
          </size>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
@@ -186,9 +190,9 @@
         </widget>
         <widget class="QWidget" name="tab_2">
          <attribute name="title">
-          <string>通道管廊参数化</string>
+          <string>巷道隧道参数化</string>
          </attribute>
-         <widget class="QPushButton" name="rectPipe_5">
+         <widget class="QPushButton" name="ladderPipe_4_h">
           <property name="geometry">
            <rect>
             <x>240</x>
@@ -201,20 +205,7 @@
            <string>梯形截面：水平四通建模与输出</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="rectPipe_6">
-          <property name="geometry">
-           <rect>
-            <x>240</x>
-            <y>100</y>
-            <width>211</width>
-            <height>23</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>梯形截面：四通接头建模与输出</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="rectPipe_7">
+         <widget class="QPushButton" name="ladderPipe_3_h">
           <property name="geometry">
            <rect>
             <x>240</x>
@@ -227,20 +218,7 @@
            <string>梯形截面：水平三通建模与输出</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="circlePipe_5">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>100</y>
-            <width>211</width>
-            <height>23</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>拱形截面： 四通接头建模与输出</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="rectPipe_8">
+         <widget class="QPushButton" name="ladderPipe_2">
           <property name="geometry">
            <rect>
             <x>240</x>
@@ -253,7 +231,7 @@
            <string>梯形截面：两通弯头建模与输出</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="circlePipe_6">
+         <widget class="QPushButton" name="arcPipe_2">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -266,7 +244,7 @@
            <string>拱形截面： 两通弯头建模与输出</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="circlePipe_7">
+         <widget class="QPushButton" name="arcPipe_4_h">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -279,7 +257,7 @@
            <string>拱形截面： 水平四通建模与输出</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="circlePipe_8">
+         <widget class="QPushButton" name="arcPipe_3_h">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -290,6 +268,32 @@
           </property>
           <property name="text">
            <string>拱形截面： 水平三通建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="arcPipeLine">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>100</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>拱形截面：水平管段建模与输出</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="ladderPipeLine">
+          <property name="geometry">
+           <rect>
+            <x>240</x>
+            <y>100</y>
+            <width>211</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>梯形截面：水平管段建模与输出</string>
           </property>
          </widget>
         </widget>
@@ -482,6 +486,134 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>arcPipe_2</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotArcPipe_2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>43</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>arcPipe_3_h</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotArcPipe_3_h()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>arcPipe_4_h</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotArcPipe_4_h()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>103</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>arcPipeLine</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotArcPipeLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ladderPipe_2</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotLadderPipe_2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>348</x>
+     <y>43</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ladderPipe_3_h</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotLadderPipe_3_h()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>348</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ladderPipe_4_h</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotLadderPipe_4_h()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>348</x>
+     <y>103</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ladderPipeLine</sender>
+   <signal>clicked()</signal>
+   <receiver>iXModeBuilderSDK</receiver>
+   <slot>slotLadderPipeLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>348</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>slotCirclePipe1()</slot>
@@ -494,5 +626,13 @@
   <slot>slotRectPipe4()</slot>
   <slot>slotCirclePipeLine()</slot>
   <slot>slotRectPipeLine()</slot>
+  <slot>slotLadderPipe_2()</slot>
+  <slot>slotLadderPipe_3_h()</slot>
+  <slot>slotLadderPipe_4_h()</slot>
+  <slot>slotLadderPipeLine()</slot>
+  <slot>slotArcPipe_2()</slot>
+  <slot>slotArcPipe_3_h()</slot>
+  <slot>slotArcPipe_4_h()</slot>
+  <slot>slotArcPipeLine()</slot>
  </slots>
 </ui>

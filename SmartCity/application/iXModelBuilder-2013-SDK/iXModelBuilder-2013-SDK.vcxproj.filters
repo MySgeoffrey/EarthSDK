@@ -66,5 +66,14 @@
     <ClInclude Include="GeneratedFiles\ui_myclass.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="iXModelBuilder-2013-SDK.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="main.ico" />
   </ItemGroup>
 </Project>

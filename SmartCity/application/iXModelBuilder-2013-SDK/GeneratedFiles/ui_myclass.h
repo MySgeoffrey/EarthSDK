@@ -45,21 +45,24 @@ public:
     QPushButton *rectPipeLine;
     QPushButton *circlePipeLine;
     QWidget *tab_2;
-    QPushButton *rectPipe_5;
-    QPushButton *rectPipe_6;
-    QPushButton *rectPipe_7;
-    QPushButton *circlePipe_5;
-    QPushButton *rectPipe_8;
-    QPushButton *circlePipe_6;
-    QPushButton *circlePipe_7;
-    QPushButton *circlePipe_8;
+    QPushButton *ladderPipe_4_h;
+    QPushButton *ladderPipe_3_h;
+    QPushButton *ladderPipe_2;
+    QPushButton *arcPipe_2;
+    QPushButton *arcPipe_4_h;
+    QPushButton *arcPipe_3_h;
+    QPushButton *arcPipeLine;
+    QPushButton *ladderPipeLine;
     QGridLayout *gridLayout;
 
     void setupUi(QMainWindow *iXModeBuilderSDK)
     {
         if (iXModeBuilderSDK->objectName().isEmpty())
             iXModeBuilderSDK->setObjectName(QStringLiteral("iXModeBuilderSDK"));
-        iXModeBuilderSDK->resize(770, 386);
+        iXModeBuilderSDK->resize(649, 386);
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/MyClass/main.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        iXModeBuilderSDK->setWindowIcon(icon);
         action = new QAction(iXModeBuilderSDK);
         action->setObjectName(QStringLiteral("action"));
         action_2 = new QAction(iXModeBuilderSDK);
@@ -117,30 +120,30 @@ public:
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QStringLiteral("tab_2"));
-        rectPipe_5 = new QPushButton(tab_2);
-        rectPipe_5->setObjectName(QStringLiteral("rectPipe_5"));
-        rectPipe_5->setGeometry(QRect(240, 70, 211, 23));
-        rectPipe_6 = new QPushButton(tab_2);
-        rectPipe_6->setObjectName(QStringLiteral("rectPipe_6"));
-        rectPipe_6->setGeometry(QRect(240, 100, 211, 23));
-        rectPipe_7 = new QPushButton(tab_2);
-        rectPipe_7->setObjectName(QStringLiteral("rectPipe_7"));
-        rectPipe_7->setGeometry(QRect(240, 40, 211, 23));
-        circlePipe_5 = new QPushButton(tab_2);
-        circlePipe_5->setObjectName(QStringLiteral("circlePipe_5"));
-        circlePipe_5->setGeometry(QRect(10, 100, 211, 23));
-        rectPipe_8 = new QPushButton(tab_2);
-        rectPipe_8->setObjectName(QStringLiteral("rectPipe_8"));
-        rectPipe_8->setGeometry(QRect(240, 10, 211, 23));
-        circlePipe_6 = new QPushButton(tab_2);
-        circlePipe_6->setObjectName(QStringLiteral("circlePipe_6"));
-        circlePipe_6->setGeometry(QRect(10, 10, 211, 23));
-        circlePipe_7 = new QPushButton(tab_2);
-        circlePipe_7->setObjectName(QStringLiteral("circlePipe_7"));
-        circlePipe_7->setGeometry(QRect(10, 70, 211, 23));
-        circlePipe_8 = new QPushButton(tab_2);
-        circlePipe_8->setObjectName(QStringLiteral("circlePipe_8"));
-        circlePipe_8->setGeometry(QRect(10, 40, 211, 23));
+        ladderPipe_4_h = new QPushButton(tab_2);
+        ladderPipe_4_h->setObjectName(QStringLiteral("ladderPipe_4_h"));
+        ladderPipe_4_h->setGeometry(QRect(240, 70, 211, 23));
+        ladderPipe_3_h = new QPushButton(tab_2);
+        ladderPipe_3_h->setObjectName(QStringLiteral("ladderPipe_3_h"));
+        ladderPipe_3_h->setGeometry(QRect(240, 40, 211, 23));
+        ladderPipe_2 = new QPushButton(tab_2);
+        ladderPipe_2->setObjectName(QStringLiteral("ladderPipe_2"));
+        ladderPipe_2->setGeometry(QRect(240, 10, 211, 23));
+        arcPipe_2 = new QPushButton(tab_2);
+        arcPipe_2->setObjectName(QStringLiteral("arcPipe_2"));
+        arcPipe_2->setGeometry(QRect(10, 10, 211, 23));
+        arcPipe_4_h = new QPushButton(tab_2);
+        arcPipe_4_h->setObjectName(QStringLiteral("arcPipe_4_h"));
+        arcPipe_4_h->setGeometry(QRect(10, 70, 211, 23));
+        arcPipe_3_h = new QPushButton(tab_2);
+        arcPipe_3_h->setObjectName(QStringLiteral("arcPipe_3_h"));
+        arcPipe_3_h->setGeometry(QRect(10, 40, 211, 23));
+        arcPipeLine = new QPushButton(tab_2);
+        arcPipeLine->setObjectName(QStringLiteral("arcPipeLine"));
+        arcPipeLine->setGeometry(QRect(10, 100, 211, 23));
+        ladderPipeLine = new QPushButton(tab_2);
+        ladderPipeLine->setObjectName(QStringLiteral("ladderPipeLine"));
+        ladderPipeLine->setGeometry(QRect(240, 100, 211, 23));
         tabWidget->addTab(tab_2, QString());
 
         verticalLayout->addWidget(tabWidget);
@@ -167,8 +170,16 @@ public:
         QObject::connect(rectPipe_4, SIGNAL(clicked()), iXModeBuilderSDK, SLOT(slotRectPipe4()));
         QObject::connect(circlePipeLine, SIGNAL(clicked()), iXModeBuilderSDK, SLOT(slotCirclePipeLine()));
         QObject::connect(rectPipeLine, SIGNAL(clicked()), iXModeBuilderSDK, SLOT(slotRectPipeLine()));
+        QObject::connect(arcPipe_2, SIGNAL(clicked()), iXModeBuilderSDK, SLOT(slotArcPipe_2()));
+        QObject::connect(arcPipe_3_h, SIGNAL(clicked()), iXModeBuilderSDK, SLOT(slotArcPipe_3_h()));
+        QObject::connect(arcPipe_4_h, SIGNAL(clicked()), iXModeBuilderSDK, SLOT(slotArcPipe_4_h()));
+        QObject::connect(arcPipeLine, SIGNAL(clicked()), iXModeBuilderSDK, SLOT(slotArcPipeLine()));
+        QObject::connect(ladderPipe_2, SIGNAL(clicked()), iXModeBuilderSDK, SLOT(slotLadderPipe_2()));
+        QObject::connect(ladderPipe_3_h, SIGNAL(clicked()), iXModeBuilderSDK, SLOT(slotLadderPipe_3_h()));
+        QObject::connect(ladderPipe_4_h, SIGNAL(clicked()), iXModeBuilderSDK, SLOT(slotLadderPipe_4_h()));
+        QObject::connect(ladderPipeLine, SIGNAL(clicked()), iXModeBuilderSDK, SLOT(slotLadderPipeLine()));
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(iXModeBuilderSDK);
@@ -190,15 +201,15 @@ public:
         rectPipeLine->setText(QApplication::translate("iXModeBuilderSDK", "\346\226\271\345\275\242\346\210\252\351\235\242\357\274\232\347\256\241\346\256\265\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
         circlePipeLine->setText(QApplication::translate("iXModeBuilderSDK", "\345\234\206\345\275\242\346\210\252\351\235\242\357\274\232\347\256\241\346\256\265\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("iXModeBuilderSDK", "\347\256\241\351\201\223\346\216\245\345\244\264\345\217\202\346\225\260\345\214\226", Q_NULLPTR));
-        rectPipe_5->setText(QApplication::translate("iXModeBuilderSDK", "\346\242\257\345\275\242\346\210\252\351\235\242\357\274\232\346\260\264\345\271\263\345\233\233\351\200\232\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
-        rectPipe_6->setText(QApplication::translate("iXModeBuilderSDK", "\346\242\257\345\275\242\346\210\252\351\235\242\357\274\232\345\233\233\351\200\232\346\216\245\345\244\264\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
-        rectPipe_7->setText(QApplication::translate("iXModeBuilderSDK", "\346\242\257\345\275\242\346\210\252\351\235\242\357\274\232\346\260\264\345\271\263\344\270\211\351\200\232\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
-        circlePipe_5->setText(QApplication::translate("iXModeBuilderSDK", "\346\213\261\345\275\242\346\210\252\351\235\242\357\274\232 \345\233\233\351\200\232\346\216\245\345\244\264\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
-        rectPipe_8->setText(QApplication::translate("iXModeBuilderSDK", "\346\242\257\345\275\242\346\210\252\351\235\242\357\274\232\344\270\244\351\200\232\345\274\257\345\244\264\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
-        circlePipe_6->setText(QApplication::translate("iXModeBuilderSDK", "\346\213\261\345\275\242\346\210\252\351\235\242\357\274\232 \344\270\244\351\200\232\345\274\257\345\244\264\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
-        circlePipe_7->setText(QApplication::translate("iXModeBuilderSDK", "\346\213\261\345\275\242\346\210\252\351\235\242\357\274\232 \346\260\264\345\271\263\345\233\233\351\200\232\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
-        circlePipe_8->setText(QApplication::translate("iXModeBuilderSDK", "\346\213\261\345\275\242\346\210\252\351\235\242\357\274\232 \346\260\264\345\271\263\344\270\211\351\200\232\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("iXModeBuilderSDK", "\351\200\232\351\201\223\347\256\241\345\273\212\345\217\202\346\225\260\345\214\226", Q_NULLPTR));
+        ladderPipe_4_h->setText(QApplication::translate("iXModeBuilderSDK", "\346\242\257\345\275\242\346\210\252\351\235\242\357\274\232\346\260\264\345\271\263\345\233\233\351\200\232\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
+        ladderPipe_3_h->setText(QApplication::translate("iXModeBuilderSDK", "\346\242\257\345\275\242\346\210\252\351\235\242\357\274\232\346\260\264\345\271\263\344\270\211\351\200\232\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
+        ladderPipe_2->setText(QApplication::translate("iXModeBuilderSDK", "\346\242\257\345\275\242\346\210\252\351\235\242\357\274\232\344\270\244\351\200\232\345\274\257\345\244\264\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
+        arcPipe_2->setText(QApplication::translate("iXModeBuilderSDK", "\346\213\261\345\275\242\346\210\252\351\235\242\357\274\232 \344\270\244\351\200\232\345\274\257\345\244\264\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
+        arcPipe_4_h->setText(QApplication::translate("iXModeBuilderSDK", "\346\213\261\345\275\242\346\210\252\351\235\242\357\274\232 \346\260\264\345\271\263\345\233\233\351\200\232\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
+        arcPipe_3_h->setText(QApplication::translate("iXModeBuilderSDK", "\346\213\261\345\275\242\346\210\252\351\235\242\357\274\232 \346\260\264\345\271\263\344\270\211\351\200\232\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
+        arcPipeLine->setText(QApplication::translate("iXModeBuilderSDK", "\346\213\261\345\275\242\346\210\252\351\235\242\357\274\232\346\260\264\345\271\263\347\256\241\346\256\265\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
+        ladderPipeLine->setText(QApplication::translate("iXModeBuilderSDK", "\346\242\257\345\275\242\346\210\252\351\235\242\357\274\232\346\260\264\345\271\263\347\256\241\346\256\265\345\273\272\346\250\241\344\270\216\350\276\223\345\207\272", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("iXModeBuilderSDK", "\345\267\267\351\201\223\351\232\247\351\201\223\345\217\202\346\225\260\345\214\226", Q_NULLPTR));
     } // retranslateUi
 
 };
