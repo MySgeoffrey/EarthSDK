@@ -1,8 +1,8 @@
 #ifndef MeshGenerator_h__
 #define MeshGenerator_h__
 
-#include "Macro.h"
-#include "MeshDefine.h"
+#include "modelbuilder/Macro.h"
+#include "modelbuilder/MeshDefine.h"
 #include "osgEarth\GeoData"
 
 namespace osg
@@ -43,6 +43,8 @@ namespace MeshGenerator
 		
 		MeshData* createPipeSegmentLonLat(const JointData& first, const JointData& second);
 
+		MeshData* createPipeSegmentLonLat(const JointData& first, const JointData& second, const std::vector<osg::Vec3d>& points);
+
 		MeshData* createPipeSegmentXYZ(const JointData& first, const JointData& second);
 
 
@@ -61,17 +63,21 @@ namespace MeshGenerator
 
 	private:
 		MeshData* createJoint(const JointData& joint, bool withHat = true);
-
 		MeshData* createPipeSegment(const JointData& first, const JointData& second);
-
+		MeshData* createPipeSegment(const JointData& first, const JointData& second,const std::vector<osg::Vec3d>& points);
 		MeshData* createLoftLonLat(const osg::Vec3d& start, const osg::Vec3d& end, const SectionDesc& desc);
 
 		MeshData* createLoft(const osg::Vec3& start, const osg::Vec3& end, const SectionDesc& desc);
-
 		MeshData* createLoft(const std::vector<osg::Vec3>& pts, const SectionDesc& desc, bool isColsed = false);
+		MeshData* createLoft(const std::vector<osg::Vec3>& pts, const SectionDesc& descStart, const SectionDesc& descEnd, bool isColsed = false);
 
 		MeshData* createLoft(const std::vector<osg::Vec3>& pts, const std::vector<osg::Vec3>& outline,
 			const osg::Vec3& frontDir = osg::Y_AXIS, bool isColsed = false);
+		MeshData* createLoft(const std::vector<osg::Vec3>& pts, const SectionDesc& desc,
+			const osg::Vec3& startFront, const osg::Vec3& endFront);
+		MeshData* createLoft(const std::vector<osg::Vec3>& pts, const SectionDesc& descStart, 
+			const SectionDesc& descEnd,const osg::Vec3& startFront, const osg::Vec3& endFront);
+
 
 		bool calcutePipeSegmentPosImpl(const JointData& first, const JointData& second, osg::Vec3d& start, osg::Vec3d& end,bool islla);
 
@@ -84,8 +90,7 @@ namespace MeshGenerator
 
 		MeshData* createJointCircle(const JointData& joint, bool withHat = true);
 		MeshData* createJointGeneral(const JointData& joint, bool withHat = true);
-
-		MeshData* createJointOnlyTwo(const JointData& joint, bool withHat = true);
+		MeshData* createJointOnlyTwo(const JointData& joint, bool withHat = true, bool useThirdorderBessel = false);
 
 		MeshData* createJointGeneralCrossBottom(const JointData& joint, const std::vector<SectionBase*>& sections, 
 			const std::vector<osg::Matrix>& transform);
@@ -96,8 +101,6 @@ namespace MeshGenerator
 		MeshData* createJointGeneralCrossTopSide(const JointData& joint, const std::vector<SectionBase*>& sections,
 			const std::vector<osg::Matrix>& transform);
 
-		MeshData* createLoft(const std::vector<osg::Vec3>& pts, const SectionDesc& desc,
-			const osg::Vec3& startFront, const osg::Vec3& endFront);
 
 		MeshData* createJointHat(const SectionDesc& desc, const osg::Vec3& pos, const osg::Vec3& dir);
 
@@ -125,9 +128,7 @@ namespace MeshGenerator
 		float _hatThickness = 0.1f;
 
 		float _fixedOffset = 0.5f;
-
 		bool _circleSpecialProcess = true;
-
 		bool _sameOffset = false;
 	};
 }

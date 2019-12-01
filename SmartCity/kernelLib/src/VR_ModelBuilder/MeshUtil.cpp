@@ -255,6 +255,11 @@ namespace MeshGenerator
 
 	MeshData* MeshUtil::createLoft(const std::vector<osg::Vec3>& pts, const SectionDesc& desc, bool isColsed)
 	{
+		return createLoft(pts, desc, desc, isColsed);
+	}
+
+	MeshData* MeshUtil::createLoft(const std::vector<osg::Vec3>& pts, const SectionDesc& descStart, const SectionDesc& descEnd, bool isColsed /*= false*/)
+	{
 		if (pts.size() < 2)
 		{
 			return nullptr;
@@ -281,7 +286,7 @@ namespace MeshGenerator
 				v2.normalize();
 
 				auto front = v1 + v2;
-				return createLoft(newPts, desc, front, front);
+				return createLoft(newPts, descStart, descEnd, front, front);
 			}
 			else
 			{
@@ -292,31 +297,49 @@ namespace MeshGenerator
 				v2.normalize();
 
 				auto front = v1 + v2;
-				return createLoft(pts, desc, front, front);
+				return createLoft(pts, descStart, descEnd, front, front);
 			}
 		}
 		else
 		{
 			auto startFront = pts[1] - pts[0];
 			auto endFront = pts[pts.size() - 1] - pts[pts.size() - 2];
-			return createLoft(pts, desc, startFront, endFront);
+			return createLoft(pts, descStart, descEnd, startFront, endFront);
 		}
 	}
 
 	MeshData* MeshUtil::createLoft(const std::vector<osg::Vec3>& pts, const SectionDesc& desc,
 		const osg::Vec3& startFront, const osg::Vec3& endFront)
 	{
+		return createLoft(pts, desc, desc, startFront, endFront);
+	}
+
+	MeshData* MeshUtil::createLoft(const std::vector<osg::Vec3>& pts, const std::vector<osg::Vec3>& outline, const osg::Vec3& frontDir /*= osg::Y_AXIS*/, bool isColsed /*= false*/)
+	{
+		// to do
+
+		return nullptr;
+	}
+
+	MeshData* MeshUtil::createLoft(const std::vector<osg::Vec3>& pts, const SectionDesc& descStart, const SectionDesc& descEnd, const osg::Vec3& startFront, const osg::Vec3& endFront)
+	{
+		if (descStart.type != descEnd.type)
+		{
+			return nullptr;
+		}
+
 		if (pts.size() < 2)
 		{
 			return nullptr;
 		}
 
 		MeshData* mesh = nullptr;
-		auto section = SectionCreator::createStandardSection(desc);
-		if (section)
+		auto sectionStart = SectionCreator::createStandardSection(descStart);
+		auto sectionEnd = SectionCreator::createStandardSection(descEnd);
+		if (sectionStart && sectionEnd)
 		{
 			mesh = new MeshData;
-			const auto& vertexs = section->getMeshVertexs();
+			const auto& vertexs = sectionStart->getMeshVertexs();
 
 			int count = pts.size();
 			mesh->vertexs.reserve(vertexs.size() * count);
@@ -341,7 +364,7 @@ namespace MeshGenerator
 					auto rotate = generateRotateMatrix(endFront, lastUpDir);
 
 					const auto& m = rotate  * osg::Matrix::translate(pts[i]);
-					for (const auto& v : vertexs)
+					for (const auto& v : sectionEnd->getMeshVertexs())
 					{
 						mesh->vertexs.emplace_back(MeshVertex());
 						TransformMeshVertex(v, m, mesh->vertexs.back());
@@ -379,76 +402,71 @@ namespace MeshGenerator
 		return mesh;
 	}
 
-	MeshData* MeshUtil::createLoft(const std::vector<osg::Vec3>& pts, const std::vector<osg::Vec3>& outline, const osg::Vec3& frontDir /*= osg::Y_AXIS*/, bool isColsed /*= false*/)
-	{
-		// to do
-
-		return nullptr;
-	}
-
 	MeshData* MeshUtil::createJointCircle(const JointData& joint, bool withHat /* = true */)
 	{
-		auto count = joint.adjacents.size();
-		if (count < 2)
+		int indexFirst = 0;
+		int indexSecond = 0;
+
+		float maxAngle = 0;
+		for (int i = 0; i < joint.adjacents.size() - 1; ++i)
 		{
-			return nullptr;
+			auto& adj = joint.adjacents[i];
+			for (int j = i + 1; j < joint.adjacents.size();++j)
+			{
+				auto& adjNext = joint.adjacents[j];
+
+				auto dir1 = adj.pos - joint.pos;
+				dir1.normalize();
+
+				auto dir2 = adjNext.pos - joint.pos;
+				dir2.normalize();
+
+				float a = acos(dir1 * dir2);
+				if (a > maxAngle)
+				{
+					indexFirst = i;
+					indexSecond = j;
+					maxAngle = a;
+				}
+			}	
 		}
 
-		if (count == 2)
+
+		std::vector<MeshData*> tempMesh;
+		for (size_t i = 0; i < joint.adjacents.size(); ++i)
 		{
-			//B(t) = (1 - t) ^ 2 * p0 + 2 * (1 - t) * t * p1 + t ^ 2 * p2
-			std::vector<osg::Vec3> pts;
-			const auto& p0 = joint.adjacents[0].pos;
-			const auto& p1 = joint.pos;
-			const auto& p2 = joint.adjacents[1].pos;
-
-			auto dir = p1 - p0;
-			dir.normalize();
-			auto dir2 = p2 - p1;
-			dir2.normalize();
-
-			float angle = acos(dir * dir2);
-			float per = (10.f * _blendParam + 20.f * (1.f - _blendParam)) * osg::PI / 180.f;
-			int count = angle / per;
-			count = std::max(2, count);
-			float countI = 1.f / count;
-			for (int i = 0; i <= count; ++i)
-			{
-				float t = i * countI;
-				pts.emplace_back(osg::Vec3());
-				pts.back() = p0 * (1.f - t) * (1.f - t) + p1 * 2.f * (1.f - t) * t + p2 * t * t;
-			}
-
-			std::vector<MeshData*> tempMesh;
-
-			auto mesh = createLoft(pts, joint.adjacents[0].sectionDesc, dir, dir2);
-			tempMesh.emplace_back(mesh);
-
-			if (withHat)
-			{
-				auto outlineMesh = createJointHat(joint.adjacents[0].sectionDesc, joint.adjacents[0].pos, joint.adjacents[0].pos - joint.pos);
-				tempMesh.emplace_back(outlineMesh);
-
-				auto outlineMesh2 = createJointHat(joint.adjacents[0].sectionDesc, joint.adjacents[1].pos, joint.adjacents[1].pos - joint.pos);
-				tempMesh.emplace_back(outlineMesh2);
-			}
-
-			return mergeMeshDatas(tempMesh);
-		}
-		else
-		{
-			std::vector<MeshData*> tempMesh;
-
-			for (size_t i = 0; i < joint.adjacents.size(); ++i)
+			if (indexFirst != i && indexSecond != i)
 			{
 				auto m = createLoft(joint.adjacents[i].pos, joint.pos, joint.adjacents[i].sectionDesc);
 				tempMesh.emplace_back(m);
-				auto outline = createJointHat(joint.adjacents[i].sectionDesc, joint.adjacents[i].pos, joint.adjacents[i].pos - joint.pos);
-				tempMesh.emplace_back(outline);
+				if (withHat)
+				{
+					tempMesh.emplace_back(createJointHat(joint.adjacents[i].sectionDesc, joint.adjacents[i].pos, joint.adjacents[i].pos - joint.pos));
+				}	
 			}
-
-			return mergeMeshDatas(tempMesh);
 		}
+
+		JointData tempJoint;
+		tempJoint.pos = joint.pos;
+		tempJoint.adjacents.emplace_back(JointAdjacent());
+		tempJoint.adjacents.back().pos = joint.adjacents[indexFirst].pos;
+		tempJoint.adjacents.back().sectionDesc = joint.adjacents[indexFirst].sectionDesc;
+
+		tempJoint.adjacents.emplace_back(JointAdjacent());
+		tempJoint.adjacents.back().pos = joint.adjacents[indexSecond].pos;
+		tempJoint.adjacents.back().sectionDesc = joint.adjacents[indexSecond].sectionDesc;
+
+		tempMesh.emplace_back(createJointOnlyTwo(tempJoint, withHat,true));
+
+		/*auto m = createLoft({ joint.adjacents[indexFirst].pos, joint.pos, joint.adjacents[indexSecond].pos }, joint.adjacents[indexFirst].sectionDesc, joint.adjacents[indexSecond].sectionDesc);
+		tempMesh.emplace_back(m);
+		if (withHat)
+		{
+		tempMesh.emplace_back(createJointHat(joint.adjacents[indexFirst].sectionDesc, joint.adjacents[indexFirst].pos, joint.adjacents[indexFirst].pos - joint.pos));
+		tempMesh.emplace_back(createJointHat(joint.adjacents[indexSecond].sectionDesc, joint.adjacents[indexSecond].pos, joint.adjacents[indexSecond].pos - joint.pos));
+		}
+		*/
+		return mergeMeshDatas(tempMesh);
 	}
 
 	MeshData* MeshUtil::createJointGeneral(const JointData& joint, bool withHat /* = true */)
@@ -550,7 +568,7 @@ namespace MeshGenerator
 		}
 		auto newJoint = calcuteJointData(joint);
 
-		if (count == 2 && joint.adjacents[0].sectionDesc == joint.adjacents[1].sectionDesc)
+		if (count == 2)
 		{
 			return createJointOnlyTwo(newJoint,withHat);
 		}
@@ -1177,7 +1195,80 @@ namespace MeshGenerator
 		return createPipeSegment(newJoint1, newJoint2);
 	}
 
+	MeshData* MeshUtil::createPipeSegmentLonLat(const JointData& first, const JointData& second, const std::vector<osg::Vec3d>& points)
+	{
+#if 0
+		JointData newJoint1 = first;
+		convertToLocalFromLonLat(first.pos, newJoint1.pos);
+		for (size_t i = 0; i < first.adjacents.size(); ++i)
+		{
+			convertToLocalFromLonLat(first.adjacents[i].pos, newJoint1.adjacents[i].pos);
+		}
+
+		JointData newJoint2 = second;
+		convertToLocalFromLonLat(second.pos, newJoint2.pos);
+		for (size_t i = 0; i < second.adjacents.size(); ++i)
+		{
+			convertToLocalFromLonLat(second.adjacents[i].pos, newJoint2.adjacents[i].pos);
+		}
+
+		std::vector<osg::Vec3d> localpts;
+		localpts.resize(points.size());
+		for (size_t i = 0; i < points.size(); ++i)
+		{
+			convertToLocalFromLonLat(points[i], localpts[i]);
+		}
+
+		return createPipeSegment(newJoint1, newJoint2, localpts);
+#else
+		if (points.empty())
+		{
+			return createPipeSegmentLonLat(first, second);
+		}
+		else
+		{
+			std::vector<JointData> joints;
+			joints.resize(points.size());
+			auto& sectionDesc = first.adjacents[0].sectionDesc;
+			for (auto i = 0; i < points.size(); ++i)
+			{
+				joints[i].pos = points[i];
+				joints[i].adjacents.emplace_back(JointAdjacent());
+				joints[i].adjacents.back().pos = (i == 0 ? first.pos : points[i - 1]);
+				joints[i].adjacents.back().sectionDesc = sectionDesc;
+
+				joints[i].adjacents.emplace_back(JointAdjacent());
+				joints[i].adjacents.back().pos = (i == points.size() - 1 ? second.pos : points[i + 1]);
+				joints[i].adjacents.back().sectionDesc = sectionDesc;
+			}
+
+			std::vector<MeshData*> tempMesh;
+			tempMesh.emplace_back(createPipeSegmentLonLat(first, joints.front()));
+
+			if (joints.size() >= 2)
+			{
+				for (auto i = 0; i < joints.size() - 1; ++i)
+				{
+					tempMesh.emplace_back(createPipeSegmentLonLat(joints[i], joints[i + 1]));
+				}
+			}
+			tempMesh.emplace_back(createPipeSegmentLonLat(joints.back(), second));
+
+			for (auto& joint : joints)
+			{
+				tempMesh.emplace_back(createJointLonLat(joint, false));
+			}
+			return mergeMeshDatas(tempMesh);
+		}
+#endif
+	}
+
 	MeshData* MeshUtil::createPipeSegment(const JointData& first, const JointData& second)
+	{
+		return createPipeSegment(first, second, {});
+	}
+
+	MeshData* MeshUtil::createPipeSegment(const JointData& first, const JointData& second, const std::vector<osg::Vec3d>& points)
 	{
 		if (first.adjacents.empty() || second.adjacents.empty())
 		{
@@ -1185,11 +1276,12 @@ namespace MeshGenerator
 		}
 
 		osg::Vec3 posStart;
-		SectionDesc desc;
+		SectionDesc descStart;
+		SectionDesc descEnd;
 		if (first.adjacents.size() == 1)
 		{
 			posStart = first.pos;
-			desc = first.adjacents[0].sectionDesc;
+			descStart = first.adjacents[0].sectionDesc;
 		}
 		else
 		{
@@ -1206,7 +1298,7 @@ namespace MeshGenerator
 				{
 					posStart = j1.adjacents[i].pos;
 					flag = true;
-					desc = j1.adjacents[i].sectionDesc;
+					descStart = j1.adjacents[i].sectionDesc;
 					break;
 				}
 			}
@@ -1222,6 +1314,7 @@ namespace MeshGenerator
 		if (second.adjacents.size() <= 1)
 		{
 			posEnd = second.pos;
+			descEnd = second.adjacents[0].sectionDesc;
 		}
 		else
 		{
@@ -1237,6 +1330,7 @@ namespace MeshGenerator
 				if (angle - 1.0 > -0.0001f && angle - 1.0 < 0.0001f)
 				{
 					posEnd = j2.adjacents[i].pos;
+					descEnd = j2.adjacents[i].sectionDesc;
 					flag = true;
 					break;
 				}
@@ -1248,42 +1342,79 @@ namespace MeshGenerator
 			}
 		}
 
-		return createLoft(posStart, posEnd, desc);
+		std::vector<osg::Vec3> totalPts;
+		totalPts.reserve(points.size() + 2);
+		totalPts.emplace_back(posStart);
+		totalPts.insert(totalPts.end(), points.begin(), points.end());
+		totalPts.emplace_back(posEnd);
+		return createLoft(totalPts, descStart,descEnd);
 	}
 
-	MeshData* MeshUtil::createJointOnlyTwo(const JointData& joint, bool withHat /* = true */)
+	MeshData* MeshUtil::createJointOnlyTwo(const JointData& joint, bool withHat /* = true */, bool useThirdorderBessel /* = false */)
 	{
 		if (joint.adjacents.size() != 2)
 		{
 			return nullptr;
 		}
 
-		//B(t) = (1 - t) ^ 2 * p0 + 2 * (1 - t) * t * p1 + t ^ 2 * p2
 		std::vector<osg::Vec3> pts;
-		const auto& p0 = joint.adjacents[0].pos;
-		const auto& p1 = joint.pos;
-		const auto& p2 = joint.adjacents[1].pos;
 
-		auto dir = p1 - p0;
+		auto dir = joint.pos - joint.adjacents[0].pos;
 		dir.normalize();
-		auto dir2 = p2 - p1;
+		auto dir2 = joint.adjacents[1].pos - joint.pos;
 		dir2.normalize();
 
-		float angle = acos(dir * dir2);
-		float per = (10.f * _blendParam + 20.f * (1.f - _blendParam)) * osg::PI / 180.f;
-		int count = angle / per;
-		count = std::max(2, count);
-		float countI = 1.f / count;
-		for (int i = 0; i <= count; ++i)
+		if (!useThirdorderBessel)
 		{
-			float t = i * countI;
-			pts.emplace_back(osg::Vec3());
-			pts.back() = p0 * (1.f - t) * (1.f - t) + p1 * 2.f * (1.f - t) * t + p2 * t * t;
+			//B(t) = (1 - t) ^ 2 * p0 + 2 * (1 - t) * t * p1 + t ^ 2 * p2
+			const auto& p0 = joint.adjacents[0].pos;
+			const auto& p1 = joint.pos;
+			const auto& p2 = joint.adjacents[1].pos;
+
+			float angle = acos(dir * dir2);
+			float per = (10.f * _blendParam + 20.f * (1.f - _blendParam)) * osg::PI / 180.f;
+			int count = angle / per;
+			count = std::max(2, count);
+			float countI = 1.f / count;
+			for (int i = 0; i <= count; ++i)
+			{
+				float t = i * countI;
+				pts.emplace_back(osg::Vec3());
+				pts.back() = p0 * (1.f - t) * (1.f - t) + p1 * 2.f * (1.f - t) * t + p2 * t * t;
+			}
+		}
+		else{
+			//B(t) = p0 * (1 - t) ^ 3 + 3 * p1 * t *(1 - t) ^ 2 + 3 * p2 * t ^ 2 * (1 - t) + p3 * t ^ 3
+			const auto& p0 = joint.adjacents[0].pos;
+
+			auto t = joint.pos - joint.adjacents[1].pos;
+			float l = t.length();
+			t.normalize();
+			const auto& p1 = joint.pos + t * l * 0.33333f;
+
+			t = joint.pos - joint.adjacents[0].pos;
+			l = t.length();
+			t.normalize();
+			const auto& p2 = joint.pos + t * l * 0.33333f;
+
+			const auto& p3 = joint.adjacents[1].pos;
+
+			float angle = acos(dir * dir2);
+			float per = (10.f * _blendParam + 20.f * (1.f - _blendParam)) * osg::PI / 180.f;
+			int count = angle / per;
+			count = std::max(2, count);
+			float countI = 1.f / count;
+			for (int i = 0; i <= count; ++i)
+			{
+				float t = i * countI;
+				pts.emplace_back(osg::Vec3());
+				//B(t) = p0 * (1 - t) ^ 3 + 3 * p1 * t *(1 - t) ^ 2 + 3 * p2 * t ^ 2 * (1 - t) + p3 * t ^ 3
+				pts.back() = p0 * (1.f - t) * (1.f - t) * (1.f - t) + p1 * 3.f * t * (1.f - t) * (1.f - t) + p2 * 3 * t * t * (1.f - t) + p3 * t * t* t;
+			}
 		}
 
 		std::vector<MeshData*> tempMesh;
-
-		auto mesh = createLoft(pts, joint.adjacents[0].sectionDesc, dir, dir2);
+		auto mesh = createLoft(pts, joint.adjacents[0].sectionDesc, joint.adjacents[1].sectionDesc, dir, dir2);
 		tempMesh.emplace_back(mesh);
 
 		if (withHat)
@@ -1291,10 +1422,10 @@ namespace MeshGenerator
 			auto outlineMesh = createJointHat(joint.adjacents[0].sectionDesc, joint.adjacents[0].pos, joint.adjacents[0].pos - joint.pos);
 			tempMesh.emplace_back(outlineMesh);
 
-			auto outlineMesh2 = createJointHat(joint.adjacents[0].sectionDesc, joint.adjacents[1].pos, joint.adjacents[1].pos - joint.pos);
+			auto outlineMesh2 = createJointHat(joint.adjacents[1].sectionDesc, joint.adjacents[1].pos, joint.adjacents[1].pos - joint.pos);
 			tempMesh.emplace_back(outlineMesh2);
 		}
-		
+
 		return mergeMeshDatas(tempMesh);
 	}
 

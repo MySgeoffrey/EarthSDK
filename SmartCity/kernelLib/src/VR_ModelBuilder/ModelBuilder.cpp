@@ -1,8 +1,33 @@
 #include "modelbuilder/ModelBuilder.h"
-#include<osgDB/WriteFile>
+#include <osgDB/WriteFile>
+#include "osgDB\ReadFile"
 
 namespace MeshGenerator
 {
+	std::map<std::string, osg::ref_ptr<osg::Image>> g_images;
+	OpenThreads::Mutex g_imageMutex;
+	osg::ref_ptr<osg::Image> getImage(const std::string& in_path)
+	{
+		osg::ref_ptr<osg::Image> r = NULL;
+		g_imageMutex.lock();
+		{
+			std::map<std::string, osg::ref_ptr<osg::Image>>::iterator itr =
+				g_images.find(in_path);
+			if (itr == g_images.end())
+			{
+				osg::ref_ptr<osg::Image> image = osgDB::readImageFile(in_path);
+				g_images[in_path] = image;
+				r = image;
+			}
+			else
+			{
+				r = itr->second;
+			}
+		}
+		g_imageMutex.unlock();
+		return r;
+	}
+
 	JointData CModelCreator::createCircleJointData(
 		const osg::Vec3d& in_geoPosition,
 		const std::vector<osg::Vec3d>& in_adjacentPoints,
@@ -203,7 +228,7 @@ namespace MeshGenerator
 		if (meshJoint)
 		{
 			osg::ref_ptr<osg::Node> meshJointNode = MeshUtil::getInstance()->createGeodeFromMeshData({
-				meshJoint.get() }, in_color, in_texturePath);
+				meshJoint.get() }, in_color, getImage(in_texturePath));
 				return meshJointNode;
 		}
 		return NULL;
@@ -220,7 +245,7 @@ namespace MeshGenerator
 		if (meshSegment)
 		{
 			osg::ref_ptr<osg::Node> meshSegmentNode = MeshUtil::getInstance()->createGeodeFromMeshData({
-				meshSegment.get() }, in_color, in_texturePath);
+				meshSegment.get() }, in_color, getImage(in_texturePath));
 				return meshSegmentNode;
 		}
 		return NULL;
