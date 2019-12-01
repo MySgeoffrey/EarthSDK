@@ -27,6 +27,8 @@ namespace CityBuilder
 
 		static bool load(const std::string& filePath,PipeNet::CPipePointDataSet*& inout_pDataSet);
 
+		static bool loadModelData(const std::string& filePath, PipeNet::CPipePointDataSet*& inout_pDataSet);
+
 		static bool loadEx(const std::string& filePath, PipeNet::CPipePointDataSet*& inout_pDataSet);
 	};
 

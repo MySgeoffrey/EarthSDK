@@ -172,14 +172,19 @@ bool CPipeLayerDriver::loadEx(const std::string& filePath, PipeNet::CPipeLineDat
 				//获取管线ID
 				int objectIdIndex = pDataSet->getProperty()->getFieldIndex("OBJECTID");
 				int radiusIndex = pDataSet->getProperty()->getFieldIndex("PipeWidth");
-
-				int start84ZIndex = pDataSet->getProperty()->getFieldIndex("StartDeep");
-				int end84ZIndex = pDataSet->getProperty()->getFieldIndex("EndDeep");
-				//QString objectID = pDataSet->getProperty()->RecordDBFValues[i]->at(objectIdIndex);
 				QString radius = pDataSet->getProperty()->RecordDBFValues[i]->at(radiusIndex);
+
+				int start84ZIndex = pDataSet->getProperty()->getFieldIndex("StartEle");
+				int end84ZIndex = pDataSet->getProperty()->getFieldIndex("EndEle"); 
 				double startZ = pDataSet->getProperty()->RecordDBFValues[i]->at(start84ZIndex).toDouble();
 				double endZ = pDataSet->getProperty()->RecordDBFValues[i]->at(end84ZIndex).toDouble();
-
+				//if (startZ < 0.1 || endZ < 0.1)
+				{
+					start84ZIndex = pDataSet->getProperty()->getFieldIndex("StartDeep");
+					end84ZIndex = pDataSet->getProperty()->getFieldIndex("EndDeep");
+					startZ = pDataSet->getProperty()->RecordDBFValues[i]->at(start84ZIndex).toDouble();
+					endZ = pDataSet->getProperty()->RecordDBFValues[i]->at(end84ZIndex).toDouble();
+				}
 				PipeNet::CPipeLine* pPipeLine = new PipeNet::CPipeLine();
 				//pPipeLine->setID(objectID.toStdString());
 				pPipeLine->getStartGeoPosition() =
@@ -311,6 +316,37 @@ bool CPipeLayerDriver::load(const std::string& filePath,PipeNet::CPipePointDataS
 				pPipePoint->getGeoPosition() = osg::Vec3d(
 					wgs84X, wgs84Y, wgs84Z);
 				pPipePoint->getAttachmentType() = attachment.toStdString();
+				if (NULL == inout_pDataSet)
+				{
+					inout_pDataSet = new PipeNet::CPipePointDataSet();
+				}
+				inout_pDataSet->getPipePoints().push_back(pPipePoint);
+			}
+		}
+	}
+	return false;
+}
+
+bool CPipeLayerDriver::loadModelData(const std::string& filePath, PipeNet::CPipePointDataSet*& inout_pDataSet)
+{
+	QString layerDataPath = QString::fromStdString(filePath);
+	MyChart::CMyShpDataDriver driver;
+	MyChart::IMyLayer* pDataSet = driver.readS57Map(layerDataPath)->getLayers().at(0);
+	for (int i = 0; i < pDataSet->getRecords().size(); ++i)
+	{
+		MyChart::IMyShapeRecord* pRecord = pDataSet->getRecords().at(i);
+		if (pRecord && pRecord->Geometry)
+		{
+			MyChart::IMyPoint* pPoint =
+				dynamic_cast<MyChart::IMyPoint*>(pRecord->Geometry);
+			if (pPoint)
+			{
+				int wgs84ZIndex = pDataSet->getProperty()->getFieldIndex("Elevation");
+				double wgs84Z = pDataSet->getProperty()->RecordDBFValues[i]->at(wgs84ZIndex).toDouble();
+
+				PipeNet::CPipePoint* pPipePoint = new PipeNet::CPipePoint();
+				pPipePoint->getGeoPosition() = osg::Vec3d(
+					pPoint->Position.X, pPoint->Position.Y, wgs84Z);
 				if (NULL == inout_pDataSet)
 				{
 					inout_pDataSet = new PipeNet::CPipePointDataSet();

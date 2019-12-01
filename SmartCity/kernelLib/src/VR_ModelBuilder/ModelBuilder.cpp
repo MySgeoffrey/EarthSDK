@@ -9,6 +9,8 @@ namespace MeshGenerator
 	osg::ref_ptr<osg::Image> getImage(const std::string& in_path)
 	{
 		osg::ref_ptr<osg::Image> r = NULL;
+		if (in_path == "")
+			return r;
 		g_imageMutex.lock();
 		{
 			std::map<std::string, osg::ref_ptr<osg::Image>>::iterator itr =

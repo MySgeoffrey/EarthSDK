@@ -80,7 +80,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VR_CITYBUILDEREX_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -90,7 +90,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(SolutionDir)\Osg340\lib;$(SolutionDir)\Osgearth280\lib;$(OutDir);$(SolutionDir)\mymaplib\lib;$(SolutionDir)\3rdParty\x86\lib;$(QTDIR480)\lib;$(SolutionDir)\3rd\mys57map\depends\lib\gdal;$(SolutionDir)\3rd\mys57map\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

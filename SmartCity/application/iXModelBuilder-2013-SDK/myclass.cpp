@@ -4,6 +4,7 @@
 #include "pipenet/pipepoint.h"
 #include <QDir>
 
+std::map<int, osg::ref_ptr<osg::Node>> g_modelNodes;
 
 MyClass::MyClass(QWidget *parent)
 	: QMainWindow(parent)
@@ -49,8 +50,8 @@ void MyClass::init()
 
 	/*初始化弯头以及管道要用的纹理路径*/
 	std::string runPath = osgDB::getCurrentWorkingDirectory();
-	this->mLinkerTexturePath = runPath + "/resource/image/blue.bmp";
-	this->mPipeTexturePath = runPath + "/resource/image/red.bmp";
+	this->mLinkerTexturePath = "";// runPath + "/resource/image/blue.bmp";
+	this->mPipeTexturePath = "";// runPath + "/resource/image/red.bmp";
 
 	/*建模参考中心点,建模算法以此位置为参考来构建三维模型*/
 	this->mRefGeoCenter = osgEarth::GeoPoint(this->mpGlobeWidget->getMapNodeRef()->getMapSRS(),
@@ -66,11 +67,26 @@ void MyClass::init()
 	this->mpGlobeWidget->getMapNodeRef()->addChild(this->mpGroup);
 
 	//临时测试管网
-	//loadPipeData();
+	loadPipeData();
 }
 
 void MyClass::loadPipeData()
 {
+	//@0：加载模型
+	std::string runPathex = osgDB::getCurrentWorkingDirectory();
+	runPathex += "/testPipeData/";
+	/*std::string path1 = runPathex + "xfs7.3ds";
+	osg::ref_ptr<osg::Node> node1 = osgDB::readNodeFile(path1);*/
+	std::string path2 = runPathex + "gyj.3ds";
+	osg::ref_ptr<osg::Node> node1 = osgDB::readNodeFile(path2);
+	std::string path3 = runPathex + "gsj.3ds";
+	osg::ref_ptr<osg::Node> node2 = osgDB::readNodeFile(path3);
+	std::string path4 = runPathex + "famen.3ds";
+	osg::ref_ptr<osg::Node> node3 = osgDB::readNodeFile(path4);
+	g_modelNodes[0] = node1;
+	g_modelNodes[1] = node2;
+	g_modelNodes[2] = node3;
+
 	/*建模参考中心点,建模算法以此位置为参考来构建三维模型*/
 	bool initialCenter = false;
 	osg::ref_ptr<osgEarth::GeoTransform> pGroup = new osgEarth::GeoTransform();
@@ -85,99 +101,134 @@ void MyClass::loadPipeData()
 		QStringList namefilters;
 		namefilters << "*.shp";
 		QStringList files = dir.entryList(namefilters, QDir::Files | QDir::Readable, QDir::Name);
+		//files.push_back("雨水主管.shp");
 		if (!files.empty())
 		{
 			for (int i = 0; i < files.size(); ++i)
 			{
-				QString lPath = files.at(i);
+				QString name = files.at(i);
 				QString pipePath = dirPath + "/" + files.at(i);
-				PipeNet::CPipeLineDataSet* pPipeLineDataSet = NULL;
-				PipeNet::CPipePointDataSet* pPipePointDataSet = NULL;
-				CityBuilder::CPipeLayerDriver::loadEx(pipePath.toLocal8Bit().constData(), pPipeLineDataSet);
-				CityBuilder::CPipeLayerDriver::loadEx(pipePath.toLocal8Bit().constData(), pPipePointDataSet);
-				if (pPipeLineDataSet && pPipePointDataSet)
+				if (!name.contains("yszgjPoint"))
 				{
-					osg::Vec4 linkerColor(rand() % 10 / 10.0, rand() % 10 / 10.0, rand() % 10 / 10.0, 1.0);
-					osg::Vec4 pipeColor(rand() % 10 / 10.0, rand() % 10 / 10.0, rand() % 10 / 10.0, 1.0);
-					//@1:计算管网的拓扑
-					for (int i = 0; i < pPipePointDataSet->getPipePoints().size(); ++i)
+					PipeNet::CPipeLineDataSet* pPipeLineDataSet = NULL;
+					PipeNet::CPipePointDataSet* pPipePointDataSet = NULL;
+					CityBuilder::CPipeLayerDriver::loadEx(pipePath.toLocal8Bit().constData(), pPipeLineDataSet);
+					CityBuilder::CPipeLayerDriver::loadEx(pipePath.toLocal8Bit().constData(), pPipePointDataSet);
+					if (pPipeLineDataSet && pPipePointDataSet)
 					{
-						PipeNet::CPipePoint* pPipePoint = pPipePointDataSet->getPipePoints().at(i);
-						std::vector<PipeNet::CPipeLine*> inout_pipeLines;
-						if (pPipeLineDataSet->getPipeLines(pPipePoint, inout_pipeLines))
+						osg::Vec4 linkerColor(rand() % 50 / 50.0, rand() % 50 / 50.0, rand() % 50 / 50.0, 1.0);
+						osg::Vec4 pipeColor(rand() % 50 / 50.0, rand() % 50 / 50.0, rand() % 50 / 50.0, 1.0);
+						//@1:计算管网的拓扑
+						for (int i = 0; i < pPipePointDataSet->getPipePoints().size(); ++i)
 						{
-							pPipePoint->setAdjcentLines(inout_pipeLines);
-						}
-						if (initialCenter == false)
-						{
-							referCenter = osgEarth::GeoPoint(this->mpGlobeWidget->getMapNodeRef()->getMapSRS(),
-								pPipePoint->getGeoPosition());
-							pGroup->setPosition(referCenter);
-							MeshGenerator::MeshUtil::getInstance()->setReferenceCenter(referCenter);
-							this->mpGlobeWidget->flyTo(pPipePoint->getGeoPosition().x(), pPipePoint->getGeoPosition().y(), pPipePoint->getGeoPosition().z());
-							initialCenter = true;
-						}
-					}
-					std::map<std::string, MeshGenerator::JointData> jointDatas;
-					//@2:接头建模
-					for (int i = 0; i < pPipePointDataSet->getPipePoints().size(); ++i)
-					{
-						PipeNet::CPipePoint* pPipePoint = pPipePointDataSet->getPipePoints().at(i);
-						if (pPipePoint->getAdjcentLines().size() >= 2)
-						{
-							std::vector<osg::Vec3d> adjcentPoints;
-							std::vector<double> radiusVecs;
-							//弯头建模参数
-							std::vector<PipeNet::CPipeLine*>& adjcentPipeLines = pPipePoint->getAdjcentLines();
-							for (int j = 0; j < adjcentPipeLines.size(); ++j)
+							PipeNet::CPipePoint* pPipePoint = pPipePointDataSet->getPipePoints().at(i);
+							std::vector<PipeNet::CPipeLine*> inout_pipeLines;
+							if (pPipeLineDataSet->getPipeLines(pPipePoint, inout_pipeLines))
 							{
-								PipeNet::CPipeLine* pPipeLine = adjcentPipeLines.at(j);
-								PipeNet::CPipePoint* pAdjencentPoint = NULL;
-								if ((pPipeLine->getStartGeoPosition() - pPipePoint->getGeoPosition()).length() < 0.00000001)
+								pPipePoint->setAdjcentLines(inout_pipeLines);
+							}
+							if (initialCenter == false)
+							{
+								referCenter = osgEarth::GeoPoint(this->mpGlobeWidget->getMapNodeRef()->getMapSRS(),
+									pPipePoint->getGeoPosition());
+								pGroup->setPosition(referCenter);
+								MeshGenerator::MeshUtil::getInstance()->setReferenceCenter(referCenter);
+								this->mpGlobeWidget->flyTo(pPipePoint->getGeoPosition().x(), pPipePoint->getGeoPosition().y(), pPipePoint->getGeoPosition().z());
+								initialCenter = true;
+							}
+						}
+						std::map<std::string, MeshGenerator::JointData> jointDatas;
+						//@2:接头建模
+						for (int i = 0; i < pPipePointDataSet->getPipePoints().size(); ++i)
+						{
+							PipeNet::CPipePoint* pPipePoint = pPipePointDataSet->getPipePoints().at(i);
+							if (pPipePoint->getAdjcentLines().size() >= 2)
+							{
+								std::vector<osg::Vec3d> adjcentPoints;
+								std::vector<double> radiusVecs;
+								//弯头建模参数
+								std::vector<PipeNet::CPipeLine*>& adjcentPipeLines = pPipePoint->getAdjcentLines();
+								for (int j = 0; j < adjcentPipeLines.size(); ++j)
 								{
-									pAdjencentPoint = dynamic_cast<PipeNet::CPipePoint*>(pPipePointDataSet->getPipePoint(pPipeLine->getEndGeoPosition()));
+									PipeNet::CPipeLine* pPipeLine = adjcentPipeLines.at(j);
+									PipeNet::CPipePoint* pAdjencentPoint = NULL;
+									if ((pPipeLine->getStartGeoPosition() - pPipePoint->getGeoPosition()).length() < 0.00000001)
+									{
+										pAdjencentPoint = dynamic_cast<PipeNet::CPipePoint*>(pPipePointDataSet->getPipePoint(pPipeLine->getEndGeoPosition()));
+									}
+									else
+									{
+										pAdjencentPoint = dynamic_cast<PipeNet::CPipePoint*>(pPipePointDataSet->getPipePoint(pPipeLine->getStartGeoPosition()));
+									}
+									if (pAdjencentPoint != NULL)
+									{
+										adjcentPoints.push_back(pAdjencentPoint->getGeoPosition());
+										radiusVecs.push_back(pPipeLine->getRadius());
+									}
 								}
-								else
+
+								if (!adjcentPoints.empty())
 								{
-									pAdjencentPoint = dynamic_cast<PipeNet::CPipePoint*>(pPipePointDataSet->getPipePoint(pPipeLine->getStartGeoPosition()));
-								}
-								if (pAdjencentPoint != NULL)
-								{
-									adjcentPoints.push_back(pAdjencentPoint->getGeoPosition());
-									radiusVecs.push_back(pPipeLine->getRadius());
+									MeshGenerator::JointData jointData = modelCreator.createCircleJointData(
+										pPipePoint->getGeoPosition(),
+										adjcentPoints, radiusVecs);
+									jointDatas[pPipePoint->getID()] = jointData;
+									/*osg::ref_ptr<osg::Node> pLinkerNode = modelCreator.createLinkerModel(jointData, linkerColor, this->mLinkerTexturePath);
+									osg::ref_ptr<osg::LOD> pLod = new osg::LOD();
+									pLod->addChild(pLinkerNode, 0, 50);
+									pGroup->addChild(pLod);*/
 								}
 							}
-
-							if (!adjcentPoints.empty())
+						}
+						//@3:管段建模
+						for (int i = 0; i < pPipeLineDataSet->getPipeLines().size(); ++i)
+						{
+							PipeNet::CPipeLine* pipe = pPipeLineDataSet->getPipeLines().at(i);
+							if (pipe)
 							{
-								MeshGenerator::JointData jointData = modelCreator.createCircleJointData(
-									pPipePoint->getGeoPosition(),
-									adjcentPoints, radiusVecs);
-								jointDatas[pPipePoint->getID()] = jointData;
-								osg::ref_ptr<osg::Node> pLinkerNode = modelCreator.createLinkerModel(jointData, linkerColor, this->mLinkerTexturePath);
+								PipeNet::CPipePoint* startPoint = pPipePointDataSet->getPipePoint(pipe->getStartGeoPosition());
+								PipeNet::CPipePoint* endPoint = pPipePointDataSet->getPipePoint(pipe->getEndGeoPosition());
+
+								if (startPoint && endPoint)
+								{
+									MeshGenerator::JointData startJointData = jointDatas[startPoint->getID()];
+									MeshGenerator::JointData endJointData = jointDatas[endPoint->getID()];
+									osg::ref_ptr<osg::Node> pPipeNode = modelCreator.createPipeModel(startJointData, endJointData, pipeColor, this->mPipeTexturePath);
+									osg::ref_ptr<osg::LOD> pLod = new osg::LOD();
+									pLod->addChild(pPipeNode, 0, 1000);
+									pGroup->addChild(pLod);
+								}
+							
+							}
+						}
+					}
+				}
+				else
+				{
+					
+					PipeNet::CPipePointDataSet* pPipeModelDataSet = NULL;
+					CityBuilder::CPipeLayerDriver::loadModelData(pipePath.toLocal8Bit().constData(), pPipeModelDataSet);
+					if (pPipeModelDataSet)
+					{
+						for (int n = 0; n < pPipeModelDataSet->getPipePoints().size(); ++n)
+						{
+							PipeNet::CPipePoint* modelPoint = pPipeModelDataSet->getPipePoints().at(n);
+							if (modelPoint)
+							{
+								osgEarth::GeoPoint modelCenter = osgEarth::GeoPoint(this->mpGlobeWidget->getMapNodeRef()->getMapSRS(),
+									modelPoint->getGeoPosition());
+								osg::ref_ptr<osgEarth::GeoTransform> pModelGroup = new osgEarth::GeoTransform();
+								pModelGroup->setPosition(modelCenter);
+								int type = n % g_modelNodes.size();
+								osg::ref_ptr<osg::Node> node = g_modelNodes[type];
 								osg::ref_ptr<osg::LOD> pLod = new osg::LOD();
-								pLod->addChild(pLinkerNode, 0, 1000);
-								pGroup->addChild(pLod);
+								pLod->addChild(node, 0, 200);
+								pModelGroup->addChild(pLod);
+								this->mpGlobeWidget->getMapNodeRef()->addChild(pModelGroup);
 							}
 						}
 					}
-					//@3:管段建模
-					for (int i = 0; i < pPipeLineDataSet->getPipeLines().size(); ++i)
-					{
-						PipeNet::CPipeLine* pipe = pPipeLineDataSet->getPipeLines().at(i);
-						if (pipe)
-						{
-							PipeNet::CPipePoint* startPoint = pPipePointDataSet->getPipePoint(pipe->getStartGeoPosition());
-							PipeNet::CPipePoint* endPoint = pPipePointDataSet->getPipePoint(pipe->getEndGeoPosition());
 
-							MeshGenerator::JointData startJointData = jointDatas[startPoint->getID()];
-							MeshGenerator::JointData endJointData = jointDatas[endPoint->getID()];
-							osg::ref_ptr<osg::Node> pPipeNode = modelCreator.createPipeModel(startJointData, endJointData, pipeColor, this->mPipeTexturePath);
-							osg::ref_ptr<osg::LOD> pLod = new osg::LOD();
-							pLod->addChild(pPipeNode, 0, 3000);
-							pGroup->addChild(pLod);
-						}
-					}
 				}
 			}
 		}
