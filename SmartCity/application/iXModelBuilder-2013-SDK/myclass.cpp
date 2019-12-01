@@ -81,11 +81,11 @@ void MyClass::loadPipeData()
 	osg::ref_ptr<osg::Node> node1 = osgDB::readNodeFile(path2);
 	std::string path3 = runPathex + "gsj.3ds";
 	osg::ref_ptr<osg::Node> node2 = osgDB::readNodeFile(path3);
-	std::string path4 = runPathex + "famen.3ds";
-	osg::ref_ptr<osg::Node> node3 = osgDB::readNodeFile(path4);
+	/*std::string path4 = runPathex + "famen.3ds";
+	osg::ref_ptr<osg::Node> node3 = osgDB::readNodeFile(path4);*/
 	g_modelNodes[0] = node1;
 	g_modelNodes[1] = node2;
-	g_modelNodes[2] = node3;
+	//g_modelNodes[2] = node3;
 
 	/*建模参考中心点,建模算法以此位置为参考来构建三维模型*/
 	bool initialCenter = false;
@@ -173,10 +173,10 @@ void MyClass::loadPipeData()
 										pPipePoint->getGeoPosition(),
 										adjcentPoints, radiusVecs);
 									jointDatas[pPipePoint->getID()] = jointData;
-									/*osg::ref_ptr<osg::Node> pLinkerNode = modelCreator.createLinkerModel(jointData, linkerColor, this->mLinkerTexturePath);
+									osg::ref_ptr<osg::Node> pLinkerNode = modelCreator.createLinkerModel(jointData, linkerColor, this->mLinkerTexturePath);
 									osg::ref_ptr<osg::LOD> pLod = new osg::LOD();
-									pLod->addChild(pLinkerNode, 0, 50);
-									pGroup->addChild(pLod);*/
+									pLod->addChild(pLinkerNode, 0, 150);
+									pGroup->addChild(pLod);
 								}
 							}
 						}
@@ -195,7 +195,7 @@ void MyClass::loadPipeData()
 									MeshGenerator::JointData endJointData = jointDatas[endPoint->getID()];
 									osg::ref_ptr<osg::Node> pPipeNode = modelCreator.createPipeModel(startJointData, endJointData, pipeColor, this->mPipeTexturePath);
 									osg::ref_ptr<osg::LOD> pLod = new osg::LOD();
-									pLod->addChild(pPipeNode, 0, 1000);
+									pLod->addChild(pPipeNode, 0, 1500);
 									pGroup->addChild(pLod);
 								}
 							
@@ -222,7 +222,7 @@ void MyClass::loadPipeData()
 								int type = n % g_modelNodes.size();
 								osg::ref_ptr<osg::Node> node = g_modelNodes[type];
 								osg::ref_ptr<osg::LOD> pLod = new osg::LOD();
-								pLod->addChild(node, 0, 200);
+								pLod->addChild(node, 0, 400);
 								pModelGroup->addChild(pLod);
 								this->mpGlobeWidget->getMapNodeRef()->addChild(pModelGroup);
 							}
