@@ -172,23 +172,23 @@ bool CPipeLayerDriver::loadEx(const std::string& filePath, PipeNet::CPipeLineDat
 				//获取管线ID
 				int objectIdIndex = pDataSet->getProperty()->getFieldIndex("OBJECTID");
 				int radiusIndex = pDataSet->getProperty()->getFieldIndex("PipeWidth");
-				QString radius = pDataSet->getProperty()->RecordDBFValues[i]->at(radiusIndex);
+				QString radius = "500";// pDataSet->getProperty()->RecordDBFValues[i]->at(radiusIndex);
 
-				int start84ZIndex = pDataSet->getProperty()->getFieldIndex("StartEle");
-				int end84ZIndex = pDataSet->getProperty()->getFieldIndex("EndEle"); 
+				int start84ZIndex = 12;// pDataSet->getProperty()->getFieldIndex("StartElev");
+				int end84ZIndex = 13;// pDataSet->getProperty()->getFieldIndex("EndElev");
 				double startZ = pDataSet->getProperty()->RecordDBFValues[i]->at(start84ZIndex).toDouble();
 				double endZ = pDataSet->getProperty()->RecordDBFValues[i]->at(end84ZIndex).toDouble();
 				//if (startZ < 0.1 || endZ < 0.1)
-				{
+				/*{
 					start84ZIndex = pDataSet->getProperty()->getFieldIndex("StartDeep");
 					end84ZIndex = pDataSet->getProperty()->getFieldIndex("EndDeep");
 					startZ = pDataSet->getProperty()->RecordDBFValues[i]->at(start84ZIndex).toDouble();
 					endZ = pDataSet->getProperty()->RecordDBFValues[i]->at(end84ZIndex).toDouble();
-				}
+				}*/
 				PipeNet::CPipeLine* pPipeLine = new PipeNet::CPipeLine();
 				//pPipeLine->setID(objectID.toStdString());
 				pPipeLine->getStartGeoPosition() =
-					osg::Vec3d(pLine->Points.at(0).X, pLine->Points.at(0).Y, startZ);
+					osg::Vec3d(pLine->Points.at(0).X, pLine->Points.at(0).Y, startZ );
 				pPipeLine->getEndGeoPosition() =
 					osg::Vec3d(pLine->Points.at(1).X, pLine->Points.at(1).Y, endZ);
 
@@ -371,15 +371,16 @@ bool CPipeLayerDriver::loadEx(const std::string& filePath, PipeNet::CPipePointDa
 		{
 			MyChart::IMyPolyline* pPolyline =
 				dynamic_cast<MyChart::IMyPolyline*>(pRecord->Geometry);
-			if (pPolyline && pPolyline->Points.size() >= 02)
+			if (pPolyline && pPolyline->Points.size() >= 2)
 			{
 				int objectIdIndex = pDataSet->getProperty()->getFieldIndex("OBJECTID");
 				int radiusIndex = pDataSet->getProperty()->getFieldIndex("PipeWidth");
 
-				int start84ZIndex = pDataSet->getProperty()->getFieldIndex("StartDeep");
-				int end84ZIndex = pDataSet->getProperty()->getFieldIndex("EndDeep");
-				//QString objectID = pDataSet->getProperty()->RecordDBFValues[i]->at(objectIdIndex);
-				QString radius = pDataSet->getProperty()->RecordDBFValues[i]->at(radiusIndex);
+				QString radius = "500";// pDataSet->getProperty()->RecordDBFValues[i]->at(radiusIndex);
+
+				int start84ZIndex = 12;// pDataSet->getProperty()->getFieldIndex("StartElev");
+				int end84ZIndex = 13;// pDataSet->getProperty()->getFieldIndex("EndElev");
+
 				double startZ = pDataSet->getProperty()->RecordDBFValues[i]->at(start84ZIndex).toDouble();
 				double endZ = pDataSet->getProperty()->RecordDBFValues[i]->at(end84ZIndex).toDouble();
 

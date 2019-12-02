@@ -3,6 +3,8 @@
 #include "pipenet/pipeline.h"
 #include "pipenet/pipepoint.h"
 #include <QDir>
+#include <osgEarthDrivers\gdal\GDALOptions>
+#include "geoobject/geosegment.h"
 
 std::map<int, osg::ref_ptr<osg::Node>> g_modelNodes;
 
@@ -23,8 +25,23 @@ MyClass::MyClass(QWidget *parent)
 
 	//加载谷歌影像数据
 	Globe::CGlobeMap::getInstance()->initialise(this->mpGlobeWidget->getMapRef());
+#if 0
 	Globe::CGlobeMap::getInstance()->addImageLayer("", "googleImage", Globe::MapType::WEB_GOOGLE_MT);
-
+#else
+	std::string tmsPath = runPath + "/chinaShpTile/tms.xml";
+	Globe::CGlobeMap::getInstance()->addImageLayer(tmsPath, "shpImage", Globe::MapType::TMS_MT);
+	std::string demPath = runPath + "/data/chinadem.tif";
+	//Globe::CGlobeMap::getInstance()->addElevationLayer(demPath,"chinadem.tif");
+	/*osgEarth::Drivers::GDALOptions dem_gdal;
+	dem_gdal.url() = demPath;
+	osgEarth::ElevationLayer* pDemLayer = new osgEarth::ElevationLayer(demPath, dem_gdal);
+	this->mpGlobeWidget->getMapRef()->addElevationLayer(pDemLayer);*/
+#endif
+	/*osgEarth::Drivers::TMSOptions imgOption;
+	imgOption.url() = mFilePathTms.toStdString();
+	osgEarth::ImageLayer* pImageLayer = new osgEarth::ImageLayer(mFileNameTms.toStdString(), imgOption);
+	mGlobeWidget->getMapRef()->addImageLayer(pImageLayer);
+	CAddDom::s_pImageLayer = pImageLayer;*/
 	//初始化
 	this->init();
 }
@@ -44,8 +61,7 @@ void MyClass::init()
 	MeshGenerator::MeshUtil::getInstance()->setBlendParam(0.7);
 	MeshGenerator::MeshUtil::getInstance()->setHatParam(0.5, 0.5);
 	/*设置接头建模时的固定回退偏移*/
-	MeshGenerator::MeshUtil::getInstance()->setFixedOffset(0.8);
-
+	MeshGenerator::MeshUtil::getInstance()->setFixedOffset(0.1);
 	
 
 	/*初始化弯头以及管道要用的纹理路径*/
@@ -81,11 +97,11 @@ void MyClass::loadPipeData()
 	osg::ref_ptr<osg::Node> node1 = osgDB::readNodeFile(path2);
 	std::string path3 = runPathex + "gsj.3ds";
 	osg::ref_ptr<osg::Node> node2 = osgDB::readNodeFile(path3);
-	/*std::string path4 = runPathex + "famen.3ds";
-	osg::ref_ptr<osg::Node> node3 = osgDB::readNodeFile(path4);*/
+	std::string path4 = runPathex + "wsj.3ds";
+	osg::ref_ptr<osg::Node> node3 = osgDB::readNodeFile(path4);
 	g_modelNodes[0] = node1;
 	g_modelNodes[1] = node2;
-	//g_modelNodes[2] = node3;
+	g_modelNodes[2] = node3;
 
 	/*建模参考中心点,建模算法以此位置为参考来构建三维模型*/
 	bool initialCenter = false;
@@ -104,11 +120,12 @@ void MyClass::loadPipeData()
 		//files.push_back("雨水主管.shp");
 		if (!files.empty())
 		{
+			int index = 0;
 			for (int i = 0; i < files.size(); ++i)
 			{
 				QString name = files.at(i);
 				QString pipePath = dirPath + "/" + files.at(i);
-				if (!name.contains("yszgjPoint"))
+				if (!name.contains("_M"))
 				{
 					PipeNet::CPipeLineDataSet* pPipeLineDataSet = NULL;
 					PipeNet::CPipePointDataSet* pPipePointDataSet = NULL;
@@ -116,8 +133,17 @@ void MyClass::loadPipeData()
 					CityBuilder::CPipeLayerDriver::loadEx(pipePath.toLocal8Bit().constData(), pPipePointDataSet);
 					if (pPipeLineDataSet && pPipePointDataSet)
 					{
-						osg::Vec4 linkerColor(rand() % 50 / 50.0, rand() % 50 / 50.0, rand() % 50 / 50.0, 1.0);
-						osg::Vec4 pipeColor(rand() % 50 / 50.0, rand() % 50 / 50.0, rand() % 50 / 50.0, 1.0);
+						osg::Vec4 linkerColor(1, 1, 0, 1); //(rand() % 50 / 50.0, rand() % 50 / 50.0, rand() % 50 / 50.0, 1.0);
+						if (index % 3 == 0)
+						{
+							linkerColor = osg::Vec4(0, 0.2, 0.8, 1);
+						}
+						else if (index % 3 == 2)
+						{
+							linkerColor = osg::Vec4(0.8, 0.2, 0.8, 1);
+						}
+						index++;
+						osg::Vec4 pipeColor = linkerColor; // (rand() % 50 / 50.0, rand() % 50 / 50.0, rand() % 50 / 50.0, 1.0);
 						//@1:计算管网的拓扑
 						for (int i = 0; i < pPipePointDataSet->getPipePoints().size(); ++i)
 						{
@@ -175,7 +201,7 @@ void MyClass::loadPipeData()
 									jointDatas[pPipePoint->getID()] = jointData;
 									osg::ref_ptr<osg::Node> pLinkerNode = modelCreator.createLinkerModel(jointData, linkerColor, this->mLinkerTexturePath);
 									osg::ref_ptr<osg::LOD> pLod = new osg::LOD();
-									pLod->addChild(pLinkerNode, 0, 150);
+									pLod->addChild(pLinkerNode, 0, 500);
 									pGroup->addChild(pLod);
 								}
 							}
@@ -195,8 +221,18 @@ void MyClass::loadPipeData()
 									MeshGenerator::JointData endJointData = jointDatas[endPoint->getID()];
 									osg::ref_ptr<osg::Node> pPipeNode = modelCreator.createPipeModel(startJointData, endJointData, pipeColor, this->mPipeTexturePath);
 									osg::ref_ptr<osg::LOD> pLod = new osg::LOD();
-									pLod->addChild(pPipeNode, 0, 1500);
+									pLod->addChild(pPipeNode, 0, 2500);
 									pGroup->addChild(pLod);
+
+#if 0
+									Geo::CGeoSegment* geoSegment = new Geo::CGeoSegment(this->mpGlobeWidget->getMapNodeRef());
+									geoSegment->getStartPoint() = startPoint->getGeoPosition();
+									geoSegment->getEndPoint() = endPoint->getGeoPosition();
+									geoSegment->setColor(pipeColor);
+									geoSegment->setLineWidth(pipe->getRadius() * 2);
+									geoSegment->loadToScene();
+									geoSegment->renderToScene();
+#endif
 								}
 							
 							}
@@ -222,7 +258,7 @@ void MyClass::loadPipeData()
 								int type = n % g_modelNodes.size();
 								osg::ref_ptr<osg::Node> node = g_modelNodes[type];
 								osg::ref_ptr<osg::LOD> pLod = new osg::LOD();
-								pLod->addChild(node, 0, 400);
+								pLod->addChild(node, 0, 1000);
 								pModelGroup->addChild(pLod);
 								this->mpGlobeWidget->getMapNodeRef()->addChild(pModelGroup);
 							}

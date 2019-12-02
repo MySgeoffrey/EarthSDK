@@ -73,7 +73,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(SolutionDir)\Osg340\lib;$(SolutionDir)\kernelLib\lib;$(SolutionDir)\Osgearth280\lib;$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;osgEarthUtil.lib;osg.lib;osgWidget.lib;osgUtil.lib;osgSim.lib;osgTerrain.lib;osgDB.lib;osgQt.lib;osgFX.lib;osgViewer.lib;osgText.lib;osgGA.lib;OpenThreads.lib;glu32.lib;opengl32.lib;osgEarthAnnotation.lib;osgEarthFeatures.lib;osgEarthSymbology.lib;osgEarth.lib;ws2_32.lib;winmm.lib;wldap32.lib;psapi.lib;osgShadow.lib;osgManipulator.lib;osgEarthQt.lib;VR_GlobeWidget.lib;VR_GlobeMap.lib;Qt5OpenGL.lib;VR_ModelBuilder.lib;VR_PipeNet.lib;VR_CityBuilder.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;osgEarthUtil.lib;osg.lib;osgWidget.lib;osgUtil.lib;osgSim.lib;osgTerrain.lib;osgDB.lib;osgQt.lib;osgFX.lib;osgViewer.lib;osgText.lib;osgGA.lib;OpenThreads.lib;glu32.lib;opengl32.lib;osgEarthAnnotation.lib;osgEarthFeatures.lib;osgEarthSymbology.lib;osgEarth.lib;ws2_32.lib;winmm.lib;wldap32.lib;psapi.lib;osgShadow.lib;osgManipulator.lib;osgEarthQt.lib;VR_GlobeWidget.lib;VR_GlobeMap.lib;Qt5OpenGL.lib;VR_ModelBuilder.lib;VR_PipeNet.lib;VR_CityBuilder.lib;VR_GeoObject.lib;VR_Framework.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

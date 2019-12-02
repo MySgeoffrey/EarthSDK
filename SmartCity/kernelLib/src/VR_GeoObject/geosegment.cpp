@@ -91,7 +91,7 @@ namespace Geo
 		mpGeometry->addPrimitiveSet(new osg::DrawElementsUShort(osg::PrimitiveSet::LINES, numIndices, pIndices));
 		osg::StateSet* stateset = new osg::StateSet;  //透明属性设置
 		stateset->setMode(GL_BLEND, osg::StateAttribute::ON); //Alpha混合开启 
-		stateset->setMode(GL_DEPTH_TEST, osg::StateAttribute::OFF); //取消深度测试 
+		stateset->setMode(GL_DEPTH_TEST, osg::StateAttribute::ON); //取消深度测试 
 		stateset->setMode(GL_LIGHTING, osg::StateAttribute::OFF /*| osg::StateAttribute::PROTECTED*/);
 		stateset->setAttribute(new osg::LineWidth(mLineWidth), osg::StateAttribute::ON);
 		stateset->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);

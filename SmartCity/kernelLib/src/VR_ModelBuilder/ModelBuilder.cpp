@@ -10,7 +10,6 @@ namespace MeshGenerator
 	{
 		osg::ref_ptr<osg::Image> r = NULL;
 		if (in_path == "")
-			return r;
 		g_imageMutex.lock();
 		{
 			std::map<std::string, osg::ref_ptr<osg::Image>>::iterator itr =
@@ -226,7 +225,7 @@ namespace MeshGenerator
 		const osg::Vec4& in_color,
 		const std::string& in_texturePath)
 	{
-		std::shared_ptr<MeshData> meshJoint(MeshUtil::getInstance()->createJointLonLat(in_joint));
+		std::shared_ptr<MeshData> meshJoint(MeshUtil::getInstance()->createJointLonLat(in_joint,true));
 		if (meshJoint)
 		{
 			osg::ref_ptr<osg::Node> meshJointNode = MeshUtil::getInstance()->createGeodeFromMeshData({
